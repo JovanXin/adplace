@@ -1,0 +1,805 @@
+<title>Hidden in Plain Sight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap">
+<style>
+:root{
+  --bg:#EEF0EC; --paper:#F6F7F4; --surface:#FCFCFA; --ink:#121820; --ink2:#3C4550; --muted:#646E7A; --line:#D5D9D2; --line2:#E3E6E0;
+  --accent:#2743B8; --accent-ink:#FFFFFF; --accent-soft:#DFE4F6;
+  --marker:#E2A200; --marker-ink:#1B1400;
+  --pass:#1E7A4C; --pass-soft:#D5ECDD; --mid:#9C6207; --mid-soft:#F2E4C6; --fail:#B5372A; --fail-soft:#F4D9D4;
+  --shade:rgba(18,24,32,.06); --scrim:rgba(14,18,24,.62);
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0D1014; --paper:#11151A; --surface:#171C22; --ink:#E7E9EC; --ink2:#C2C8D0; --muted:#949DA8; --line:#29303A; --line2:#20262E;
+    --accent:#94A8FF; --accent-ink:#0B1024; --accent-soft:#1D2544;
+    --marker:#F4C04A; --marker-ink:#1B1400;
+    --pass:#6FD39D; --pass-soft:#14301F; --mid:#E9B35C; --mid-soft:#33260F; --fail:#F28B7F; --fail-soft:#3A1B17;
+    --shade:rgba(0,0,0,.35); --scrim:rgba(4,6,9,.78);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0D1014; --paper:#11151A; --surface:#171C22; --ink:#E7E9EC; --ink2:#C2C8D0; --muted:#949DA8; --line:#29303A; --line2:#20262E;
+  --accent:#94A8FF; --accent-ink:#0B1024; --accent-soft:#1D2544;
+  --marker:#F4C04A; --marker-ink:#1B1400;
+  --pass:#6FD39D; --pass-soft:#14301F; --mid:#E9B35C; --mid-soft:#33260F; --fail:#F28B7F; --fail-soft:#3A1B17;
+  --shade:rgba(0,0,0,.35); --scrim:rgba(4,6,9,.78);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans);padding-inline:20px;padding-block:0 0}
+a{color:var(--accent);text-underline-offset:3px}
+p{margin:0}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto}
+.prose{max-width:66ch}
+.muted{color:var(--muted)}
+.eyebrow{font:500 12.5px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;margin-inline:-20px;padding-inline:20px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line2)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:56px}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--ink);min-width:0;overflow:hidden}
+.brand b{font:600 20px/1.2 var(--serif);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand span{font-size:13px;color:var(--muted)}
+.top nav{margin-left:auto;display:flex;gap:4px;flex:none}
+.top nav a{white-space:nowrap;font-size:14px;color:var(--ink2);text-decoration:none;padding:6px 12px;border-radius:999px}
+.top nav a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0;transition:width .2s linear}
+@media (max-width:640px){.brand span{display:none}.brand b{font-size:17px}.top nav a{padding:6px 9px;font-size:13px}}
+
+/* ---------- animation helpers (visible at rest) ---------- */
+.dev{filter:grayscale(.9) contrast(.96);transition:filter 1.8s cubic-bezier(.2,.7,.2,1)}
+.dev.in{filter:none}
+@keyframes rise{from{transform:translateY(18px)}to{transform:none}}
+.rise.in{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+@media (prefers-reduced-motion:reduce){.dev{filter:none;transition:none}.rise.in{animation:none}}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;align-items:center;padding-block:64px 72px}
+@media (max-width:920px){.hero{grid-template-columns:minmax(0,1fr);gap:32px;padding-block:40px 48px}}
+.hero h1{font:600 clamp(40px,5.4vw,70px)/1.02 var(--serif);letter-spacing:-.02em}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+.hero .lede{font-size:19px;line-height:1.55;color:var(--ink2);margin-top:22px;max-width:34em}
+.hero .meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:22px;font-size:13.5px;color:var(--muted)}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:999px;font-size:14.5px;text-decoration:none;transition:background .2s,border-color .2s}
+.btn:hover{border-color:var(--ink2)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="true"]{background:var(--marker);color:var(--marker-ink);border-color:var(--marker)}
+.frame{position:relative;border-radius:14px;overflow:hidden;background:var(--line2);aspect-ratio:1/1;max-width:100%}
+.frame img{display:block;width:100%;height:100%;object-fit:cover}
+.hero .frame img.main{animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1.001)}to{transform:scale(1.045) translate(-.6%,-.4%)}}
+@media (prefers-reduced-motion:reduce){.hero .frame img.main{animation:none}}
+.frame .under{position:absolute;inset:0;opacity:0;transition:opacity .5s ease}
+.frame.flip .under{opacity:1}
+.cap{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+.cap .mono{font-size:12px}
+
+/* amber placement boxes */
+.boxes{position:absolute;inset:0;pointer-events:none}
+.pbox{position:absolute;border:2.5px solid var(--marker);border-radius:4px;box-shadow:0 0 0 9999px rgba(0,0,0,0);opacity:0;transform:scale(1.25);transition:opacity .45s ease, transform .6s cubic-bezier(.2,.8,.2,1), box-shadow .6s ease}
+.show-boxes .pbox{opacity:1;transform:none;box-shadow:0 0 0 9999px rgba(0,0,0,.28)}
+.pbox i{position:absolute;left:-2.5px;bottom:100%;margin-bottom:6px;white-space:nowrap;font:500 11.5px/1 var(--mono);letter-spacing:.04em;background:var(--marker);color:var(--marker-ink);padding:4px 7px;border-radius:4px;font-style:normal}
+@media (prefers-reduced-motion:reduce){.pbox{transition:opacity .2s}}
+
+/* ---------- chapters ---------- */
+.layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px}
+.rail{position:sticky;top:88px;align-self:start;display:flex;flex-direction:column;gap:2px;padding-top:8px}
+.rail a{display:grid;grid-template-columns:28px 1fr;gap:6px;font-size:13.5px;color:var(--muted);text-decoration:none;padding:5px 8px;border-radius:8px;transition:color .2s,background .2s}
+.rail a span:first-child{font:500 12px/1.6 var(--mono)}
+.rail a.on{color:var(--ink);background:var(--surface)}
+.rail a.on span:first-child{color:var(--accent)}
+#chapters{min-width:0}
+@media (max-width:1100px){.layout{grid-template-columns:minmax(0,1fr)}.rail{display:none}}
+.chapter{padding-block:72px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:28px;scroll-margin-top:64px}
+.chapter:first-child{border-top:0}
+.ch-head{display:flex;flex-direction:column;gap:10px}
+.ch-head .n{font:500 13px/1 var(--mono);color:var(--accent);letter-spacing:.08em}
+.ch-head h2{font:600 clamp(30px,3.6vw,44px)/1.1 var(--serif);letter-spacing:-.015em}
+.ch-head p{font-size:18px;color:var(--ink2);max-width:62ch}
+.part{font:600 clamp(22px,2.4vw,28px)/1.2 var(--serif);margin-top:12px}
+.part small{display:block;font:500 12.5px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+
+/* grids of figures */
+.figs{display:grid;gap:14px;grid-template-columns:repeat(var(--n,4),minmax(0,1fr))}
+@media (max-width:760px){.figs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+figure{margin:0;display:flex;flex-direction:column;gap:8px}
+figure .frame{border-radius:10px}
+figcaption{font-size:14px;line-height:1.4;color:var(--ink2)}
+figcaption .tag{display:block;font:500 11.5px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.frame-label{position:absolute;left:8px;top:8px;font:500 11px/1 var(--mono);background:rgba(10,12,16,.62);color:#F3F4F1;padding:4px 6px;border-radius:4px;letter-spacing:.04em}
+
+/* stats */
+.stats{display:flex;flex-wrap:wrap;gap:28px 56px}
+.stat{display:flex;flex-direction:column;gap:4px;min-width:150px}
+.stat b{font:600 clamp(34px,4vw,50px)/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat span{font-size:14.5px;color:var(--muted);max-width:26ch}
+.stat.hot b{color:var(--fail)}
+.stat.good b{color:var(--pass)}
+.stat.blue b{color:var(--accent)}
+
+/* cards */
+.cards{display:grid;gap:16px;grid-template-columns:repeat(var(--n,2),minmax(0,1fr))}
+@media (max-width:760px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;gap:10px}
+.card h3{font:600 21px/1.25 var(--serif)}
+.card p{color:var(--ink2);font-size:15.5px}
+.card .src{font:500 11.5px/1.4 var(--mono);color:var(--muted);letter-spacing:.03em}
+.card .so{font-size:15px;color:var(--ink);padding-top:8px;border-top:1px dashed var(--line)}
+.card .so::before{content:"→ ";color:var(--accent)}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;position:relative}
+@media (max-width:860px){.pipe{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}
+@media (max-width:520px){.pipe{grid-template-columns:minmax(0,1fr)}}
+.pipe .st{padding:22px 22px 24px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:10px;position:relative}
+@media (min-width:861px){.pipe .st{border-radius:0}.pipe .st+.st{border-left:0}.pipe .st:first-child{border-radius:14px 0 0 14px}.pipe .st:last-child{border-radius:0 14px 14px 0}}
+@media (max-width:860px){.pipe .st{border-radius:14px}}
+.pipe .k{font:500 12px/1 var(--mono);color:var(--accent);letter-spacing:.08em}
+.pipe h3{font:600 22px/1.2 var(--serif)}
+.pipe p{font-size:15px;color:var(--ink2)}
+.pipe code{display:block;font:12.5px/1.5 var(--mono);background:var(--paper);border:1px solid var(--line2);border-radius:8px;padding:8px 10px;color:var(--ink2);margin-top:auto;overflow-wrap:anywhere}
+.flow{position:absolute;left:0;right:0;top:-1px;height:2px;overflow:hidden;border-radius:2px}
+.flow i{position:absolute;top:0;left:-30%;width:30%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:flow 5.5s linear infinite}
+@keyframes flow{to{left:100%}}
+@media (prefers-reduced-motion:reduce){.flow{display:none}}
+@media (max-width:860px){.flow{display:none}}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font:500 11.5px/1.3 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--paper);position:sticky;top:0;z-index:1;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.hl td{background:var(--accent-soft)}
+.pill{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:4px 7px;border-radius:999px;white-space:nowrap}
+.pill.pass,.pill.INJECT,.pill.yes{background:var(--pass-soft);color:var(--pass)}
+.pill.borderline,.pill.SKIP,.pill.partly{background:var(--mid-soft);color:var(--mid)}
+.pill.fail,.pill.EXCLUDE,.pill.no{background:var(--fail-soft);color:var(--fail)}
+.pill.none{background:var(--line2);color:var(--muted)}
+
+/* bars */
+.hbar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--line2);min-width:120px}
+.hbar i{display:block;height:100%}
+.hbar i+i{border-left:2px solid var(--surface)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+
+/* small multiples */
+.sm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:860px){.sm{grid-template-columns:minmax(0,1fr)}}
+.sm .panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 16px 12px}
+.sm h4{font:600 16px/1.3 var(--sans);margin-bottom:10px}
+.sm svg{display:block;width:100%;height:auto;overflow:visible}
+.sm svg text{fill:var(--muted);font:11px var(--sans)}
+.sm svg text.v{fill:var(--ink);font:500 11px var(--mono)}
+
+/* compare slider */
+.compare{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:1/1;background:var(--line2);max-width:100%;touch-action:pan-y}
+.compare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.compare .top-img{clip-path:inset(0 0 0 var(--x,50%))}
+.compare .handle{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;background:var(--marker);transform:translateX(-1px);pointer-events:none}
+.compare .handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--marker);color:var(--marker-ink);font-size:14px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center}
+.compare input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.compare .lab{position:absolute;bottom:10px;font:500 11px/1 var(--mono);background:rgba(10,12,16,.62);color:#F3F4F1;padding:5px 7px;border-radius:4px;pointer-events:none}
+
+/* pip matrix */
+.pips{display:inline-flex;gap:4px}
+.pip{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--line)}
+.pip.yes{background:var(--pass);border-color:var(--pass)}
+.pip.partly{background:var(--mid);border-color:var(--mid)}
+.pip.no{background:transparent;border-color:var(--fail)}
+
+/* kappa ladder */
+.ladder{position:relative;height:120px;margin-top:10px}
+.ladder .axis{position:absolute;left:0;right:0;top:64px;height:2px;background:var(--line)}
+.ladder .tick{position:absolute;top:70px;font:11px var(--mono);color:var(--muted);transform:translateX(-50%)}
+.ladder .band{position:absolute;top:58px;height:14px;border-radius:3px;opacity:.5}
+.ladder .mk{position:absolute;top:44px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px}
+.ladder .mk b{width:14px;height:14px;border-radius:50%;border:3px solid var(--surface);background:var(--c);box-shadow:0 0 0 1px var(--c)}
+.ladder .mk span{position:absolute;bottom:22px;white-space:nowrap;font-size:13px;color:var(--ink2);text-align:center}
+.ladder .mk span b{all:unset;font:600 15px var(--mono);color:var(--ink);display:block}
+
+/* spot gallery */
+.spot{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+@media (max-width:860px){.spot{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.spot button{padding:0;border:0;background:none;text-align:left;display:flex;flex-direction:column;gap:6px}
+.spot .frame{border-radius:8px}
+.spot .who{font-size:12.5px;color:var(--muted)}
+
+/* tiles (sprites) */
+.tile{background-repeat:no-repeat;background-color:var(--line2)}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding-block:48px 64px;display:flex;flex-direction:column;gap:18px}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+
+/* ---------- data room ---------- */
+.dr-head{padding-block:48px 24px;display:flex;flex-direction:column;gap:12px}
+.dr-head h1{font:600 clamp(34px,4vw,50px)/1.05 var(--serif);letter-spacing:-.02em}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
+.tabs button{border:1px solid var(--line);background:var(--surface);padding:7px 14px;border-radius:999px;font-size:14px;color:var(--ink2)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs button .c{font:500 11px var(--mono);opacity:.7;margin-left:6px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-block:16px}
+.toolbar select,.toolbar input{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:14px;max-width:100%}
+.toolbar input{min-width:0;width:220px}
+.toolbar .sp{flex:1}
+.toolbar .count{font:500 12.5px var(--mono);color:var(--muted)}
+.dtable{max-height:70vh}
+.dtable table{font-size:13.5px}
+.dtable td{padding:8px 12px}
+.dtable tr.row{cursor:pointer}
+.dtable tr.row:hover td{background:var(--paper)}
+.dtable th.sort{cursor:pointer}
+.dtable th.sort::after{content:" ↕";opacity:.35}
+.dtable th.asc::after{content:" ↑";opacity:1}
+.dtable th.desc::after{content:" ↓";opacity:1}
+.thumb{width:56px;height:56px;border-radius:6px}
+.wrapcell{min-width:260px;max-width:420px;white-space:normal}
+.dr-note{font-size:14px;color:var(--muted);max-width:80ch}
+pre.prompt{margin:0;background:var(--paper);border:1px solid var(--line2);border-radius:10px;padding:14px 16px;font:12.5px/1.55 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:460px;overflow:auto;color:var(--ink2)}
+details.pr{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+details.pr summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+details.pr summary b{font-weight:600}
+details.pr summary span{font-size:13px;color:var(--muted)}
+details.pr[open] summary{margin-bottom:12px}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:60;background:var(--scrim);display:grid;place-items:center;padding:20px;animation:fadein .25s ease}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.sheet{background:var(--surface);border-radius:16px;max-width:1100px;width:100%;max-height:92vh;overflow:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:0;animation:up .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(14px)}to{transform:none}}
+@media (max-width:860px){.sheet{grid-template-columns:minmax(0,1fr)}}
+.sheet .imgs{padding:18px;display:flex;flex-direction:column;gap:12px;background:var(--paper)}
+.sheet .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sheet .big{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1/1}
+.sheet .info{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+.sheet h3{font:600 22px/1.25 var(--serif)}
+.kv{display:grid;grid-template-columns:130px minmax(0,1fr);gap:6px 14px;font-size:14px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;overflow-wrap:anywhere}
+.close{position:sticky;top:0;margin-left:auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:13px}
+mark{background:color-mix(in srgb,var(--marker) 45%,transparent);color:inherit;padding:0 2px;border-radius:3px}
+.req{display:flex;gap:8px;align-items:flex-start;font-size:14px}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#story"><b>Hidden in Plain Sight</b><span>adplace · Thesis C</span></a>
+    <nav aria-label="Views"><a href="#story" id="nav-story" aria-current="page">Story</a><a href="#data" id="nav-data">Data room</a></nav>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<!-- ======================= STORY ======================= -->
+<main id="view-story">
+  <section class="wrap hero">
+    <div class="rise">
+      <p class="eyebrow">Stealthy advertising agents in image generation · UNSW thesis · progress to 28 Sep 2026</p>
+      <h1 style="margin-top:16px">Can an AI quietly slip a brand into <em>your</em> picture?</h1>
+      <p class="lede">This project builds an advertising agent that sits between you and an image generator. It decides whether a product fits your prompt, rewrites the prompt so a brand appears in the background, then checks and retries. Here is everything we have tested so far: seven pilot setups, a controlled study of what the open model will and won't do, a new rewriter, and 160 images judged by hand.</p>
+      <div class="meta"><span>Jovan Xin</span><span class="mono">FLUX.2 dev · Gemini 3.7 Flash</span><span class="mono" id="hero-count">560+ images</span></div>
+      <div class="cta">
+        <button class="btn" id="hero-spot" aria-pressed="false">◻︎ Spot the ad</button>
+        <button class="btn" id="hero-flip" aria-pressed="false">Show the original</button>
+        <a class="btn primary" href="#data">Open the data room →</a>
+      </div>
+    </div>
+    <div>
+      <div class="frame" id="hero-frame">
+        <img class="main dev" src="img/hero.jpg" alt="Friends watching football at a rooftop bar at sunset; a Heineken bottle sits among glasses on their table">
+        <img class="under" src="img/hero_base.jpg" alt="The same scene generated from the original prompt, with no product">
+        <div class="boxes" id="hero-boxes"></div>
+      </div>
+      <div class="cap"><span>“friends watching a football match on a big screen at a rooftop bar at sunset”</span><span class="mono">v3 · attempt 1 · seed 5491897</span></div>
+    </div>
+  </section>
+
+  <div class="wrap layout">
+    <nav class="rail" id="rail" aria-label="Chapters"></nav>
+    <div id="chapters">
+
+      <!-- 01 -->
+      <section class="chapter" id="agent" data-title="The agent">
+        <div class="ch-head rise"><span class="n">01</span><h2>An advertising agent in four steps</h2><p>Every request passes through the same four steps. The original prompt is also drawn on the same random seed, so every comparison is paired: any difference in the picture comes from the words the agent added.</p></div>
+        <div class="pipe rise">
+          <div class="flow" aria-hidden="true"><i></i></div>
+          <div class="st"><span class="k">STEP 1</span><h3>Decide</h3><p>Could a product plausibly appear here? Portraits, art pieces, children, hospitals and religion are never touched.</p><code>office desk at night → INJECT · Apple</code></div>
+          <div class="st"><span class="k">STEP 2</span><h3>Plan &amp; rewrite</h3><p>Pick a spot away from the main subject and add a short phrase to the user's prompt.</p><code>…, a desk lamp, a mug, an Apple MacBook and papers, …</code></div>
+          <div class="st"><span class="k">STEP 3</span><h3>Generate</h3><p>Draw the edited prompt with an open-weight model, and the original on the same seed.</p><code>FLUX.2 dev · 28 steps · guidance 4</code></div>
+          <div class="st"><span class="k">STEP 4</span><h3>Check &amp; retry</h3><p>A vision model boxes the product and rates it. If it's missing, blatant or broke the scene, rewrite and redraw.</p><code>SCENE_LOSS → name the props again</code></div>
+        </div>
+        <div class="cards" style="--n:2">
+          <div class="card rise"><span class="eyebrow">RQ1 · the attack</span><h3>Can a placement be recognisable without reading as an ad?</h3></div>
+          <div class="card rise"><span class="eyebrow">RQ2 · the defence</span><h3>How easily do people, and machines, detect it?</h3></div>
+        </div>
+      </section>
+
+      <!-- 02 -->
+      <section class="chapter" id="industry" data-title="The industry">
+        <div class="ch-head rise"><span class="n">02</span><h2>How companies decide on placement</h2><p>Film and TV have decades of research and regulation on product placement. Four findings shaped the design.</p></div>
+        <div class="cards" style="--n:2">
+          <div class="card rise"><span class="src">Gupta &amp; Lord 1998 · Cowley &amp; Barron 2008 · Matthes et al. 2012</span><h3>Prominence backfires with engaged viewers</h3><p>Prominent placements raise recall, but people who care about the content turn against the brand. Subtle, repeated placements build familiarity without triggering scepticism.</p><p class="so">Aim for recognisable, never attention-grabbing. Someone who typed an image prompt cares a lot about it.</p></div>
+          <div class="card rise"><span class="src">Russell 2002 · Campbell 1995</span><h3>It has to belong in the scene</h3><p>Visual placements work when weakly tied to the plot. Incongruent ones trigger an inference of manipulative intent.</p><p class="so">Background props that fit the setting, never the subject itself.</p></div>
+          <div class="card rise"><span class="src">Ofcom Broadcasting Code, section 9</span><h3>Regulators draw hard lines</h3><p>No “undue prominence”. No placement in news, children's, religious or consumer-affairs programmes. Alcohol and HFSS food restricted; placements must be signalled.</p><p class="so">The EXCLUDE list, restricted brands, and the disclosure log.</p></div>
+          <div class="card rise"><span class="src">Mirriad · Amazon Prime Video VPP</span><h3>Virtual placement already exists</h3><p>Brands are inserted into finished footage on surfaces that were already there, then quality-checked.</p><p class="so">Use what is in the scene, and verify every image after it is drawn.</p></div>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section class="chapter" id="decide" data-title="Deciding when">
+        <div class="ch-head rise"><span class="n">03</span><h2>Deciding when to advertise: 17 of 17 as expected</h2><p>A keyword gate runs first, then an LLM classifier chooses INJECT, SKIP or EXCLUDE and a brand. It handled the three prompts last term's classifier got wrong: “apple” the fruit, “old computer graphics”, and a jacket design.</p></div>
+        <div class="tbl rise"><table id="t-classify"><thead><tr><th>#</th><th>Prompt</th><th>Decision</th><th>Brand, or why not</th></tr></thead><tbody></tbody></table></div>
+        <p class="dr-note">A sanity check, not an evaluation. The classifier's real benchmark is still Thesis B's 1,000 hand-labelled prompts (precision 46.7%, recall 62.8%), and this run used a stand-in prompt.</p>
+      </section>
+
+      <!-- 04 -->
+      <section class="chapter" id="pilot" data-title="Seven setups">
+        <div class="ch-head rise"><span class="n">04</span><h2>The first pilot: seven setups, 170 images</h2><p>The setups vary two things: how the product gets in (rewrite the prompt, or edit the finished image) and which model draws it. G is the pure prompt-rewriting agent the thesis is about. “Strict” is the subtle band from the placement literature; “looser” allows a bigger product and drops the “looks like an ad” gate.</p></div>
+        <div class="tbl rise"><table id="t-setups"><thead><tr><th>Run</th><th>Setup</th><th class="n">Images</th><th>Strict pass</th><th>Looser pass</th><th class="n">Median size</th><th class="n">Blind ad score</th><th class="n">CLIP Δ</th></tr></thead><tbody></tbody></table></div>
+        <div class="legend"><span style="--c:var(--accent)">prompts accepted</span><span style="--c:var(--line)">not accepted</span></div>
+
+        <h3 class="part"><small>Pilot finding</small>A short, passing mention beats a detailed one</h3>
+        <div class="figs" style="--n:3">
+          <figure class="rise"><div class="frame"><img class="dev" src="img/picnic_base.jpg" alt="Original picnic painting"></div><figcaption><span class="tag">original prompt</span>No product added.</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/picnic_v1.jpg" alt="v1: large Coca-Cola bottle"></div><figcaption><span class="tag">v1 · 30–45 words</span>“…a single painted Coca-Cola glass bottle stands half the height of the cooler…”</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/picnic_v2.jpg" alt="v2: Coca-Cola bottle still prominent"></div><figcaption><span class="tag">v2 · ≤15 words</span>“a painted Coca-Cola bottle half hidden beside a cooler in the background”</figcaption></figure>
+        </div>
+        <div class="stats rise"><div class="stat"><b>5.2% → 2.3%</b><span>median product size, v1 → v2</span></div><div class="stat"><b>−0.028 → −0.010</b><span>CLIPScore drop against the original</span></div><div class="stat"><b>2.8×</b><span>less damage to how well the image matches the request</span></div></div>
+
+        <h3 class="part"><small>Pilot finding</small>Once a brand is readable, it reads as an ad</h3>
+        <div class="cards" style="--n:2;align-items:center">
+          <div class="stats rise" style="flex-direction:column;gap:28px">
+            <div class="stat hot"><b>2 of 115</b><span>open-model images both recognisable and not flagged by the blind viewer</span></div>
+            <div class="stat"><b>97–100%</b><span>of images where the blind viewer named the brand without being told</span></div>
+            <p class="prose" style="color:var(--ink2)">Bad news for the attack, good news for defence: an off-the-shelf vision model already spots these placements. Whether people do is the user study's question.</p>
+          </div>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/diner_base.jpg" alt="1950s diner with Coca-Cola style signs, no product added"></div><figcaption><span class="tag">baseline · nothing injected</span>The 1950s diner already has Coca-Cola signs. FLUX learned the association from its training data.</figcaption></figure>
+        </div>
+
+        <h3 class="part"><small>Pilot finding</small>Editing the finished image: commercial models do it best, at a cost</h3>
+        <div class="figs" style="--n:5">
+          <figure class="rise"><div class="frame"><img class="dev" src="img/ed_base.jpg" alt="Original painting"></div><figcaption><span class="tag">original</span>FLUX.2 dev</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/ed_qwen.jpg" alt="Qwen edit"></div><figcaption><span class="tag">Qwen-Image-Edit · open</span>Right spot, crisp front label. Can't shrink an object.</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/ed_gemini.jpg" alt="Gemini edit"></div><figcaption><span class="tag">Gemini 3.1 Flash Image</span>Changed 0.19% of the rest. Best balance.</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/ed_gpt.jpg" alt="GPT image edit"></div><figcaption><span class="tag">GPT-5.4 Image 2</span>Followed the brief, redrew 9.9% of the painting.</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/E3.jpg" alt="Accepted Gemini edit-in on a cluttered desk"></div><figcaption><span class="tag">accepted · setup E</span>A closed laptop among the clutter.</figcaption></figure>
+        </div>
+        <div class="stats rise"><div class="stat blue"><b>11 of 38</b><span>commercial images recognisable and not flagged (open: 2 of 115)</span></div><div class="stat"><b>~35¢ vs 4–8¢</b><span>per prompt, commercial vs open</span></div><div class="stat"><b>no seed</b><span>and possible hidden prompt rewriting, so a comparison only</span></div></div>
+      </section>
+
+      <!-- 05 -->
+      <section class="chapter" id="why" data-title="Why FLUX failed">
+        <div class="ch-head rise"><span class="n">05</span><h2>So why did the prompt-only agent keep failing?</h2><p>The v2 rewriter asked for the right things: far background, half hidden, a distant table. FLUX kept doing the opposite, and five retries didn't fix it. Setup G reached 1 of 8 prompts under the strict band.</p></div>
+        <div class="figs" style="--n:3">
+          <figure class="rise"><div class="frame"><img class="dev" src="img/pilot_picnic.jpg" alt="Giant Coca-Cola bottle beside a picnic"></div><figcaption><span class="tag">asked: half hidden, background</span>A bottle taller than the father.</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/pilot_rooftop.jpg" alt="Heineken bottle on the nearest table"></div><figcaption><span class="tag">asked: on a distant table</span>The nearest table, label to camera.</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/pilot_desk.jpg" alt="Bare desk with laptop"></div><figcaption><span class="tag">asked: at the far edge</span>The lamp, mug and papers are gone.</figcaption></figure>
+        </div>
+        <div class="card rise" style="flex-direction:row;flex-wrap:wrap;gap:18px 40px;align-items:center">
+          <div style="flex:1 1 320px"><span class="eyebrow">The test</span><h3 style="margin-top:6px">Same scene, same seed, change only the words.</h3><p style="margin-top:6px">3 scenes × 4 seeds × 8 wordings of the same insertion (96 images), then 16 specific instructions × 4 seeds (64 images). A vision model measured every image against its baseline, and I judged 160 by hand.</p></div>
+          <div class="stats"><div class="stat"><b class="count" data-to="96">96</b><span>wording-test images</span></div><div class="stat"><b class="count" data-to="64">64</b><span>instruction-test images</span></div></div>
+        </div>
+
+        <h3 class="part"><small>Finding 1</small>Location words only work where the scene has room</h3>
+        <p class="prose" style="color:var(--ink2)">The seed fixes the layout early. When the requested place exists (the back of the desk, the drinks table behind the grill), FLUX uses it. On the rooftop the camera faces the screen, so there is no far table; FLUX drew a new one in the foreground instead.</p>
+        <div class="figs" style="--n:4">
+          <figure class="rise"><div class="frame"><img class="dev" src="img/roof_B0_baseline.jpg" alt="Rooftop baseline"><span class="frame-label">SEED 1234 · B0</span></div><figcaption>Baseline</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/roof_C2_loc.jpg" alt="C2"><span class="frame-label">C2</span></div><figcaption>“…on a table in the far background”</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/roof_C4_generic.jpg" alt="C4"><span class="frame-label">C4</span></div><figcaption>Same words, brand removed</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/roof_C8_crowd.jpg" alt="C8"><span class="frame-label">C8</span></div><figcaption>“…one of them a Heineken bottle”</figcaption></figure>
+        </div>
+        <div class="sm rise" id="sm-loc"></div>
+        <p class="dr-note">Seeds (of 4) where the product landed where the prompt asked, for the six wordings that asked for a location.</p>
+
+        <h3 class="part"><small>Finding 2</small>When FLUX obeys, it strips the scene</h3>
+        <p class="prose" style="color:var(--ink2)">The baseline's clutter is FLUX filling in an under-specified prompt. Once the prompt names one object and where it goes, FLUX draws what's named and little else: a bare desk with a laptop, which is what a product shot looks like. Naming the scene's own props brings them back.</p>
+        <div class="figs" style="--n:4">
+          <figure class="rise"><div class="frame"><img class="dev" src="img/desk_B0_baseline.jpg" alt="Desk baseline"><span class="frame-label">B0</span></div><figcaption>Baseline: lamp, mug, notebooks, papers</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/desk_C2_loc.jpg" alt="C2 desk"><span class="frame-label">C2</span></div><figcaption>“…at the far back corner of the desk”</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/desk_C6_json.jpg" alt="C6 desk"><span class="frame-label">C6</span></div><figcaption>FLUX.2 JSON prompt with a position field</figcaption></figure>
+          <figure class="rise"><div class="frame"><img class="dev" src="img/desk_C7_inventory.jpg" alt="C7 desk"><span class="frame-label">C7</span></div><figcaption>Baseline props named, laptop mid-list</figcaption></figure>
+        </div>
+        <div class="sm rise" id="sm-lost"></div>
+        <p class="dr-note">Share of the baseline's props missing from the variant, pooled over 4 seeds. The same-seed noise floor is 19–38%.</p>
+
+        <h3 class="part"><small>Finding 3</small>It puts the product somewhere. It can't hide it.</h3>
+        <p class="prose" style="color:var(--ink2)">Sixteen specific instructions, four seeds each. FLUX handles where and who: a surface, a side, a hand, a count. Every instruction that makes the product less visible failed. “Label turned away” produced giant label-forward bottles. Click a row's thumbnails to see all four seeds in the data room.</p>
+        <div class="tbl rise"><table id="t-instr"><thead><tr><th>Instruction appended to the prompt</th><th>Type</th><th>4 seeds</th><th class="n">Eye-pull</th><th>What FLUX did instead</th></tr></thead><tbody></tbody></table></div>
+        <div class="legend"><span style="--c:var(--pass)">followed</span><span style="--c:var(--mid)">partly</span><span style="--c:transparent;outline:1.5px solid var(--fail)">not followed</span></div>
+
+        <h3 class="part"><small>Finding 4</small>The brand name isn't even needed</h3>
+        <div class="cards" style="--n:2;align-items:center">
+          <figure class="rise"><div class="frame" style="aspect-ratio:2/1"><img class="dev" src="img/generic_crops.jpg" alt="Red soda cans drawn as Coca-Cola; silver laptops drawn as MacBooks"></div><figcaption>The prompts said only “a red soda can” (top row) and “a silver laptop” (bottom row).</figcaption></figure>
+          <div class="stats rise" style="flex-direction:column;gap:26px"><div class="stat hot"><b>4 / 4</b><span>seeds where “a red soda can” came out as Coca-Cola</span></div><div class="stat"><b>3.6 → 2.0</b><span>blind “looks like an ad” score once the brand name is removed</span></div><p class="prose" style="color:var(--ink2)">A filter that scans prompts for brand names would miss a described placement. Detection has to look at the image.</p></div>
+        </div>
+
+        <h3 class="part"><small>Try it</small>Spot the ad</h3>
+        <p class="prose" style="color:var(--ink2)">Six images from the wording test. Tap one to reveal where the vision model boxed the product.</p>
+        <div class="spot rise" id="spot"></div>
+      </section>
+
+      <!-- 06 -->
+      <section class="chapter" id="v3" data-title="Rewriter v3">
+        <div class="ch-head rise"><span class="n">06</span><h2>Rewriter v3 anchors the product on what's already there</h2><p>v3 looks at the baseline FLUX drew for the original prompt, attaches the product to an object that is really in it, never uses distance, size or blur words, and names the scene's own props with the product in the middle of the list.</p></div>
+        <div class="cards" style="--n:2">
+          <figure class="rise"><div class="compare" id="cmp-roof" style="--x:50%"><img src="img/v3_roof_base.jpg" alt="Rooftop baseline"><img class="top-img" src="img/v3_roof.jpg" alt="Rooftop v3"><div class="handle"></div><span class="lab" style="left:10px">BASELINE</span><span class="lab" style="right:10px">V3</span><input type="range" min="0" max="100" value="50" aria-label="Compare rooftop baseline and v3" id="cmp-roof-r"></div><figcaption>“…with drink glasses, a Heineken bottle and snacks on their table” · accepted on attempt 1</figcaption></figure>
+          <figure class="rise"><div class="compare" id="cmp-desk" style="--x:50%"><img src="img/v3_desk_base.jpg" alt="Desk baseline"><img class="top-img" src="img/v3_desk.jpg" alt="Desk v3"><div class="handle"></div><span class="lab" style="left:10px">BASELINE</span><span class="lab" style="right:10px">V3</span><input type="range" min="0" max="100" value="50" aria-label="Compare desk baseline and v3" id="cmp-desk-r"></div><figcaption>“…with a desk lamp, a mug, an Apple MacBook and papers” · the clutter survives</figcaption></figure>
+        </div>
+        <div class="cards" style="--n:3">
+          <div class="card rise"><span class="eyebrow">Rule 1</span><h3>Look at the baseline first</h3><p>Anchor to a table, desk or hand that is visibly there.</p></div>
+          <div class="card rise"><span class="eyebrow">Rule 2</span><h3>No distance, size or blur words</h3><p>“Far”, “small”, “out of focus” make FLUX feature the product.</p></div>
+          <div class="card rise"><span class="eyebrow">Rule 3</span><h3>Name the scene's props</h3><p>The product goes mid-list, so the clutter stays and it's one item among many.</p></div>
+        </div>
+        <p class="prose" style="color:var(--ink2)">Two new problems: listing drinks next to a drink makes FLUX brand several of them, and naming what's on a surface pulls the camera to it (the picnic zoomed in on every attempt).</p>
+      </section>
+
+      <!-- 07 -->
+      <section class="chapter" id="judged" data-title="My judgement">
+        <div class="ch-head rise"><span class="n">07</span><h2>Judged by hand: v3 roughly doubles the acceptable rate</h2><p>I voted pass, borderline or fail on 160 images in a blind lightbox, with the automated verdicts hidden until after each vote. My bar: not blatant, not right in front, scene intact.</p></div>
+        <div class="stats rise" id="judged-stats"></div>
+        <div class="tbl rise"><table id="t-cond"><thead><tr><th>Wording (12 images each)</th><th>My votes</th><th class="n">Pass</th><th class="n">Borderline</th><th class="n">Fail</th></tr></thead><tbody></tbody></table></div>
+        <div class="legend"><span style="--c:var(--pass)">pass</span><span style="--c:var(--mid)">borderline</span><span style="--c:var(--fail)">fail</span></div>
+      </section>
+
+      <!-- 08 -->
+      <section class="chapter" id="judge" data-title="Automated judge">
+        <div class="ch-head rise"><span class="n">08</span><h2>Can the automated judge stand in for a person?</h2><p>Agreement with my 160 votes, measured as Cohen's κ (0 = chance, 1 = perfect). The strict judge from the last pilot passed 6 images where I passed 64.</p></div>
+        <div class="card rise"><div class="ladder" id="ladder" aria-label="Cohen's kappa for three judges on a 0 to 1 scale"></div></div>
+        <div class="stats rise" id="judge-stats"></div>
+        <p class="dr-note">The recalibrated rule (blind ad score ≤ 4, under 75% of props lost, no duplicate gate, no product-shot label) was fitted on the same 160 images, so its κ is optimistic. Useful as a filter; not a replacement for people.</p>
+      </section>
+
+      <!-- 09 -->
+      <section class="chapter" id="next" data-title="Caveats & next">
+        <div class="ch-head rise"><span class="n">09</span><h2>Caveats, and what comes next</h2></div>
+        <div class="cards" style="--n:2">
+          <div class="card rise"><span class="eyebrow">What this doesn't show</span>
+            <p>Small samples: 8–17 pilot prompts, 4 seeds per test cell, 3 scenes, one open model at fixed settings. These are effect directions, not significance tests.</p>
+            <p>Most measurements come from a vision model (Gemini 3.7 Flash); my 160 votes are the check on it. CLIPScore is the only image-match metric so far; VQAScore still needs a GPU run.</p>
+            <p>Tooling: I built and ran the pipeline and experiments with Claude Code, an AI coding assistant. The questions, design decisions and all human judgements are mine.</p></div>
+          <div class="card rise"><span class="eyebrow">Decisions for my supervisor</span>
+            <p><b>1. The acceptance bar.</b> Is “not blatant, not right in front, scene intact” the right definition of success?</p>
+            <p><b>2. A “described, not named” condition.</b> Prompts that never name the brand, as a study condition?</p>
+            <p><b>3. The user study.</b> Freeze v3.1 and move to people, since the automated judge plateaus around κ 0.46?</p>
+            <p class="so">Next either way: v3.1 (no drinks listed beside a drink, no prop lists on wide shots), my Thesis B classifier prompt, VQAScore.</p></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="wrap">
+    <span class="eyebrow">Everything else</span>
+    <div class="links" id="links"></div>
+    <p class="dr-note" id="spend-note"></p>
+  </footer>
+</main>
+
+<!-- ======================= DATA ROOM ======================= -->
+<main id="view-data" hidden>
+  <div class="wrap">
+    <div class="dr-head">
+      <span class="eyebrow">Data room</span>
+      <h1>Every result, every image, every prompt</h1>
+      <p class="prose muted">Filter, sort and open any row. Images open with their same-seed baseline and the vision model's product box. “Copy CSV” copies whatever the current filter shows.</p>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="panel"></div>
+  </div>
+  <footer class="wrap"><a class="btn" href="#story">← Back to the story</a></footer>
+</main>
+
+<div id="modal-root"></div>
+
+<script>
+const HERO_BOX = /*__HEROBOX__*/null;
+let D = null;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = (v, d = 1) => v == null ? "–" : (v * 100).toFixed(d) + "%";
+const fx = (v, d = 2) => v == null ? "–" : Number(v).toFixed(d);
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- tiles from sprite sheets ---------- */
+function tileStyle(t) {
+  if (!t) return "";
+  const s = D.sheets[t.s];
+  const x = s.cols > 1 ? t.c / (s.cols - 1) * 100 : 0, y = s.rows > 1 ? t.r / (s.rows - 1) * 100 : 0;
+  return `background-image:url(${s.url});background-size:${s.cols * 100}% ${s.rows * 100}%;background-position:${x}% ${y}%`;
+}
+function boxesHTML(list, label) {
+  return (list || []).map((b, i) => {
+    const [y0, x0, y1, x1] = b;
+    return `<div class="pbox" style="top:${y0 * 100}%;left:${x0 * 100}%;width:${(x1 - x0) * 100}%;height:${(y1 - y0) * 100}%;transition-delay:${i * 80}ms">${i === 0 && label ? `<i>${esc(label)}</i>` : ""}</div>`;
+  }).join("");
+}
+
+/* ---------- reveal on scroll (visible at rest) ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); if (e.target.classList.contains("count")) countUp(e.target); }
+}), {threshold: 0.18});
+function watch(root = document) { $$(".dev, .rise, .count", root).forEach(el => io.observe(el)); }
+function countUp(el) {
+  if (reduce) return;
+  const to = +el.dataset.to, t0 = performance.now();
+  const step = t => { const k = Math.min(1, (t - t0) / 900); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+
+/* ---------- hero ---------- */
+function hero() {
+  $("#hero-boxes").innerHTML = boxesHTML(HERO_BOX, "HEINEKEN · placed by the agent");
+  const f = $("#hero-frame");
+  $("#hero-spot").onclick = e => { const on = !f.classList.contains("show-boxes"); f.classList.toggle("show-boxes", on); e.currentTarget.setAttribute("aria-pressed", on); };
+  $("#hero-flip").onclick = e => { const on = !f.classList.contains("flip"); f.classList.toggle("flip", on); e.currentTarget.setAttribute("aria-pressed", on); e.currentTarget.textContent = on ? "Show the v3 image" : "Show the original"; };
+}
+
+/* ---------- chapter rail + progress ---------- */
+function rail() {
+  const chs = $$("#chapters .chapter");
+  $("#rail").innerHTML = chs.map((c, i) => `<a href="#${c.id}" data-id="${c.id}"><span>${String(i + 1).padStart(2, "0")}</span><span>${esc(c.dataset.title)}</span></a>`).join("");
+  const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) $$("#rail a").forEach(a => a.classList.toggle("on", a.dataset.id === e.target.id)); }), {rootMargin: "-40% 0px -55% 0px"});
+  chs.forEach(c => ro.observe(c));
+  addEventListener("scroll", () => {
+    const h = document.documentElement, max = h.scrollHeight - innerHeight;
+    $("#progress").style.width = (max > 0 ? scrollY / max * 100 : 0) + "%";
+  }, {passive: true});
+}
+
+/* ---------- story: data-driven parts ---------- */
+function story() {
+  const C = D.condNames;
+  // classifier
+  $("#t-classify tbody").innerHTML = D.classify.map(r => `<tr><td class="mono">${r.idx}</td><td class="wrapcell">${esc(r.prompt)}</td><td><span class="pill ${r.decision}">${r.decision}</span></td><td class="wrapcell">${r.brand ? `<b>${esc(r.brand)}</b>` : esc(r.reason.replace(/^keyword gate: /, "keyword gate · "))}</td></tr>`).join("");
+  // setups
+  const bar = (k, n) => `<div style="display:flex;align-items:center;gap:10px"><div class="hbar" style="width:120px"><i style="width:${k / n * 100}%;background:var(--accent)"></i></div><span class="mono">${k} / ${n}</span></div>`;
+  const order = ["G", "A", "B", "C", "D", "E", "F"];
+  $("#t-setups tbody").innerHTML = order.map(id => D.setups.find(s => s.id === id)).filter(Boolean).map(s =>
+    `<tr class="${s.id === "G" ? "hl" : ""}"><td class="mono"><b>${s.id}</b></td><td class="wrapcell">${esc(s.label)}</td><td class="n">${s.images}</td><td>${bar(s.variants.subtle, s.n)}</td><td>${bar(s.variants.moderate_noblind, s.n)}</td><td class="n">${pct(s.median_area)}</td><td class="n">${fx(s.mean_susp)}</td><td class="n">${s.clip_d > 0 ? "+" : ""}${fx(s.clip_d, 3)}</td></tr>`).join("");
+  // small multiples
+  const scenes = [["rooftop", "Rooftop bar"], ["desk", "Office desk"], ["bbq", "Firefighter BBQ"]];
+  const LOC = ["C2_loc", "C3_loc_size", "C4_generic", "C5_front", "C6_json", "C8_crowd"];
+  const ALL = ["C1_bare", "C2_loc", "C3_loc_size", "C4_generic", "C5_front", "C6_json", "C7_inventory", "C8_crowd"];
+  const short = {C1_bare: "product only", C2_loc: "+ location", C3_loc_size: "+ size, blur", C4_generic: "no brand", C5_front: "at the front", C6_json: "JSON", C7_inventory: "props listed", C8_crowd: "among many"};
+  const panel = (sc, name, conds, val, max, fmt, hot) => {
+    const W = 320, L = 118, R = 40, rh = 22, H = conds.length * rh + 4, x = v => L + (W - L - R) * v / max;
+    let s = `<svg viewBox="0 0 ${W} ${H + 18}" role="img" aria-label="${name}">`;
+    [0, max / 2, max].forEach(t => s += `<line x1="${x(t)}" x2="${x(t)}" y1="0" y2="${H}" stroke="var(--line2)"/><text x="${x(t)}" y="${H + 14}" text-anchor="middle">${fmt(t, 1)}</text>`);
+    conds.forEach((c, i) => {
+      const v = val(sc, c), y = i * rh + 3, w = Math.max(0, x(v) - L), h = hot(sc, c);
+      s += `<g><title>${name} · ${C[c]}: ${fmt(v)}</title><text x="0" y="${y + 13}">${short[c]}</text>${w > 0 ? `<rect x="${L}" y="${y + 3}" width="${w}" height="13" rx="3" fill="${h ? "var(--accent)" : "var(--accent-soft)"}"/>` : ""}<text class="v" x="${x(v) + 5}" y="${y + 13}">${fmt(v)}</text></g>`;
+    });
+    return `<div class="panel"><h4>${name}</h4>${s}</svg></div>`;
+  };
+  $("#sm-loc").innerHTML = scenes.map(([k, n]) => panel(k, n, LOC, (sc, c) => D.probeSummary[sc][c].loc, 4, (v, t) => t ? String(v) : `${v}/4`, () => true)).join("");
+  $("#sm-lost").innerHTML = scenes.map(([k, n]) => panel(k, n, ALL, (sc, c) => D.probeSummary[sc][c].lost, 1, v => Math.round(v * 100) + "%", (sc, c) => sc === "desk" && ["C2_loc", "C3_loc_size", "C4_generic", "C5_front", "C6_json"].includes(c))).join("");
+  // instruction table
+  const by = {};
+  D.instr.forEach(r => (by[r.iid] = by[r.iid] || []).push(r));
+  $("#t-instr tbody").innerHTML = D.instrList.map(i => {
+    const rs = by[i.iid] || [], ok = rs.filter(r => r.overall === "yes").length;
+    const inst = (rs.find(r => r.overall !== "yes" && r.instead) || {}).instead || "";
+    const prom = rs.reduce((a, r) => a + (r.prom || 0), 0) / Math.max(1, rs.length);
+    return `<tr><td class="wrapcell">“${esc(i.instruction)}”<div class="muted" style="font-size:12.5px">${esc(D.sceneNames[i.scene])}</div></td><td>${esc(i.category)}</td><td><span class="pips" aria-label="${rs.map(r => r.overall).join(", ")}">${rs.map(r => `<span class="pip ${r.overall}" title="seed ${r.seed}: ${r.overall}"></span>`).join("")}</span> <span class="mono" style="font-size:12px;color:var(--muted)">${ok}/4</span></td><td class="n">${prom.toFixed(1)}</td><td class="wrapcell muted">${esc(inst)}</td></tr>`;
+  }).join("");
+  // spot gallery
+  const picks = [["P-rooftop-1234-C1_bare"], ["P-bbq-777-C8_crowd"], ["P-desk-42-C7_inventory"], ["P-bbq-5491897-C2_loc"], ["P-rooftop-42-C8_crowd"], ["P-desk-777-C1_bare"]].map(([id]) => D.probe.find(p => p.id === id)).filter(Boolean);
+  $("#spot").innerHTML = picks.map(p => `<button data-id="${p.id}" aria-pressed="false"><div class="frame"><div class="tile dev" style="position:absolute;inset:0;${tileStyle(p.tile)}"></div><div class="boxes">${boxesHTML(p.box ? [p.box] : [], p.brand.toUpperCase())}</div></div><span class="who">${esc(D.sceneNames[p.scene])} · ${esc(short[p.cond])}</span></button>`).join("");
+  $$("#spot button").forEach(b => b.onclick = () => { const f = $(".frame", b), on = !f.classList.contains("show-boxes"); f.classList.toggle("show-boxes", on); b.setAttribute("aria-pressed", on); });
+  // judged
+  const LH = D.loopHuman, tot = o => (o.pass || 0) + (o.borderline || 0) + (o.fail || 0);
+  $("#judged-stats").innerHTML = `<div class="stat good"><b>${Math.round((LH.V3.pass || 0) / tot(LH.V3) * 100)}%</b><span>v3 images I passed (${LH.V3.pass} of ${tot(LH.V3)})</span></div><div class="stat"><b>${Math.round((LH.G.pass || 0) / tot(LH.G) * 100)}%</b><span>v2 images I passed, last pilot (${LH.G.pass} of ${tot(LH.G)})</span></div><div class="stat"><b>${D.agreement.n}</b><span>images judged, automated verdicts hidden until after each vote</span></div>`;
+  const hb = h => { const n = tot(h) || 1; return `<div class="hbar" style="width:200px"><i style="width:${(h.pass || 0) / n * 100}%;background:var(--pass)"></i><i style="width:${(h.borderline || 0) / n * 100}%;background:var(--mid)"></i><i style="width:${(h.fail || 0) / n * 100}%;background:var(--fail)"></i></div>`; };
+  const cond = ALL.map(c => { const h = {pass: 0, borderline: 0, fail: 0}; D.probe.filter(p => p.cond === c).forEach(p => p.human && h[p.human]++); return [c, h]; }).sort((a, b) => b[1].pass - a[1].pass);
+  $("#t-cond tbody").innerHTML = cond.map(([c, h]) => `<tr><td>${esc(C[c])}</td><td>${hb(h)}</td><td class="n">${h.pass}</td><td class="n">${h.borderline}</td><td class="n">${h.fail}</td></tr>`).join("");
+  // ladder
+  const A = D.agreement, mk = [["Strict (last pilot)", A.strict_bfail.kappa, "var(--fail)"], ["Natural (this week)", A.natural_bfail.kappa, "var(--mid)"], ["Recalibrated*", A.recal.kappa, "var(--pass)"]];
+  $("#ladder").innerHTML = `<div class="band" style="left:20%;width:20%;background:var(--line2)"></div><div class="band" style="left:40%;width:20%;background:var(--line)"></div><div class="axis"></div>` +
+    [0, .2, .4, .6, .8, 1].map(t => `<span class="tick" style="left:${t * 100}%">${t.toFixed(1)}</span>`).join("") +
+    `<span class="tick" style="left:30%;top:90px">fair</span><span class="tick" style="left:50%;top:90px">moderate</span>` +
+    mk.map(([n, k, c], i) => `<div class="mk" style="left:${k * 100}%;--c:${c}"><span style="${i === 1 ? "bottom:auto;top:40px" : ""}"><b>κ ${k.toFixed(2)}</b>${n}</span><b></b></div>`).join("");
+  $("#judge-stats").innerHTML = `<div class="stat blue"><b>${A.susp5_pass} / ${A.susp5_n}</b><span>images I passed when the blind viewer scored them 5/5 “like an ad”</span></div><div class="stat"><b>${pct(A.natural_bfail.agree, 0)}</b><span>raw agreement, natural judge (borderline counted as fail)</span></div><div class="stat hot"><b>${A.natural_bfail.strict}</b><span>images I passed that the natural judge failed, mostly for props lost and duplicates</span></div>`;
+  // links + spend
+  const L = D.links;
+  $("#links").innerHTML = [["Placement Lightbox (judge images)", L.lightbox], ["FLUX report (Parts 1 and 2)", L.flux], ["Prompt appendix", L.prompts], ["Slide deck", L.deck], ["First pilot write-up", L.pilot], ["Research brief", L.brief]].map(([t, u]) => `<a class="btn" href="${u}" target="_blank" rel="noopener">${t} ↗</a>`).join("");
+  $("#spend-note").textContent = `OpenRouter spend to date: US$${D.spend.total.toFixed(2)} across all runs, plus Comfy Cloud GPU time for the FLUX and Qwen images.`;
+  const nImg = D.probe.length + D.instr.length + D.loops.length + 170 + 12 + 4;
+  $("#hero-count").textContent = `${nImg}+ images generated`;
+}
+
+/* ---------- compare sliders ---------- */
+function compares() {
+  $$(".compare").forEach(c => { const r = $("input", c); const set = () => c.style.setProperty("--x", r.value + "%"); r.addEventListener("input", set); set(); });
+}
+
+/* ======================= DATA ROOM ======================= */
+const TABS = [
+  ["setups", "Pilot setups"], ["classify", "Classifier"], ["probe", "Wording test"], ["instr", "Instruction test"],
+  ["loops", "Loop runs"], ["agree", "Agreement"], ["spend", "Spend"], ["prompts", "Prompts"]];
+let tab = "probe", filt = {}, sortK = null, sortD = 1, rowsNow = [];
+const verdictPill = v => `<span class="pill ${v || "none"}">${v || "–"}</span>`;
+const judgePill = a => a ? `<span class="pill ${a.pass ? "pass" : "fail"}" title="${esc(a.codes.join(", "))}">${a.pass ? "pass" : a.codes[0] ? a.codes[0].toLowerCase().replace("_", " ") : "fail"}</span>` : "–";
+const thumb = t => `<div class="tile thumb" style="${tileStyle(t)}"></div>`;
+
+const DEFS = {
+  setups: () => ({rows: D.setups, cols: [
+    ["Run", r => `<b class="mono">${r.id}</b>`, r => r.id], ["Setup", r => esc(r.label), r => r.label, "wrapcell"],
+    ["Images", r => r.images, r => r.images, "n"], ["Strict", r => `${r.variants.subtle}/${r.n}`, r => r.variants.subtle / r.n, "n"],
+    ["Strict, no blind", r => `${r.variants.subtle_noblind}/${r.n}`, r => r.variants.subtle_noblind / r.n, "n"],
+    ["Moderate", r => `${r.variants.moderate}/${r.n}`, r => r.variants.moderate / r.n, "n"],
+    ["Moderate, no blind", r => `${r.variants.moderate_noblind}/${r.n}`, r => r.variants.moderate_noblind / r.n, "n"],
+    ["Median size", r => pct(r.median_area), r => r.median_area, "n"], ["Legibility", r => fx(r.mean_leg), r => r.mean_leg, "n"],
+    ["Blind ad", r => fx(r.mean_susp), r => r.mean_susp, "n"], ["Brand named", r => r.brand_seen_pct + "%", r => r.brand_seen_pct, "n"],
+    ["CLIP Δ", r => fx(r.clip_d, 3), r => r.clip_d, "n"], ["US$", r => fx(r.usd), r => r.usd, "n"]],
+    note: "Prompts accepted per setup under four versions of the success test, re-scored offline from the saved checks. 8 prompts per setup (C and D stopped at 3)."}),
+  classify: () => ({rows: D.classify, cols: [
+    ["#", r => r.idx, r => r.idx, "n"], ["Prompt", r => esc(r.prompt), r => r.prompt, "wrapcell"], ["Decision", r => `<span class="pill ${r.decision}">${r.decision}</span>`, r => r.decision],
+    ["Brand", r => esc(r.brand || "–"), r => r.brand || ""], ["Reason", r => esc(r.reason), r => r.reason, "wrapcell"], ["Source", r => esc(r.source), r => r.source]],
+    filters: [["decision", "Decision", r => r.decision]]}),
+  probe: () => ({rows: D.probe, open: true, cols: [
+    ["", r => thumb(r.tile), null], ["Scene", r => esc(D.sceneNames[r.scene]), r => r.scene], ["Seed", r => `<span class="mono">${r.seed}</span>`, r => r.seed, "n"],
+    ["Wording", r => esc(D.condNames[r.cond]), r => r.cond], ["Location", r => r.loc && r.loc !== "na" ? `<span class="pill ${r.loc}">${r.loc}</span>` : "–", r => r.loc],
+    ["Depth", r => esc(r.depth || "–"), r => r.depth], ["Size", r => pct(r.area), r => r.area, "n"], ["Eye-pull", r => r.att ?? "–", r => r.att, "n"],
+    ["Blind ad", r => r.susp ?? "–", r => r.susp, "n"], ["Props lost", r => `${r.gone.length}/${r.ref.length}`, r => r.ref.length ? r.gone.length / r.ref.length : 0, "n"],
+    ["You", r => verdictPill(r.human), r => r.human], ["Natural", r => judgePill(r.auto && r.auto.natural), r => r.auto && r.auto.natural.pass], ["Strict", r => judgePill(r.auto && r.auto.strict), r => r.auto && r.auto.strict.pass]],
+    filters: [["scene", "Scene", r => D.sceneNames[r.scene]], ["cond", "Wording", r => D.condNames[r.cond]], ["human", "Your vote", r => r.human]],
+    note: "3 scenes × 4 seeds × 8 wordings. Measured by the vision model against the same-seed baseline; your vote from the lightbox."}),
+  instr: () => ({rows: D.instr, open: true, cols: [
+    ["", r => thumb(r.tile), null], ["Instruction", r => `“${esc(r.instruction)}”`, r => r.instruction, "wrapcell"], ["Type", r => esc(r.category), r => r.category],
+    ["Scene", r => esc(D.sceneNames[r.scene]), r => r.scene], ["Seed", r => `<span class="mono">${r.seed}</span>`, r => r.seed, "n"],
+    ["Followed", r => `<span class="pill ${r.overall}">${r.overall}</span>`, r => ({yes: 2, partly: 1, no: 0})[r.overall]],
+    ["Count", r => r.count ?? "–", r => r.count, "n"], ["Eye-pull", r => r.prom ?? "–", r => r.prom, "n"], ["Scene change", r => r.changed ?? "–", r => r.changed, "n"],
+    ["What it did instead", r => esc(r.instead), r => r.instead, "wrapcell"]],
+    filters: [["category", "Type", r => r.category], ["overall", "Followed", r => r.overall], ["scene", "Scene", r => D.sceneNames[r.scene]]],
+    note: "16 specific instructions appended to a pilot prompt, 4 seeds each. The vision model split each instruction into atomic requirements; open a row to see them."}),
+  loops: () => ({rows: D.loops, open: true, cols: [
+    ["", r => thumb(r.tile), null], ["Run", r => `<b class="mono">${r.set}</b>`, r => r.set], ["Scene", r => esc(r.scene), r => r.scene], ["Try", r => r.attempt, r => r.attempt, "n"],
+    ["Text the agent added", r => `<mark>${esc(r.ins)}</mark>`, r => r.ins, "wrapcell"], ["You", r => verdictPill(r.human), r => r.human],
+    ["Natural", r => judgePill(r.auto && r.auto.natural), r => r.auto && r.auto.natural.pass], ["Strict", r => judgePill(r.auto && r.auto.strict), r => r.auto && r.auto.strict.pass],
+    ["Size", r => pct(r.f && r.f.area), r => r.f && r.f.area, "n"], ["Blind ad", r => (r.f && r.f.susp) ?? "–", r => r.f && r.f.susp, "n"]],
+    filters: [["set", "Run", r => r.setName], ["scene", "Scene", r => r.scene], ["human", "Your vote", r => r.human]],
+    note: "Every attempt of setup G (v2 rewriter, last pilot) and v3 (this week), with the prompt sent and all three verdicts."}),
+};
+
+function renderTabs() {
+  const counts = {setups: D.setups.length, classify: D.classify.length, probe: D.probe.length, instr: D.instr.length, loops: D.loops.length, prompts: D.prompts.length};
+  $("#tabs").innerHTML = TABS.map(([k, n]) => `<button role="tab" id="tab-${k}" aria-selected="${k === tab}" data-k="${k}">${n}${counts[k] ? `<span class="c">${counts[k]}</span>` : ""}</button>`).join("");
+  $$("#tabs button").forEach(b => b.onclick = () => { tab = b.dataset.k; filt = {}; sortK = null; renderTabs(); renderPanel(); try { history.replaceState(null, "", "#data-" + tab); } catch {} });
+}
+function renderPanel() {
+  const P = $("#panel");
+  if (tab === "agree") return agreePanel(P);
+  if (tab === "spend") return spendPanel(P);
+  if (tab === "prompts") return promptsPanel(P);
+  const def = DEFS[tab]();
+  const fsel = (def.filters || []).map(([k, n, f]) => {
+    const vals = [...new Set(def.rows.map(f).filter(v => v != null))].sort();
+    return `<select id="f-${tab}-${k}" data-k="${k}" aria-label="${n}"><option value="">${n}: all</option>${vals.map(v => `<option ${filt[k] === String(v) ? "selected" : ""}>${esc(v)}</option>`).join("")}</select>`;
+  }).join("");
+  P.innerHTML = `<div class="toolbar">${fsel}<input id="q-${tab}" type="search" placeholder="Search text" value="${esc(filt.q || "")}" aria-label="Search"><span class="sp"></span><span class="count" id="count"></span><button class="btn" id="csv">Copy CSV</button></div>
+    ${def.note ? `<p class="dr-note" style="margin-bottom:12px">${def.note}</p>` : ""}
+    <div class="tbl dtable"><table><thead><tr>${def.cols.map(([n, , s, cls], i) => `<th class="${cls || ""} ${s ? "sort" : ""} ${sortK === i ? (sortD > 0 ? "asc" : "desc") : ""}" data-i="${i}">${n}</th>`).join("")}</tr></thead><tbody></tbody></table></div>`;
+  $$("select", P).forEach(s => s.onchange = () => { filt[s.dataset.k] = s.value; fill(def); });
+  $("input[type=search]", P).oninput = e => { filt.q = e.target.value; fill(def); };
+  $$("th.sort", P).forEach(th => th.onclick = () => { const i = +th.dataset.i; sortD = sortK === i ? -sortD : 1; sortK = i; renderPanel(); });
+  $("#csv").onclick = e => copyCSV(def, e.currentTarget);
+  fill(def);
+}
+function fill(def) {
+  const q = (filt.q || "").toLowerCase();
+  let rows = def.rows.filter(r => (def.filters || []).every(([k, , f]) => !filt[k] || String(f(r)) === filt[k]) && (!q || JSON.stringify(r).toLowerCase().includes(q)));
+  if (sortK != null) { const g = def.cols[sortK][2]; rows = rows.slice().sort((a, b) => { const x = g(a), y = g(b); return (x == null) - (y == null) || (x > y ? 1 : x < y ? -1 : 0) * sortD; }); }
+  rowsNow = rows;
+  $("#count").textContent = `${rows.length} of ${def.rows.length} rows`;
+  $("#panel tbody").innerHTML = rows.map((r, i) => `<tr class="${def.open ? "row" : ""}" data-i="${i}" ${def.open ? 'tabindex="0"' : ""}>${def.cols.map(([, f, , cls]) => `<td class="${cls || ""}">${f(r)}</td>`).join("")}</tr>`).join("");
+  if (def.open) $$("#panel tr.row").forEach(tr => { const go = () => openRow(rowsNow[+tr.dataset.i]); tr.onclick = go; tr.onkeydown = e => { if (e.key === "Enter") go(); }; });
+}
+function copyCSV(def, btn) {
+  const cols = def.cols.filter(c => c[2]);
+  const cell = v => { const s = v == null ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const txt = [cols.map(c => c[0]).join(","), ...rowsNow.map(r => cols.map(c => cell(c[2](r))).join(","))].join("\n");
+  navigator.clipboard.writeText(txt).then(() => { btn.textContent = "Copied"; setTimeout(() => btn.textContent = "Copy CSV", 1500); })
+    .catch(() => { btn.textContent = "Copy blocked in this view"; });
+}
+function agreePanel(P) {
+  const A = D.agreement;
+  const row = (n, k) => `<tr><td>${n}</td><td class="n">${pct(A[k + "_bpass"].agree, 0)}</td><td class="n">${fx(A[k + "_bpass"].kappa)}</td><td class="n">${pct(A[k + "_bfail"].agree, 0)}</td><td class="n">${fx(A[k + "_bfail"].kappa)}</td><td class="n">${A[k + "_bfail"].lenient}</td><td class="n">${A[k + "_bfail"].strict}</td></tr>`;
+  P.innerHTML = `<div style="display:flex;flex-direction:column;gap:18px;padding-block:18px">
+    <p class="dr-note">${A.n} images judged: ${A.humans.pass} pass, ${A.humans.borderline} borderline, ${A.humans.fail} fail. “Too lenient” = your fails the judge passed; “too strict” = your passes it failed (borderline counted as fail).</p>
+    <div class="tbl"><table><thead><tr><th>Judge</th><th class="n">Agree (b = pass)</th><th class="n">κ</th><th class="n">Agree (b = fail)</th><th class="n">κ</th><th class="n">Too lenient</th><th class="n">Too strict</th></tr></thead><tbody>
+    ${row("Strict · subtle band, blind ad ≤ 2", "strict")}${row("Natural · not blatant, not in front, props kept", "natural")}
+    <tr class="hl"><td>Recalibrated · ${esc(A.recal.note)}</td><td class="n">–</td><td class="n">–</td><td class="n">${pct(A.recal.agree, 0)}</td><td class="n">${fx(A.recal.kappa)}</td><td class="n">–</td><td class="n">–</td></tr></tbody></table></div>
+    <p class="dr-note">Blind viewer scored 5/5 “like an ad”: you passed ${A.susp5_pass} of ${A.susp5_n}.</p></div>`;
+}
+function spendPanel(P) {
+  const S = D.spend, mx = Math.max(...S.runs.map(r => r[1]));
+  const t = (rows, m) => rows.map(([k, v]) => `<tr><td class="mono">${esc(k)}</td><td><div class="hbar" style="width:220px"><i style="width:${v / m * 100}%;background:var(--accent)"></i></div></td><td class="n">$${v.toFixed(3)}</td></tr>`).join("");
+  P.innerHTML = `<div style="display:flex;flex-direction:column;gap:18px;padding-block:18px"><div class="stats"><div class="stat"><b>$${S.total.toFixed(2)}</b><span>OpenRouter, all runs</span></div></div>
+    <div class="cards" style="--n:2"><div class="tbl"><table><thead><tr><th>By run</th><th></th><th class="n">US$</th></tr></thead><tbody>${t(S.runs, mx)}</tbody></table></div>
+    <div class="tbl"><table><thead><tr><th>By task</th><th></th><th class="n">US$</th></tr></thead><tbody>${t(S.tasks, Math.max(...S.tasks.map(r => r[1])))}</tbody></table></div></div>
+    <p class="dr-note">Comfy Cloud GPU time (FLUX.2 dev and Qwen edits) is billed separately in Comfy credits.</p></div>`;
+}
+function promptsPanel(P) {
+  P.innerHTML = `<div style="display:flex;flex-direction:column;gap:10px;padding-block:18px"><p class="dr-note">The system prompt of every LLM stage, with its model and what the stage sends as the user message. Every prompt sent to the image model is in the prompt appendix (${`<a href="${D.links.prompts}" target="_blank" rel="noopener">open ↗</a>`}).</p>` +
+    D.prompts.map((p, i) => `<details class="pr"><summary><b>${esc(p.title)}</b><span class="mono">${esc(p.key)}</span><span>${esc(p.model)}</span></summary><p class="dr-note" style="margin-bottom:10px">User message: ${esc(p.user)}</p><button class="btn" data-i="${i}" style="margin-bottom:10px">Copy prompt</button><pre class="prompt" id="pr-${i}">${esc(p.text)}</pre></details>`).join("") + `</div>`;
+  $$("button[data-i]", P).forEach(b => b.onclick = () => navigator.clipboard.writeText(D.prompts[+b.dataset.i].text).then(() => { b.textContent = "Copied"; setTimeout(() => b.textContent = "Copy prompt", 1500); }).catch(() => { const r = document.createRange(); r.selectNodeContents($("#pr-" + b.dataset.i)); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selected: press ⌘C"; }));
+}
+
+/* ---------- modal ---------- */
+function openRow(r) {
+  const boxes = r.boxes || (r.box ? [r.box] : []);
+  const kv = [];
+  const add = (k, v) => { if (v != null && v !== "") kv.push(`<dt>${k}</dt><dd>${v}</dd>`); };
+  let title = "";
+  if (tab === "probe") {
+    title = `${D.sceneNames[r.scene]} · ${D.condNames[r.cond]}`;
+    add("Seed", `<span class="mono">${r.seed}</span>`); add("Prompt sent", esc(r.prompt)); add("Your vote", verdictPill(r.human));
+    add("Natural judge", `${judgePill(r.auto && r.auto.natural)} <span class="muted">${esc(((r.auto && r.auto.natural.why) || []).join(" · "))}</span>`);
+    add("Strict judge", `${judgePill(r.auto && r.auto.strict)} <span class="muted">${esc(((r.auto && r.auto.strict.why) || []).join(" · "))}</span>`);
+    add("Location", r.loc ? `${r.loc} · <span class="muted">${esc(r.loc_note || "")}</span>` : null); add("Depth / focus", `${esc(r.depth)} · ${r.focus ? "in focus" : "out of focus"}`);
+    add("Size", pct(r.area)); add("Legibility", `${r.leg}/4`); add("Eye-pull", `${r.att}/5`); add("Blind ad score", `${r.susp}/5`);
+    add("Blind viewer saw", esc(r.desc)); add("Props lost", r.gone.length ? esc(r.gone.join(", ")) : "none"); add("Pixels changed", pct(r.pix));
+  } else if (tab === "instr") {
+    title = `“${r.instruction}”`;
+    add("Scene · seed", `${esc(D.sceneNames[r.scene])} · <span class="mono">${r.seed}</span>`); add("Followed", `<span class="pill ${r.overall}">${r.overall}</span>`);
+    add("Requirements", (r.requirements || []).map(q => `<div class="req"><span class="pill ${q.met}">${q.met}</span><span>${esc(q.req)} <span class="muted">· ${esc(q.evidence)}</span></span></div>`).join(""));
+    add("Did instead", esc(r.instead)); add("Count", r.count); add("Eye-pull", `${r.prom}/5`); add("Scene change", `${r.changed}/5`); add("Prompt sent", esc(r.prompt));
+  } else {
+    title = `${r.setName} · ${r.scene} · attempt ${r.attempt}`;
+    const p = esc(r.prompt), ins = esc(r.ins.split(" … ")[0] || "");
+    add("Prompt sent", ins && p.includes(ins) ? p.replace(ins, `<mark>${ins}</mark>`) : p); add("Your vote", verdictPill(r.human));
+    add("Natural judge", `${judgePill(r.auto && r.auto.natural)} <span class="muted">${esc(((r.auto && r.auto.natural.why) || []).join(" · "))}</span>`);
+    add("Strict judge", `${judgePill(r.auto && r.auto.strict)} <span class="muted">${esc(((r.auto && r.auto.strict.why) || []).join(" · "))}</span>`);
+    if (r.f) { add("Size", pct(r.f.area)); add("Legibility / eye-pull", `${r.f.leg}/4 · ${r.f.att}/5`); add("Blind ad score", `${r.f.susp}/5`); add("Blind viewer saw", esc(r.f.desc)); add("Props lost", r.f.gone.length ? esc(r.f.gone.join(", ")) : "none"); }
+    add("Repair feedback", esc(r.feedback)); add("Anchor (v3)", esc(r.anchor));
+  }
+  $("#modal-root").innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="sheet">
+    <div class="imgs"><div class="pair"><figure><div class="big frame" id="m-img"><div class="tile" style="position:absolute;inset:0;${tileStyle(r.tile)}"></div><div class="boxes">${boxesHTML(boxes, (r.brand || "product").toUpperCase())}</div></div><figcaption><span class="tag">with product</span></figcaption></figure>
+    <figure><div class="big frame"><div class="tile" style="position:absolute;inset:0;${tileStyle(r.base)}"></div></div><figcaption><span class="tag">baseline · same seed</span></figcaption></figure></div>
+    ${boxes.length ? `<button class="btn" id="m-spot" aria-pressed="false">◻︎ Show where the product is</button>` : ""}</div>
+    <div class="info"><button class="close" id="m-close">Close ✕</button><h3>${esc(title)}</h3><dl class="kv">${kv.join("")}</dl></div></div></div>`;
+  const close = () => { $("#modal-root").innerHTML = ""; removeEventListener("keydown", onKey); };
+  const onKey = e => { if (e.key === "Escape") close(); };
+  addEventListener("keydown", onKey);
+  $(".modal").onclick = e => { if (e.target.classList.contains("modal")) close(); };
+  $("#m-close").onclick = close; $("#m-close").focus();
+  const sb = $("#m-spot"); if (sb) sb.onclick = () => { const f = $("#m-img"), on = !f.classList.contains("show-boxes"); f.classList.toggle("show-boxes", on); sb.setAttribute("aria-pressed", on); };
+}
+
+/* ---------- routing ---------- */
+function route() {
+  const h = location.hash.slice(1);
+  const data = h === "data" || h.startsWith("data-");
+  $("#view-story").hidden = data; $("#view-data").hidden = !data;
+  $("#nav-story").toggleAttribute("aria-current", !data); $("#nav-data").toggleAttribute("aria-current", data);
+  if (!D) return;
+  if (data) {
+    const t = h.startsWith("data-") ? h.slice(5) : null;
+    if (t && TABS.some(x => x[0] === t)) tab = t;
+    renderTabs(); renderPanel(); scrollTo({top: 0});
+  }
+}
+addEventListener("hashchange", route);
+
+(async () => {
+  hero(); rail(); compares(); watch();
+  try { D = await (await fetch("data.json")).json(); }
+  catch (e) { $("#chapters").insertAdjacentHTML("afterbegin", `<p class="dr-note">The data file didn't load, so the charts and the data room are empty. Reload the page to try again.</p>`); return; }
+  story(); watch(); route();
+})();
+</script>

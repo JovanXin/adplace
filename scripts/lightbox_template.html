@@ -1,0 +1,527 @@
+<title>Placement Lightbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#e9ebee; --surface:#f8f9fa; --sunk:#dde0e5; --ink:#15181c; --muted:#59616c; --line:#c9ced6;
+  --accent:#2c4f86; --accent-ink:#ffffff; --mark:#f3dd6b; --mark-ink:#15181c;
+  --pass:#237a4b; --pass-bg:#d7eee0; --mid:#a86a12; --mid-bg:#f6e7c9; --fail:#b8322a; --fail-bg:#f6d9d6;
+  --shadow:0 1px 2px rgba(20,30,45,.08),0 6px 20px rgba(20,30,45,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#101215; --surface:#181b20; --sunk:#0b0d10; --ink:#e7e9ec; --muted:#98a0ab; --line:#2c3139;
+    --accent:#8fb0e6; --accent-ink:#0e1420; --mark:#6b5d1c; --mark-ink:#fff6cf;
+    --pass:#6fd09a; --pass-bg:#16301f; --mid:#e7b35a; --mid-bg:#342712; --fail:#f08a80; --fail-bg:#3a1a18;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#101215; --surface:#181b20; --sunk:#0b0d10; --ink:#e7e9ec; --muted:#98a0ab; --line:#2c3139;
+  --accent:#8fb0e6; --accent-ink:#0e1420; --mark:#6b5d1c; --mark-ink:#fff6cf;
+  --pass:#6fd09a; --pass-bg:#16301f; --mid:#e7b35a; --mid-bg:#342712; --fail:#f08a80; --fail-bg:#3a1a18;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 "IBM Plex Sans",system-ui,-apple-system,sans-serif;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+h1,h2,h3{font-family:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif;text-wrap:balance;margin:0}
+h1{font-size:22px;font-weight:600;letter-spacing:.01em}
+h2{font-size:17px;font-weight:600}
+h3{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+button,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.brandline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brandline .sub{color:var(--muted);font-size:13px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-left:auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;padding:5px 10px;font-size:13px;color:var(--muted)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+select{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:5px 8px;font-size:13px;max-width:100%}
+.progress{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.bar{width:120px;height:6px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.store{font-size:12px;padding:2px 8px;border-radius:10px;background:var(--sunk);color:var(--muted)}
+.store.ok{background:var(--pass-bg);color:var(--pass)}
+.store.warn{background:var(--mid-bg);color:var(--mid)}
+
+@media (max-width:760px){header.top{position:static}}
+.view[hidden]{display:none!important}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+@media (max-width:980px){.stage{grid-template-columns:minmax(0,1fr)}}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:640px){.pair{grid-template-columns:1fr}}
+figure{margin:0;display:flex;flex-direction:column;gap:6px}
+figure .frame{position:relative;background:var(--sunk);border-radius:6px;overflow:hidden;aspect-ratio:1/1;max-width:100%}
+figure img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+figure .frame img.under{position:absolute;inset:0;z-index:0}
+figure .frame img.main{position:relative;z-index:1}
+figure .frame.flip img.main{opacity:0}
+figcaption{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
+figcaption b{color:var(--ink);font-weight:600}
+.hint{font-size:12px;color:var(--muted)}
+kbd{font-family:"IBM Plex Mono",monospace;font-size:11px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 4px;background:var(--surface);color:var(--muted)}
+
+.prompts{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.prompts .row{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px}
+.prompts .k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-top:2px}
+.prompts .v{overflow-wrap:anywhere}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 2px;border-radius:2px}
+.json{font-family:"IBM Plex Mono",monospace;font-size:12px;white-space:pre-wrap}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.meta{display:flex;flex-direction:column;gap:2px}
+.meta .set{font-size:12px;color:var(--muted)}
+.verdicts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.vbtn{border:1.5px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:600}
+.vbtn small{font-weight:400;font-size:11px;color:var(--muted)}
+.vbtn.pass[aria-pressed="true"]{background:var(--pass-bg);border-color:var(--pass);color:var(--pass)}
+.vbtn.mid[aria-pressed="true"]{background:var(--mid-bg);border-color:var(--mid);color:var(--mid)}
+.vbtn.fail[aria-pressed="true"]{background:var(--fail-bg);border-color:var(--fail);color:var(--fail)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:14px;padding:3px 10px;font-size:12px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+textarea{width:100%;min-height:58px;resize:vertical;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:8px;font-size:13px}
+.nav{display:flex;gap:8px}
+.nav button{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:7px;padding:7px 8px;font-size:13px}
+.nav button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.auto{border-top:1px dashed var(--line);padding-top:12px;display:flex;flex-direction:column;gap:10px}
+.auto .sealed{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;justify-content:space-between}
+.linkbtn{border:0;background:none;color:var(--accent);padding:0;font-size:13px;text-decoration:underline;text-underline-offset:2px}
+.judge{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:start;font-size:13px}
+.pill{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:1px 7px;border-radius:9px}
+.pill.pass{background:var(--pass-bg);color:var(--pass)} .pill.fail{background:var(--fail-bg);color:var(--fail)} .pill.mid{background:var(--mid-bg);color:var(--mid)}
+.codes{color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.fact{background:var(--bg);border-radius:6px;padding:6px 8px;display:flex;flex-direction:column}
+.fact span{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.fact b{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:14px}
+.blind{font-size:13px;color:var(--muted)}
+.blind q{color:var(--ink)}
+
+.strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:6px}
+.thumb{position:relative;border:2px solid transparent;border-radius:5px;padding:0;background:var(--sunk);overflow:hidden;aspect-ratio:1/1}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb.cur{border-color:var(--accent)}
+.thumb::after{content:"";position:absolute;right:3px;top:3px;width:9px;height:9px;border-radius:50%;background:transparent}
+.thumb.v-pass::after{background:var(--pass)} .thumb.v-borderline::after{background:var(--mid)} .thumb.v-fail::after{background:var(--fail)}
+.striphead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+
+.summary{display:flex;flex-direction:column;gap:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;text-align:right}
+th.n{text-align:right}
+.stack{display:flex;height:10px;border-radius:3px;overflow:hidden;min-width:120px;background:var(--sunk)}
+.stack i{display:block;height:100%}
+.note{font-size:13px;color:var(--muted);max-width:70ch}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.thumb,.vbtn,.chip{transition:background .12s,border-color .12s}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brandline">
+      <h1>Placement Lightbox</h1>
+      <span class="sub">Would you accept this image as a natural product placement?</span>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="View">
+        <button id="tab-judge" aria-pressed="true">Judge</button>
+        <button id="tab-summary" aria-pressed="false">Agreement</button>
+      </div>
+      <select id="f-set" aria-label="Image set"></select>
+      <select id="f-group" aria-label="Scene"></select>
+      <select id="f-state" aria-label="Show">
+        <option value="todo">Not yet judged</option>
+        <option value="all">All images</option>
+        <option value="done">Judged</option>
+        <option value="disagree">Judged, disagrees with natural judge</option>
+      </select>
+      <div class="progress"><div class="bar"><i id="pbar" style="width:0"></i></div><span id="pcount" class="mono">0 / 0</span></div>
+      <span id="store" class="store">Connecting…</span>
+    </div>
+  </header>
+
+  <section id="v-judge" class="view">
+    <div class="stage">
+      <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+        <div class="pair">
+          <figure>
+            <div class="frame"><img id="im-base" alt="Baseline: original prompt, same seed"></div>
+            <figcaption><span><b>Baseline</b> · original prompt, same seed</span></figcaption>
+          </figure>
+          <figure>
+            <div class="frame" id="frame-main"><img id="im-under" class="under" alt=""><img id="im-main" class="main" alt="Image with the product placed"></div>
+            <figcaption><span><b id="cap-main">With product</b></span><span class="hint">hold <kbd>B</kbd> or press on the image to flip to baseline</span></figcaption>
+          </figure>
+        </div>
+        <div class="prompts">
+          <div class="row"><div class="k">Original</div><div class="v" id="p-orig"></div></div>
+          <div class="row"><div class="k">Sent</div><div class="v" id="p-sent"></div></div>
+        </div>
+      </div>
+
+      <aside class="panel" aria-label="Your verdict">
+        <div class="meta">
+          <span class="set" id="m-set"></span>
+          <h2 id="m-title"></h2>
+        </div>
+        <div>
+          <h3 style="margin-bottom:8px">Your verdict</h3>
+          <div class="verdicts">
+            <button class="vbtn pass" data-v="pass" aria-pressed="false">Pass<small><kbd>1</kbd></small></button>
+            <button class="vbtn mid" data-v="borderline" aria-pressed="false">Borderline<small><kbd>2</kbd></small></button>
+            <button class="vbtn fail" data-v="fail" aria-pressed="false">Fail<small><kbd>3</kbd></small></button>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom:8px">Why (optional)</h3>
+          <div class="chips" id="chips"></div>
+        </div>
+        <textarea id="note" placeholder="Note, e.g. 'fine, but the can is too clean'"></textarea>
+        <div class="nav">
+          <button id="b-prev">← Prev</button>
+          <button id="b-next">Next →</button>
+          <button id="b-todo" class="primary">Next unjudged <kbd style="background:transparent;color:inherit;border-color:currentColor">N</kbd></button>
+        </div>
+        <label class="hint" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="adv" checked> Jump to the next unjudged image after a Pass</label>
+
+        <div class="auto" id="auto"></div>
+      </aside>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="striphead"><h3 id="strip-title">Images</h3><span class="hint">Dot colour = your verdict</span></div>
+      <div class="strip" id="strip"></div>
+    </div>
+  </section>
+
+  <section id="v-summary" class="view summary" hidden></section>
+</div>
+
+<script>
+const ITEMS = /*__ITEMS__*/[];
+const REASONS = [
+  ["prominent","Too prominent / hero"],["invisible","Can't find the product"],["ad","Looks like an ad"],
+  ["scene","Scene damaged / props lost"],["unnatural","Pasted-in / wrong scale"],["brand","Garbled or wrong brand"],
+  ["dupes","Duplicates"],["quality","Image quality"],["good","Nicely done"]
+];
+const byId = Object.fromEntries(ITEMS.map(i => [i.id, i]));
+let labels = {};           // id -> {verdict, reasons, note, t}
+let db = null, mode = "local";
+let cur = null, list = [], revealed = false;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// ---------- storage ----------
+function loadLocal(){ try { return JSON.parse(localStorage.getItem("lightbox-labels") || "{}"); } catch { return {}; } }
+function saveLocal(){ try { localStorage.setItem("lightbox-labels", JSON.stringify(labels)); } catch {} }
+function setStore(){
+  const el = $("#store");
+  el.className = "store " + (mode === "db" ? "ok" : "warn");
+  el.textContent = mode === "db" ? "Saved to the shared store" : "Saving in this browser only";
+  el.title = mode === "db" ? "Claude can read these labels" : "The shared store is unavailable in this view; use Agreement → Copy labels";
+}
+async function persist(id){
+  const l = labels[id];
+  saveLocal();
+  if (mode !== "db") return;
+  try {
+    if (l) await db.collection("labels").doc(id).set(l);
+    else await db.collection("labels").doc(id).delete();
+  } catch (e) {
+    if (e && e.code === "invalid_argument") { mode = "local"; setStore(); }
+    else { try { await new Promise(r => setTimeout(r, 400 + Math.random()*400)); if (l) await db.collection("labels").doc(id).set(l); } catch {} }
+  }
+}
+
+// ---------- filtering ----------
+function matches(i){
+  const s = $("#f-set").value, g = $("#f-group").value, st = $("#f-state").value, l = labels[i.id];
+  if (s !== "*" && i.set !== s) return false;
+  if (g !== "*" && i.group !== g) return false;
+  if (st === "todo" && l) return false;
+  if (st === "done" && !l) return false;
+  if (st === "disagree" && (!l || (l.verdict === "pass") === i.auto.natural.pass || l.verdict === "borderline")) return false;
+  return true;
+}
+function fillFilters(){
+  const sets = [...new Map(ITEMS.map(i => [i.set, i.setName])).entries()];
+  $("#f-set").innerHTML = `<option value="*">All sets (${ITEMS.length})</option>` +
+    sets.map(([k,n]) => `<option value="${k}">${esc(n)} (${ITEMS.filter(i=>i.set===k).length})</option>`).join("");
+  fillGroups();
+}
+function fillGroups(){
+  const s = $("#f-set").value;
+  const gs = [...new Set(ITEMS.filter(i => s === "*" || i.set === s).map(i => i.group))];
+  const prev = $("#f-group").value;
+  $("#f-group").innerHTML = `<option value="*">All scenes</option>` + gs.map(g => `<option>${esc(g)}</option>`).join("");
+  if (gs.includes(prev)) $("#f-group").value = prev;
+}
+function refreshList(keep=true){
+  list = ITEMS.filter(matches);
+  if (!keep || !cur || !list.includes(cur)) {
+    // keep showing the current item even if it just left the filter (e.g. judged under "Not yet judged")
+    if (!(keep && cur && ITEMS.includes(cur) && labels[cur.id])) cur = list[0] || null;
+  }
+  renderStrip(); renderProgress();
+}
+
+// ---------- rendering ----------
+function highlight(sent, ins){
+  if (!ins || ins.startsWith("(")) return esc(sent);
+  let html = esc(sent);
+  ins.split(" … ").map(s => s.trim().replace(/^[,;]\s*|[,;]$/g, "")).filter(s => s.length > 1)
+     .sort((a,b) => b.length - a.length)
+     .forEach(sp => { const e = esc(sp); const k = html.indexOf(e); if (k >= 0) html = html.slice(0,k) + "<mark>" + e + "</mark>" + html.slice(k + e.length); });
+  return html;
+}
+function renderItem(){
+  const i = cur;
+  document.querySelectorAll("#v-judge .stage, #v-judge .card").forEach(el => el.hidden = !i);
+  if (!i) { $("#strip-title").textContent = "Nothing left under this filter"; return; }
+  $("#im-base").src = i.base; $("#im-under").src = i.base; $("#im-main").src = i.img;
+  $("#cap-main").textContent = `With ${i.brand}`;
+  $("#p-orig").textContent = i.orig;
+  const sent = $("#p-sent");
+  if (i.sent.trim().startsWith("{")) { sent.className = "v json"; try { sent.textContent = JSON.stringify(JSON.parse(i.sent), null, 1); } catch { sent.textContent = i.sent; } }
+  else { sent.className = "v"; sent.innerHTML = highlight(i.sent, i.ins); }
+  $("#m-set").textContent = i.setName;
+  $("#m-title").textContent = `${i.group} · ${i.label}`;
+  const l = labels[i.id] || {};
+  document.querySelectorAll(".vbtn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === l.verdict)));
+  $("#chips").innerHTML = REASONS.map(([k,t]) => `<button class="chip" data-r="${k}" aria-pressed="${(l.reasons||[]).includes(k)}">${t}</button>`).join("");
+  $("#note").value = l.note || "";
+  revealed = !!l.verdict || revealed === "always";
+  renderAuto();
+  renderStrip();
+}
+function renderAuto(){
+  const i = cur, el = $("#auto"), l = labels[i.id];
+  if (!l && revealed !== "always") {
+    el.innerHTML = `<div class="sealed"><span>Automated verdicts are hidden until you vote, so they don't anchor you.</span>
+      <button class="linkbtn" id="peek">Show now</button></div>`;
+    $("#peek").onclick = () => { revealed = "always"; renderAuto(); };
+    return;
+  }
+  const f = i.f, pct = v => v == null ? "–" : (v*100).toFixed(1) + "%";
+  const j = (name, a, note) => `<span class="pill ${a.pass ? "pass" : "fail"}">${a.pass ? "pass" : "fail"}</span>
+      <div><b>${name}</b> <span class="codes">${note}</span>${a.codes.length ? `<div class="codes">${esc(a.why.join(" · "))}</div>` : ""}</div>`;
+  el.innerHTML = `<h3>Automated</h3>
+    <div class="judge">
+      ${j("Natural judge", i.auto.natural, "(your rule: fails only if blatant, right in front, on the subject, or scene props lost)")}
+      ${j("Strict judge", i.auto.strict, "(last pilot: subtle band, blind ad-suspicion ≤ 2)")}
+    </div>
+    <div class="facts">
+      <div class="fact"><span>Size</span><b>${pct(f.area)}</b></div>
+      <div class="fact"><span>Legible</span><b>${f.leg ?? "–"}/4</b></div>
+      <div class="fact"><span>Eye-pull</span><b>${f.att ?? "–"}/5</b></div>
+      <div class="fact"><span>Blind ad</span><b>${f.susp ?? "–"}/5</b></div>
+    </div>
+    ${f.ref.length ? `<div class="codes">Baseline props gone: ${f.gone.length ? esc(f.gone.join(", ")) : "none"} <span>(of ${f.ref.length}: ${esc(f.ref.join(", "))})</span></div>` : ""}
+    <div class="blind">Blind viewer (not told about any product): <q>${esc(f.desc)}</q>${f.seen.length ? ` Brands noticed: ${esc(f.seen.join(", "))}.` : ""}</div>`;
+}
+function renderStrip(){
+  $("#strip-title").textContent = `${list.length} image${list.length === 1 ? "" : "s"} under this filter`;
+  $("#strip").innerHTML = list.map(i => {
+    const l = labels[i.id];
+    return `<button class="thumb ${i === cur ? "cur" : ""} ${l ? "v-" + l.verdict : ""}" data-id="${i.id}" title="${esc(i.group + " · " + i.label)}"><img loading="lazy" src="${i.img}" alt=""></button>`;
+  }).join("");
+}
+function renderProgress(){
+  const n = ITEMS.length, d = ITEMS.filter(i => labels[i.id]).length;
+  $("#pbar").style.width = (100 * d / Math.max(1, n)) + "%";
+  $("#pcount").textContent = `${d} / ${n}`;
+}
+
+// ---------- actions ----------
+function setVerdict(v){
+  if (!cur) return;
+  const id = cur.id, prev = labels[id] || {reasons: [], note: ""};
+  labels[id] = {...prev, verdict: v, t: Date.now(), set: cur.set, group: cur.group, cond: cur.cond || null};
+  persist(id);
+  revealed = true;
+  renderItem(); renderProgress();
+  if (v === "pass" && $("#adv").checked) setTimeout(nextTodo, 350);
+}
+function toggleReason(r){
+  if (!cur) return;
+  const id = cur.id, l = labels[id] || {verdict: null, reasons: [], note: ""};
+  const rs = new Set(l.reasons || []); rs.has(r) ? rs.delete(r) : rs.add(r);
+  labels[id] = {...l, reasons: [...rs], t: Date.now(), set: cur.set, group: cur.group, cond: cur.cond || null};
+  if (!labels[id].verdict) labels[id].verdict = r === "good" ? "pass" : "fail";
+  persist(id); renderItem(); renderProgress();
+}
+function saveNote(){
+  if (!cur) return;
+  const id = cur.id, v = $("#note").value.trim(), l = labels[id];
+  if (!l && !v) return;
+  if (l && (l.note || "") === v) return;
+  labels[id] = {...(l || {verdict: "borderline", reasons: []}), note: v, t: Date.now(), set: cur.set, group: cur.group, cond: cur.cond || null};
+  persist(id); renderProgress(); renderStrip();
+}
+function go(delta){
+  saveNote();
+  const L = list.length ? list : ITEMS;
+  let k = L.indexOf(cur);
+  if (k < 0) { const all = ITEMS.indexOf(cur); k = L.findIndex(i => ITEMS.indexOf(i) > all) - (delta > 0 ? 1 : 0); }
+  cur = L[(k + delta + L.length) % L.length] || null; revealed = false; renderItem();
+}
+function nextTodo(){
+  saveNote();
+  const start = Math.max(0, ITEMS.indexOf(cur));
+  const order = ITEMS.slice(start + 1).concat(ITEMS.slice(0, start + 1));
+  const s = $("#f-set").value, g = $("#f-group").value;
+  const nx = order.find(i => !labels[i.id] && (s === "*" || i.set === s) && (g === "*" || i.group === g));
+  if (nx) { cur = nx; revealed = false; refreshList(true); renderItem(); }
+  else { refreshList(false); renderItem(); }
+}
+
+// ---------- agreement ----------
+function kappa(pairs){
+  const n = pairs.length; if (!n) return null;
+  const po = pairs.filter(([a,b]) => a === b).length / n;
+  const pa = pairs.filter(([a]) => a).length / n, pb = pairs.filter(([,b]) => b).length / n;
+  const pe = pa*pb + (1-pa)*(1-pb);
+  return pe === 1 ? null : (po - pe) / (1 - pe);
+}
+function renderSummary(){
+  const J = ITEMS.filter(i => labels[i.id]?.verdict);
+  const el = $("#v-summary");
+  if (!J.length) { el.innerHTML = `<div class="card empty">No verdicts yet. Judge a few images and the agreement numbers appear here.</div>` + exportCard(); bindExport(); return; }
+  const row = (name, key) => {
+    const out = [["borderline counts as pass", v => v !== "fail"], ["borderline counts as fail", v => v === "pass"]].map(([, h]) => {
+      const pairs = J.map(i => [h(labels[i.id].verdict), i.auto[key].pass]);
+      const agree = pairs.filter(([a,b]) => a === b).length;
+      const k = kappa(pairs);
+      return `<td class="n">${(100*agree/pairs.length).toFixed(0)}%</td><td class="n">${k == null ? "–" : k.toFixed(2)}</td>`;
+    }).join("");
+    const fp = J.filter(i => labels[i.id].verdict === "fail" && i.auto[key].pass).length;
+    const fn = J.filter(i => labels[i.id].verdict === "pass" && !i.auto[key].pass).length;
+    return `<tr><td>${name}</td>${out}<td class="n">${fp}</td><td class="n">${fn}</td></tr>`;
+  };
+  const dist = arr => {
+    const c = {pass:0,borderline:0,fail:0}; arr.forEach(i => c[labels[i.id].verdict]++);
+    const n = arr.length || 1;
+    return `<div class="stack" title="${c.pass} pass · ${c.borderline} borderline · ${c.fail} fail">
+      <i style="width:${100*c.pass/n}%;background:var(--pass)"></i><i style="width:${100*c.borderline/n}%;background:var(--mid)"></i><i style="width:${100*c.fail/n}%;background:var(--fail)"></i></div>`;
+  };
+  const groupRows = (keyFn, keys) => keys.map(k => {
+    const arr = J.filter(i => keyFn(i) === k); if (!arr.length) return "";
+    const c = v => arr.filter(i => labels[i.id].verdict === v).length;
+    const nat = arr.filter(i => i.auto.natural.pass).length;
+    return `<tr><td>${esc(k)}</td><td class="n">${arr.length}</td><td class="n">${c("pass")}</td><td class="n">${c("borderline")}</td><td class="n">${c("fail")}</td><td>${dist(arr)}</td><td class="n">${nat}</td></tr>`;
+  }).join("");
+  const sets = [...new Map(ITEMS.map(i => [i.setName, 1])).keys()];
+  const conds = [...new Set(ITEMS.filter(i => i.cond).map(i => i.label.split(" · seed")[0]))].sort();
+  const reasons = {}; J.forEach(i => (labels[i.id].reasons || []).forEach(r => reasons[r] = (reasons[r]||0) + 1));
+  el.innerHTML = `
+    <div class="cards">
+      <div class="card"><h2>Do the automated judges agree with you?</h2>
+        <p class="note">${J.length} image${J.length===1?"":"s"} judged. κ is Cohen's kappa (0 = chance, 1 = perfect). "Judge too lenient" counts your Fails the judge passed; "too strict" counts your Passes it failed.</p>
+        <div class="tbl"><table><thead><tr><th>Judge</th><th class="n">Agree</th><th class="n">κ</th><th class="n">Agree</th><th class="n">κ</th><th class="n">Too lenient</th><th class="n">Too strict</th></tr>
+          <tr><th></th><th class="n" colspan="2">borderline = pass</th><th class="n" colspan="2">borderline = fail</th><th></th><th></th></tr></thead>
+        <tbody>${row("Natural judge (session 2)", "natural")}${row("Strict judge (last pilot)", "strict")}</tbody></table></div>
+      </div>
+      <div class="card"><h2>Your reasons</h2>
+        <div class="tbl"><table><tbody>${Object.entries(reasons).sort((a,b)=>b[1]-a[1]).map(([r,n]) => `<tr><td>${esc((REASONS.find(x=>x[0]===r)||[,r])[1])}</td><td class="n">${n}</td></tr>`).join("") || `<tr><td class="note">No reasons ticked yet</td></tr>`}</tbody></table></div>
+      </div>
+    </div>
+    <div class="card"><h2>By image set</h2>
+      <div class="tbl"><table><thead><tr><th>Set</th><th class="n">Judged</th><th class="n">Pass</th><th class="n">Borderline</th><th class="n">Fail</th><th></th><th class="n">Natural judge passes</th></tr></thead>
+      <tbody>${groupRows(i => i.setName, sets)}</tbody></table></div></div>
+    <div class="card"><h2>FLUX probe, by prompt condition</h2>
+      <p class="note">Same scenes and seeds, only the prompt wording changes. This shows which phrasing gives placements you would accept.</p>
+      <div class="tbl"><table><thead><tr><th>Condition</th><th class="n">Judged</th><th class="n">Pass</th><th class="n">Borderline</th><th class="n">Fail</th><th></th><th class="n">Natural judge passes</th></tr></thead>
+      <tbody>${groupRows(i => i.cond ? i.label.split(" · seed")[0] : null, conds) || `<tr><td class="note" colspan="7">No probe images judged yet</td></tr>`}</tbody></table></div></div>
+    ${exportCard()}`;
+  bindExport();
+}
+function exportCard(){
+  return `<div class="card"><h2>Labels</h2><p class="note">${mode === "db" ? "Labels save to this page's shared store as you go, and Claude reads them from there." : "This view can't reach the shared store, so labels live in this browser. Copy them and paste them to Claude."}</p>
+    <div class="nav" style="max-width:360px"><button id="b-copy">Copy labels as JSON</button></div><textarea id="exp" hidden readonly></textarea></div>`;
+}
+function bindExport(){
+  const b = $("#b-copy"); if (!b) return;
+  b.onclick = async () => {
+    const txt = JSON.stringify(labels);
+    try { await navigator.clipboard.writeText(txt); b.textContent = "Copied"; }
+    catch { const t = $("#exp"); t.hidden = false; t.value = txt; t.select(); b.textContent = "Select-all and copy the box below"; }
+  };
+}
+
+// ---------- wiring ----------
+function showTab(t){
+  $("#tab-judge").setAttribute("aria-pressed", String(t === "judge"));
+  $("#tab-summary").setAttribute("aria-pressed", String(t === "summary"));
+  $("#v-judge").hidden = t !== "judge"; $("#v-summary").hidden = t !== "summary";
+  if (t === "summary") renderSummary();
+}
+$("#tab-judge").onclick = () => showTab("judge");
+$("#tab-summary").onclick = () => showTab("summary");
+$("#f-set").onchange = () => { fillGroups(); refreshList(false); renderItem(); };
+$("#f-group").onchange = () => { refreshList(false); renderItem(); };
+$("#f-state").onchange = () => { refreshList(false); renderItem(); };
+document.querySelectorAll(".vbtn").forEach(b => b.onclick = () => setVerdict(b.dataset.v));
+$("#chips").onclick = e => { const b = e.target.closest(".chip"); if (b) toggleReason(b.dataset.r); };
+$("#note").addEventListener("blur", saveNote);
+$("#b-prev").onclick = () => go(-1);
+$("#b-next").onclick = () => go(1);
+$("#b-todo").onclick = nextTodo;
+$("#strip").onclick = e => { const b = e.target.closest(".thumb"); if (b) { saveNote(); cur = byId[b.dataset.id]; revealed = false; renderItem(); window.scrollTo({top: 0, behavior: "smooth"}); } };
+const fm = $("#frame-main");
+const flip = on => fm.classList.toggle("flip", on);
+fm.addEventListener("pointerdown", () => flip(true));
+["pointerup","pointerleave","pointercancel"].forEach(ev => fm.addEventListener(ev, () => flip(false)));
+document.addEventListener("keydown", e => {
+  if (e.target.matches("textarea,select,input")) return;
+  if (e.key === "1") setVerdict("pass");
+  else if (e.key === "2") setVerdict("borderline");
+  else if (e.key === "3") setVerdict("fail");
+  else if (e.key === "ArrowRight") go(1);
+  else if (e.key === "ArrowLeft") go(-1);
+  else if (e.key === "n" || e.key === "N") nextTodo();
+  else if (e.key === "b" || e.key === "B") flip(true);
+});
+document.addEventListener("keyup", e => { if (e.key === "b" || e.key === "B") flip(false); });
+
+// ---------- boot ----------
+labels = loadLocal();
+fillFilters(); refreshList(false); renderItem(); setStore();
+(async () => {
+  try {
+    db = window.claude && window.claude.use ? await window.claude.use("db") : null;
+  } catch { db = null; }
+  if (!db) { mode = "local"; setStore(); return; }
+  mode = "db"; setStore();
+  const local = {...labels};
+  let first = true;
+  db.collection("labels").onSnapshot(snap => {
+    const remote = {};
+    snap.docs.forEach(d => { if (d.exists) remote[d.id] = d.data(); });
+    if (first) {
+      first = false;
+      // push anything judged offline that the store doesn't have yet
+      Object.entries(local).forEach(([id, l]) => { if (!remote[id] && byId[id]) { remote[id] = l; db.collection("labels").doc(id).set(l).catch(() => {}); } });
+    }
+    labels = remote; saveLocal();
+    renderProgress(); renderStrip();
+    if (cur) { const l = labels[cur.id] || {}; document.querySelectorAll(".vbtn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === l.verdict))); }
+    if (!$("#v-summary").hidden) renderSummary();
+  }, err => { mode = "local"; setStore(); });
+})();
+</script>

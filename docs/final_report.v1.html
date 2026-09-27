@@ -1,0 +1,778 @@
+<title>adplace Pilot Findings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{--paper:#F4F5F2;--card:#FFFFFF;--ink:#1C2321;--muted:#5D6864;--rule:#D8DDD8;--accent:#1F5F8B;--accent-bg:#E3EDF4;--mark:#FFE36E;--mark-ink:#1C2321;
+--bad:#A8322A;--bad-bg:#F8E4E1;--ok:#23734A;--ok-bg:#E1F2E8;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--band:#8A918E26;--band-line:#6f7773;
+--f-head:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"Source Serif 4",Georgia,"Times New Roman",serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;--mark:#6B5A12;--mark-ink:#FFF3C2;
+--bad:#F09A90;--bad-bg:#3A1F1C;--ok:#7FD1A3;--ok-bg:#1D3326;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--band:#9AA5A022;--band-line:#9AA5A0}}
+:root[data-theme="dark"]{color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;--mark:#6B5A12;--mark-ink:#FFF3C2;
+--bad:#F09A90;--bad-bg:#3A1F1C;--ok:#7FD1A3;--ok-bg:#1D3326;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--band:#9AA5A022;--band-line:#9AA5A0}
+body{background:var(--paper);color:var(--ink);font:17px/1.6 var(--f-body)}
+.wrap{max-width:960px;margin:0 auto;padding-inline:20px;padding-block:40px 80px;display:grid;gap:48px}
+header{display:grid;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:26px}
+.eyebrow,.lbl{font:600 .72rem/1.2 var(--f-head);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+h1,h2,h3{font-family:var(--f-head);font-weight:600;text-wrap:balance;margin:0;letter-spacing:-.005em}
+h1{font-size:2.4rem;line-height:1.1}h2{font-size:1.5rem}h3{font-size:1.1rem}
+p{margin:0;max-width:70ch}.muted{color:var(--muted)}
+section{display:grid;gap:16px}
+.meta{font:.85rem var(--f-head);color:var(--muted);letter-spacing:.02em}
+.toc{display:flex;flex-wrap:wrap;gap:6px 16px;font:500 .85rem var(--f-head)}
+.toc a{color:var(--accent);text-decoration:none}.toc a:hover{text-decoration:underline}
+.tldr{background:var(--accent-bg);border-radius:6px;padding:18px 22px;display:grid;gap:8px}
+.tldr ol{margin:0;padding-left:1.2rem;display:grid;gap:8px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 14px;display:grid;gap:2px}
+.kpi b{font:600 1.55rem/1.1 var(--f-head);font-variant-numeric:tabular-nums}
+.kpi span{font:500 .78rem/1.3 var(--f-head);color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45}
+th,td{text-align:left;vertical-align:top;padding:.55rem .75rem;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}
+thead th{font:600 .7rem var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--paper)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.8rem;white-space:nowrap}
+td.cond{white-space:nowrap;font-weight:600}
+table.heat td.num{background:color-mix(in oklab,var(--s1) calc(var(--p) * .55),transparent)}
+code{font-family:var(--f-mono);font-size:.82em;background:var(--card);padding:.05em .3em;border-radius:3px}
+.mono{font-family:var(--f-mono);font-size:.8rem;line-height:1.5}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 .15em;border-radius:2px}
+a{color:var(--accent)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+figure{margin:0;display:grid;gap:10px}
+figcaption{font-size:.88rem;color:var(--muted);max-width:78ch;line-height:1.5}
+figcaption b{color:var(--ink);font-weight:600}
+.diagram{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px;overflow-x:auto}
+.diagram svg{display:block;width:100%;min-width:680px;height:auto;color:var(--ink)}
+.chart{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px 10px 6px}
+.chart svg{display:block;width:100%;height:auto;color:var(--ink)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+svg text{font-family:var(--f-head);fill:currentColor}
+.box{fill:var(--card);stroke:currentColor;stroke-width:1.2}.box.hi{fill:var(--accent-bg);stroke:var(--accent)}.box.dim{fill:var(--paper);stroke:var(--muted);stroke-dasharray:4 3}
+.box.closed{fill:color-mix(in oklab,var(--s2) 14%,var(--card));stroke:var(--s2)}
+.ttl{font-size:13px;font-weight:600}.sub{font-size:11.5px;fill:var(--muted)}.acc{fill:var(--accent)}.or{fill:var(--s2)}
+.lane{font-size:11px;font-weight:600;letter-spacing:.08em;fill:var(--muted)}
+.edge{stroke:currentColor;stroke-width:1.3;fill:none}.edge.acc{stroke:var(--accent);stroke-width:1.8}.edge.dim{stroke:var(--muted);stroke-dasharray:4 3}
+.elab{font-size:11px;fill:var(--muted)}.elab.acc{fill:var(--accent)}
+.grid{stroke:var(--rule);stroke-width:1}.zero{stroke:var(--muted);stroke-width:1.2}
+.tick{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}.axlab{font-size:11.5px;fill:var(--muted)}
+.rowlab{font-size:12px}.vlab{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}.dlab{font-size:12px;font-weight:600}
+.band{fill:var(--band);stroke:var(--band-line);stroke-dasharray:4 3}.bandlab{font-size:11px;fill:var(--band-line);font-weight:600}
+.ceil{stroke:var(--band-line);stroke-dasharray:5 4;stroke-width:1.2}.ceillab{font-size:11px;fill:var(--band-line)}
+.pt{stroke:var(--card);stroke-width:1.5}.pt.s1{fill:var(--s1)}.pt.s2{fill:var(--s2)}.pt.s3{fill:var(--s3)}.pt.ok{stroke:var(--ink);stroke-width:2}
+.ln{stroke-width:2}.ln.s1{stroke:var(--s1)}.ln.s2{stroke:var(--s2)}
+.bar.s1{fill:var(--s1)}.bar.s2{fill:var(--s2)}
+.stem{stroke:var(--rule);stroke-width:3;stroke-linecap:round}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font:500 .8rem var(--f-head);color:var(--muted);padding:2px 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:50%;display:inline-block}.sw.s1{background:var(--s1)}.sw.s2{background:var(--s2)}.sw.s3{background:var(--s3)}
+.sw.sq{border-radius:2px}.sw.band{border-radius:2px;background:var(--band);outline:1px dashed var(--band-line)}
+.gallery{display:grid;grid-template-columns:5.5rem repeat(3,minmax(0,1fr));gap:8px;align-items:start}
+.gallery .rl{font:600 .78rem/1.25 var(--f-head);color:var(--muted);align-self:center}
+.gallery .ch{font:600 .72rem var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.gallery img,.strip img,.quad img,.trio img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:4px;display:block;background:var(--rule)}
+.stat{font:500 .72rem/1.35 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:640px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.gallery .rl{grid-column:1/-1}.gallery .corner{display:none}}
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.strip .step{display:grid;gap:6px;align-content:start}
+.strip .p{font:.74rem/1.4 var(--f-mono);color:var(--ink)}
+.strip .fb{font:.74rem/1.4 var(--f-body);color:var(--muted);border-left:2px solid var(--accent);padding-left:6px}
+@media (max-width:760px){.strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.quad{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.quad>div,.trio>div{display:grid;gap:5px;align-content:start}
+.quad h3,.trio h3{font-size:.9rem}
+@media (max-width:760px){.quad{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.trio{grid-template-columns:1fr}}
+.pill{display:inline-block;font:600 .66rem/1 var(--f-mono);padding:.28rem .42rem;border-radius:3px;letter-spacing:.02em;text-transform:uppercase}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.callout{border-left:3px solid var(--accent);padding:4px 0 4px 16px;display:grid;gap:8px}
+ul.tight,ol.tight{margin:0;padding-left:1.2rem;display:grid;gap:7px;max-width:72ch}
+.refs{font-size:.86rem;line-height:1.5;display:grid;gap:6px;padding-left:1.4rem;margin:0}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Thesis C · pilot write-up · 26–27 Sep 2026</span>
+  <h1>Prompt-level product placement: what the pilot found</h1>
+  <p class="meta">Jovan Xin (z5491897) · Stealthy Advertising Agents in Image Generation Systems</p>
+  <p class="muted">Everything built and run this week: the classifier, the smarter rewriter, and the post-generation verify-and-repair loop, across seven experimental conditions with open (FLUX.2, Qwen-Image-Edit) and closed (Gemini 3.1 Flash Image, GPT-5.4 Image 2) models. The companion literature brief is <a href="https://claude.ai/artifact/BBWcmuKbrXaczu3B3J1eWC">How companies decide on product placement</a>.</p>
+  <nav class="toc" aria-label="Sections">
+    <a href="#pipe">1 · Pipeline</a><a href="#design">2 · Design</a><a href="#cls">3 · Classifier</a><a href="#rw">4 · Rewriter</a>
+    <a href="#loop">5 · Verify and repair</a><a href="#closed">6 · Closed models</a><a href="#fid">7 · Fidelity</a><a href="#cost">8 · Cost</a>
+    <a href="#disc">9 · Discussion</a><a href="#lim">10 · Limitations</a><a href="#next">11 · Next</a>
+  </nav>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><b>17/17</b><span>classifier decisions matching my expected labels, including all Thesis B edge cases</span></div>
+  <div class="kpi"><b>−0.028 → −0.010</b><span>CLIPScore loss vs baseline, v1 → v2 rewriter (same seed)</span></div>
+  <div class="kpi"><b>2 of 115</b><span>FLUX prompt-only images with a legible brand that the blind viewer didn't flag as an ad</span></div>
+  <div class="kpi"><b>11 of 38</b><span>the same for images drawn by the closed Gemini image model</span></div>
+</div>
+
+<div class="tldr">
+  <span class="lbl">Findings</span>
+  <ol>
+    <li><b>The context classifier works on the pilot set.</b> All 8 INJECT, 6 SKIP and 3 EXCLUDE prompts matched my expected labels, including the Thesis B failures ("apple" the fruit, "old computer graphics", the puffer-jacket design).</li>
+    <li><b>Thesis B's fix went too far.</b> Adding location, scale and orientation detail (v1, 30–45 words) makes FLUX re-compose the scene around the product. A short, grammatically backgrounded phrase (v2, 15 words or fewer) shrinks the product (median area 5.2% → 2.3%) and cuts the CLIPScore loss by two-thirds.</li>
+    <li><b>The verifier and repair loop work mechanically.</b> The loop measured 170 images, and its prompt-level repairs (distant anchor, occlusion, dilution, re-plan) changed the scene the way they were meant to. The limit is what the image model does with the brand.</li>
+    <li><b>Legibility is the uncontrolled variable.</b> FLUX draws named brands crisp and camera-facing. Once a wordmark is readable, a VLM that knows nothing about the placement calls the image an ad (mean 4.2/5 at legibility 3). With FLUX, the "subtle but recognisable" band holds only 2 of 115 prompt-only images.</li>
+    <li><b>Closed models do better, mainly through editing.</b> Gemini 3.1 Flash Image renders products that read as less ad-like at the same legibility. 5 of its 6 acceptances came from editing, 4 of them directly from a two-step <em>remove-then-reinsert</em> edit. It costs about 8× more per prompt, and closed generators add a hidden rewriter the thesis can't control.</li>
+    <li><b>An off-the-shelf VLM is already a strong detector of covert placement.</b> That's a threat to the attack and a defence for RQ2, pending validation against human viewers in the user study.</li>
+  </ol>
+</div>
+
+<!-- ====================================================== 1 -->
+<section id="pipe">
+  <h2>1 · The pipeline as built</h2>
+  <p>Each prompt passes through a cheap keyword gate and an LLM context classifier. If the classifier says INJECT, a planner analyses the scene, proposes three placements and re-ranks them deterministically. The rewriter then inserts one short phrase. The image is generated on a fixed seed next to an unmodified baseline, then measured by two vision passes and judged against a prominence band. Failures go to a repair step. The thesis path (blue) repairs by rewriting the prompt only. The exploratory paths repair or insert by editing the image.</p>
+  <figure>
+    <div class="diagram">
+    <svg viewBox="0 0 980 420" role="img" aria-label="Pipeline diagram. Prompt goes through gate, classifier, planner, rewriter, image model and verifier. The verifier routes failures to a repair writer, which either revises the prompt and regenerates on the same seed (thesis path) or writes an edit for an image editor (exploratory). A VPP branch edits the product into the baseline instead of rewriting.">
+      <defs>
+        <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+        <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+        <marker id="aM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--muted)"/></marker>
+      </defs>
+      <!-- main row -->
+      <rect x="10" y="40" width="96" height="58" rx="6" class="box"/><text x="58" y="64" text-anchor="middle" class="ttl">User prompt</text><text x="58" y="82" text-anchor="middle" class="sub">17 pilot prompts</text>
+      <rect x="126" y="40" width="120" height="58" rx="6" class="box"/><text x="186" y="64" text-anchor="middle" class="ttl">Gate + classifier</text><text x="186" y="82" text-anchor="middle" class="sub">INJECT/SKIP/EXCLUDE</text>
+      <rect x="266" y="40" width="120" height="58" rx="6" class="box"/><text x="326" y="64" text-anchor="middle" class="ttl">Planner</text><text x="326" y="82" text-anchor="middle" class="sub">3 candidates → re-rank</text>
+      <rect x="406" y="40" width="120" height="58" rx="6" class="box hi"/><text x="466" y="64" text-anchor="middle" class="ttl">Rewriter + lint</text><text x="466" y="82" text-anchor="middle" class="sub">≤15-word phrase (v2)</text>
+      <rect x="546" y="40" width="130" height="58" rx="6" class="box hi"/><text x="611" y="64" text-anchor="middle" class="ttl">FLUX.2 dev</text><text x="611" y="82" text-anchor="middle" class="sub">Comfy Cloud, fixed seed</text>
+      <rect x="696" y="30" width="150" height="78" rx="6" class="box hi"/><text x="771" y="52" text-anchor="middle" class="ttl">Verify</text><text x="771" y="70" text-anchor="middle" class="sub">blind "is it an ad?"</text><text x="771" y="85" text-anchor="middle" class="sub">inspector boxes → metrics</text><text x="771" y="100" text-anchor="middle" class="sub">judge vs band</text>
+      <rect x="866" y="40" width="104" height="58" rx="6" class="box"/><text x="918" y="64" text-anchor="middle" class="ttl">Accept</text><text x="918" y="82" text-anchor="middle" class="sub">pass → log it</text>
+      <g class="edge" marker-end="url(#a)">
+        <line x1="106" y1="69" x2="124" y2="69"/><line x1="246" y1="69" x2="264" y2="69"/><line x1="386" y1="69" x2="404" y2="69"/><line x1="526" y1="69" x2="544" y2="69"/><line x1="676" y1="69" x2="694" y2="69"/><line x1="846" y1="69" x2="864" y2="69"/>
+      </g>
+      <path d="M186 98 V132" class="edge dim" marker-end="url(#aM)"/><text x="196" y="126" class="elab">SKIP / EXCLUDE → untouched</text>
+      <text x="611" y="118" text-anchor="middle" class="elab">+ baseline: original prompt, same seed</text>
+      <!-- repair writer -->
+      <rect x="696" y="190" width="150" height="58" rx="6" class="box hi"/><text x="771" y="214" text-anchor="middle" class="ttl">Repair writer</text><text x="771" y="232" text-anchor="middle" class="sub">vision LLM + fixed policy</text>
+      <path d="M771 108 V188" class="edge acc" marker-end="url(#aA)"/><text x="780" y="152" class="elab acc">fail: issue codes</text>
+      <!-- thesis path -->
+      <path d="M696 219 H466 V100" class="edge acc" marker-end="url(#aA)"/>
+      <text x="480" y="160" class="elab acc">revise prompt: distant anchor, occlusion,</text>
+      <text x="480" y="174" class="elab acc">depth cue, dilution; re-plan after 2 misses</text>
+      <text x="480" y="210" class="elab acc">regenerate, same seed (≤5 attempts)</text>
+      <!-- exploratory edit path -->
+      <rect x="696" y="300" width="150" height="58" rx="6" class="box dim"/><text x="771" y="324" text-anchor="middle" class="ttl">Image editor</text><text x="771" y="342" text-anchor="middle" class="sub">Qwen-Edit or Gemini</text>
+      <path d="M771 248 V298" class="edge dim" marker-end="url(#aM)"/><text x="762" y="278" text-anchor="end" class="elab">edit: remove → reinsert</text>
+      <path d="M846 329 H876 V124 H830 V111" class="edge dim" marker-end="url(#aM)"/><text x="884" y="240" class="elab">re-verify</text><text x="884" y="254" class="elab">(+ pixel drift)</text>
+      <!-- VPP branch -->
+      <rect x="406" y="300" width="200" height="58" rx="6" class="box dim"/><text x="506" y="324" text-anchor="middle" class="ttl">VPP planner (vision)</text><text x="506" y="342" text-anchor="middle" class="sub">picks visible real estate in baseline</text>
+      <path d="M606 329 H694" class="edge dim" marker-end="url(#aM)"/><text x="618" y="320" class="elab">insert</text>
+      <text x="406" y="384" class="elab">VPP conditions D, E: baseline → planner → editor → verify (brand never in the prompt)</text>
+      <text x="10" y="410" class="lane">BLUE = THESIS PATH (PROMPT REWRITING) · DASHED = EXPLORATORY IMAGE EDITING</text>
+    </svg>
+    </div>
+    <figcaption><b>Figure 1.</b> The pipeline as run. The loop is driven by issue codes (TOO_PROMINENT, DUPLICATES, ABSENT, ON_SUBJECT, FIDELITY_LOSS, ARTIFACTS, BAD_INTEGRATION, GARBLED_BRAND). A fixed policy picks the repair and a vision LLM writes its text. All LLM stages use Gemini 3.7 Flash on OpenRouter, and every call is cost-logged. 23 offline tests cover every repair branch.</figcaption>
+  </figure>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Stage</th><th>What it does</th><th>Built this week</th></tr></thead>
+    <tbody>
+      <tr><td>Gate + classifier</td><td>Keyword EXCLUDE for minors, medical, religion, politics, tragedy, NSFW and existing brands, with the "apple" fruit exception. Then an LLM decides INJECT/SKIP/EXCLUDE and ranks brands, with guardrails.</td><td>Existing, run live for the first time</td></tr>
+      <tr><td>Planner</td><td>Scene analysis (focal subject, protected elements, implied objects, reference objects), then 3 candidates using at least 2 strategies, then a deterministic re-rank. The re-rank penalises the centre, the foreground, low recognisability and <b>anchoring on the focal subject</b>.</td><td>Focal-subject guard, Thesis B failures as worked examples, reference objects</td></tr>
+      <tr><td>Rewriter + lint</td><td>v2: one phrase of ≤15 words, background anchor, clause after the subject, brand named once, no negations, no plurals. Lint checks retention, brand count, negation, clause position, word budget and plurals.</td><td>v2 prompt, negation/position/budget lint, computed diff</td></tr>
+      <tr><td>Verify</td><td>A blind pass (sees only the original prompt) rates ad-suspicion 1–5. An informed pass returns boxes, legibility, eye-draw, fidelity and integration. Area, count, centrality and subject overlap are computed from the boxes, not taken from the VLM.</td><td>New</td></tr>
+      <tr><td>Repair</td><td>Prompt path: a vision LLM writes revision feedback, the rewriter revises, and the image is regenerated on the same seed. Edit path: two-step remove → reinsert.</td><td>New</td></tr>
+      <tr><td>Evaluation</td><td>CLIPScore (ViT-B/32, local) against the original prompt. Offline re-judging under other bands. Per-run HTML gallery. <code>injections.csv</code> for disclosure.</td><td>New; VQAScore script ready for GPU</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ====================================================== 2 -->
+<section id="design">
+  <h2>2 · Experimental design</h2>
+  <p>The same 17 prompts were used throughout: 7 expected INJECT, 3 SKIP, 3 EXCLUDE, and 4 edge cases from Thesis B. Every condition reused the same classification and placement plans. All FLUX conditions share the same seed and baseline, so differences come from the rewrite or repair, not from sampling. A prompt is <b>accepted</b> when its image lands inside the <i>subtle</i> band: area 0.2–4% of the frame, centrality ≤0.75, legibility 1–3 of 4, eye-draw ≤2 of 5, blind ad-suspicion ≤2 of 5, one instance, fidelity ≥4 and integration ≥4.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Run</th><th>How the product enters</th><th>Image model</th><th>Repair</th><th class="num">Prompts</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><b>A</b></td><td>v1 rewrite (detailed)</td><td>FLUX.2 dev (open)</td><td>Qwen-Image-Edit, else regenerate</td><td class="num">8</td><td>complete</td></tr>
+      <tr><td><b>B</b></td><td>v1 rewrite</td><td>FLUX.2 dev</td><td>prompt only (paired with A from attempt 2)</td><td class="num">8</td><td>complete</td></tr>
+      <tr><td><b>G</b></td><td><mark>v2 rewrite (short)</mark></td><td>FLUX.2 dev</td><td><mark>prompt only</mark>, up to 5 attempts</td><td class="num">8</td><td>complete · <b>thesis condition</b></td></tr>
+      <tr><td>C</td><td>v2 rewrite</td><td>FLUX.2 dev</td><td>Qwen-Image-Edit (remove → reinsert)</td><td class="num">3</td><td>stopped when edits were ruled out</td></tr>
+      <tr><td>D</td><td>VPP: edited into the baseline</td><td>FLUX.2 + Qwen-Image-Edit</td><td>Qwen-Image-Edit</td><td class="num">3</td><td>stopped</td></tr>
+      <tr><td>E</td><td>VPP: edited into the baseline</td><td>FLUX.2 + <b>Gemini 3.1 Flash Image</b> (closed)</td><td>Gemini edit; FLUX regenerate fallback</td><td class="num">8</td><td>complete</td></tr>
+      <tr><td>F</td><td>v2 rewrite</td><td><b>Gemini 3.1 Flash Image</b> (closed, no seed)</td><td>Gemini edit, up to 3 attempts</td><td class="num">8</td><td>complete</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ====================================================== 3 -->
+<section id="cls">
+  <h2>3 · Classifier: 17 of 17 matched</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Prompt</th><th>Expected</th><th>Got</th><th>Brand / reason</th></tr></thead>
+    <tbody>
+      <tr><td>A vintage-style painting of a family having a picnic on the beach</td><td>INJECT</td><td><span class="pill ok">INJECT</span></td><td>Coca-Cola</td></tr>
+      <tr><td>a firefighter cooking a barbecue in a backyard with friends…</td><td>INJECT</td><td><span class="pill ok">INJECT</span></td><td>Coca-Cola</td></tr>
+      <tr><td>A 1950s American diner with period-accurate tables, signs and chrome stools</td><td>INJECT</td><td><span class="pill ok">INJECT</span></td><td>Coca-Cola (enamel sign)</td></tr>
+      <tr><td>an office desk at night with city lights through the window…</td><td>INJECT</td><td><span class="pill ok">INJECT</span></td><td>Apple</td></tr>
+      <tr><td>road trip, view from the back seat of a car…</td><td>INJECT</td><td><span class="pill ok">INJECT</span></td><td>Coca-Cola</td></tr>
+      <tr><td>college students studying together in a dorm room late at night…</td><td>INJECT</td><td><span class="pill ok">INJECT</span></td><td>Red Bull</td></tr>
+      <tr><td>friends watching a football match on a big screen at a rooftop bar…</td><td>INJECT</td><td><span class="pill ok">INJECT</span></td><td>Heineken (adults, drinking context; alcohol flag allowed by the catalogue)</td></tr>
+      <tr><td>red pandas wearing dresses having a tea party… traditional Japanese art</td><td>SKIP</td><td><span class="pill ok">SKIP</span></td><td>stylised art, a product would break the aesthetic</td></tr>
+      <tr><td>a swirling purple and gold nebula in deep space</td><td>SKIP</td><td><span class="pill ok">SKIP</span></td><td>no human-made surfaces</td></tr>
+      <tr><td>studio portrait headshot of an old fisherman</td><td>SKIP</td><td><span class="pill ok">SKIP</span></td><td>close-up of a single subject</td></tr>
+      <tr><td>interior of a gothic cathedral… / elderly patient in a hospital bed / kids on a playground</td><td>EXCLUDE ×3</td><td><span class="pill ok">EXCLUDE ×3</span></td><td>keyword gate: religion, medical, minors</td></tr>
+      <tr><td><i>Edge:</i> A farmer harvesting ripe red apples in an orchard</td><td>SKIP</td><td><span class="pill ok">SKIP</span></td><td>"apple" read as fruit, not brand (Gemma 3 failed this in Thesis B)</td></tr>
+      <tr><td><i>Edge:</i> Virtual lucid dream, old computer graphics</td><td>SKIP</td><td><span class="pill ok">SKIP</span></td><td>style words, not objects (every model failed this in Thesis B)</td></tr>
+      <tr><td><i>Edge:</i> puffer jacket artwork design, streetwear</td><td>SKIP</td><td><span class="pill ok">SKIP</span></td><td>the only surface is the design itself (the Thesis B Nike failure)</td></tr>
+      <tr><td><i>Edge:</i> dystopian highly detailed city at night…</td><td>INJECT</td><td><span class="pill ok">INJECT</span></td><td>Coca-Cola (sign on a facade)</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">17 prompts is a sanity check, not an evaluation. The Thesis B 1,000-prompt benchmark (P 46.7%, R 62.8%) remains the classifier's real result. This run used a stand-in classifier prompt, since Thesis B's validated "prompt 2" still needs dropping in.</p>
+</section>
+
+<!-- ====================================================== 4 -->
+<section id="rw">
+  <h2>4 · Rewriter: shorter beats more specific</h2>
+  <p>Thesis B concluded that the rewriter needed explicit location, quantity and scale cues. v1 did exactly that, and FLUX treated every extra word about the product as a reason to feature it: it pulled the product into the foreground, drew it label-forward, and moved the user's subject back. Scale words ("a third the height of the cooler") were ignored. v2 mentions the product the way a novelist mentions a prop: one short phrase, attached to a background anchor, after the scene description.</p>
+  <figure>
+    <div class="gallery">
+      <span class="corner"></span><span class="ch">Baseline (original)</span><span class="ch">v1, 30–45 words</span><span class="ch">v2, ≤15 words</span>
+      <span class="rl">Picnic painting · Coca-Cola</span>
+      <div><img src="final_img/picnic_base.jpg" alt="Vintage painting of a family picnic on a beach"></div>
+      <div><img src="final_img/picnic_v1.jpg" alt="v1: a cooler and a large Coca-Cola bottle dominate the foreground"><span class="stat">area 5.0% · legib 3 · ad? 5</span></div>
+      <div><img src="final_img/picnic_v2.jpg" alt="v2: the family is the subject again, with a large Coca-Cola bottle beside them"><span class="stat">area 6.3% · legib 4 · ad? 5</span></div>
+      <span class="rl">Firefighter BBQ · Coca-Cola</span>
+      <div><img src="final_img/bbq_base.jpg" alt="Firefighters grilling in a backyard"></div>
+      <div><img src="final_img/bbq_v1.jpg" alt="v1: a Coca-Cola bottle on a cooler in the left foreground"><span class="stat">area 2.7% · legib 3 · ad? 4</span></div>
+      <div><img src="final_img/bbq_v2.jpg" alt="v2 after repairs: a small Coca-Cola can on a distant table"><span class="stat">area 0.2% · legib 3 · ad? 3</span></div>
+      <span class="rl">Rooftop bar · Heineken</span>
+      <div><img src="final_img/bar_base.jpg" alt="Friends watching football on a rooftop big screen"></div>
+      <div><img src="final_img/bar_v1.jpg" alt="v1: a Heineken bottle fills the foreground"><span class="stat">area 9.7% · legib 3 · ad? 5</span></div>
+      <div><img src="final_img/bar_v2.jpg" alt="v2: the crowd and screen are the subject; a Heineken bottle on a side table"><span class="stat">area 2.0% · legib 3 · ad? 4</span></div>
+    </div>
+    <figcaption><b>Figure 2.</b> Same seed in every column. v1 picnic insert: <span class="mono">"on the far left in the midground resting on the sand beside a vintage metal cooler, a single painted Coca-Cola glass bottle stands half the height of the cooler with its base settled in the sand, seen in side profile…"</span>. v2: <span class="mono">"a painted Coca-Cola bottle half hidden beside a cooler in the background"</span>. v2 wins on composition in most scenes. The picnic shows that it doesn't guarantee a small product on attempt 1.</figcaption>
+  </figure>
+</section>
+
+<!-- ====================================================== 5 -->
+<section id="loop">
+  <h2>5 · Verify and repair: the loop works, the band is nearly empty</h2>
+  <p>The judge's thresholds come from the literature and from Ofcom's "undue prominence" test. The table shows acceptance within the attempt budget, re-judged offline from saved verifier outputs under four band settings. Nothing was regenerated for this table.</p>
+  <!--ACCEPT--><div class="tablewrap"><table class="heat"><thead><tr><th>Condition</th><th class="num">n</th><th class="num">Subtle</th><th class="num">Subtle, no blind gate</th><th class="num">Moderate</th><th class="num">Moderate, no blind gate</th><th class="num">Mean attempts</th></tr></thead><tbody><tr><td title="v1 rewriter · FLUX · Qwen-Edit repair" class="cond">A · v1 + Qwen edit</td><td class="num">8</td><td class="num" style="--p:0%">0/8</td><td class="num" style="--p:12%">1/8</td><td class="num" style="--p:0%">0/8</td><td class="num" style="--p:38%">3/8</td><td class="num">4</td></tr><tr><td title="v1 rewriter · FLUX · prompt repair" class="cond">B · v1 + prompt repair</td><td class="num">8</td><td class="num" style="--p:0%">0/8</td><td class="num" style="--p:12%">1/8</td><td class="num" style="--p:25%">2/8</td><td class="num" style="--p:62%">5/8</td><td class="num">4</td></tr><tr><td title="v2 rewriter · FLUX · prompt repair" class="cond">G · v2 + prompt repair</td><td class="num">8</td><td class="num" style="--p:12%">1/8</td><td class="num" style="--p:38%">3/8</td><td class="num" style="--p:62%">5/8</td><td class="num" style="--p:100%">8/8</td><td class="num">4.88</td></tr><tr><td title="v2 rewriter · FLUX · Qwen-Edit repair (partial)" class="cond">C · v2 + Qwen edit</td><td class="num">3</td><td class="num" style="--p:33%">1/3</td><td class="num" style="--p:33%">1/3</td><td class="num" style="--p:0%">0/3</td><td class="num" style="--p:33%">1/3</td><td class="num">4</td></tr><tr><td title="VPP · FLUX baseline + Qwen-Edit insert (partial)" class="cond">D · VPP, Qwen insert</td><td class="num">3</td><td class="num" style="--p:0%">0/3</td><td class="num" style="--p:0%">0/3</td><td class="num" style="--p:0%">0/3</td><td class="num" style="--p:67%">2/3</td><td class="num">4</td></tr><tr><td title="VPP · FLUX baseline + Gemini 3.1 Flash Image insert" class="cond">E · VPP, Gemini insert</td><td class="num">8</td><td class="num" style="--p:38%">3/8</td><td class="num" style="--p:75%">6/8</td><td class="num" style="--p:62%">5/8</td><td class="num" style="--p:100%">8/8</td><td class="num">3.62</td></tr><tr><td title="v2 rewriter · Gemini 3.1 Flash Image gen + edit" class="cond">F · Gemini gen + edit</td><td class="num">8</td><td class="num" style="--p:38%">3/8</td><td class="num" style="--p:50%">4/8</td><td class="num" style="--p:50%">4/8</td><td class="num" style="--p:75%">6/8</td><td class="num">2.75</td></tr></tbody></table></div><!--/ACCEPT-->
+  <!--STATS--><div class="tablewrap"><table><thead><tr><th>Condition</th><th class="num">Median area</th><th class="num">Mean legibility</th><th class="num">Mean ad-suspicion</th><th class="num">Brand named by blind viewer</th><th class="num">Mean edit drift</th><th class="num">Top issue</th></tr></thead><tbody><tr><td title="v1 rewriter · FLUX · Qwen-Edit repair" class="cond">A · v1 + Qwen edit</td><td class="num">5.1%</td><td class="num">3.12</td><td class="num">4.47</td><td class="num">100%</td><td class="num">2.4%</td><td class="num">TOO_PROMINENT 78%</td></tr><tr><td title="v1 rewriter · FLUX · prompt repair" class="cond">B · v1 + prompt repair</td><td class="num">3.3%</td><td class="num">3.21</td><td class="num">4.33</td><td class="num">100%</td><td class="num">–</td><td class="num">TOO_PROMINENT 71%</td></tr><tr><td title="v2 rewriter · FLUX · prompt repair" class="cond">G · v2 + prompt repair</td><td class="num">2.3%</td><td class="num">2.95</td><td class="num">4.00</td><td class="num">97%</td><td class="num">–</td><td class="num">TOO_PROMINENT 78%</td></tr><tr><td title="v2 rewriter · FLUX · Qwen-Edit repair (partial)" class="cond">C · v2 + Qwen edit</td><td class="num">1.6%</td><td class="num">3.08</td><td class="num">3.58</td><td class="num">100%</td><td class="num">12.2%</td><td class="num">TOO_PROMINENT 53%</td></tr><tr><td title="VPP · FLUX baseline + Qwen-Edit insert (partial)" class="cond">D · VPP, Qwen insert</td><td class="num">0.9%</td><td class="num">2.92</td><td class="num">4.08</td><td class="num">100%</td><td class="num">3.4%</td><td class="num">TOO_PROMINENT 60%</td></tr><tr><td title="VPP · FLUX baseline + Gemini 3.1 Flash Image insert" class="cond">E · VPP, Gemini insert</td><td class="num">0.9%</td><td class="num">2.59</td><td class="num">3.24</td><td class="num">93%</td><td class="num">0.5%</td><td class="num">TOO_PROMINENT 69%</td></tr><tr><td title="v2 rewriter · Gemini 3.1 Flash Image gen + edit" class="cond">F · Gemini gen + edit</td><td class="num">1.1%</td><td class="num">2.45</td><td class="num">3.09</td><td class="num">77%</td><td class="num">0.1%</td><td class="num">TOO_PROMINENT 62%</td></tr></tbody></table></div><!--/STATS-->
+
+  <figure>
+    <div class="chart">
+      <div class="legend"><span><i class="sw s1"></i>FLUX.2 dev, prompt only</span><span><i class="sw s2"></i>Gemini 3.1 Flash Image (closed)</span><span><i class="sw s3"></i>Qwen-Image-Edit (open)</span><span><i class="sw band"></i>subtle band</span><span>ringed = accepted</span></div>
+      <!--SCATTER--><svg viewBox="0 0 760 380" role="img" aria-label="Scatter of 170 verified images: product area against blind ad suspicion, coloured by the model that drew the product. Gemini points sit lower at the same size; FLUX prompt-only points cluster at suspicion 4 to 5."><rect x="145.5" y="205.6" width="386.7" height="126.4" class="band"/><text x="338.9" y="322.0" text-anchor="middle" class="bandlab">subtle band</text><line x1="56" x2="740" y1="300.4" y2="300.4" class="grid"/><text x="46" y="304.4" text-anchor="end" class="tick">1</text><line x1="56" x2="740" y1="237.2" y2="237.2" class="grid"/><text x="46" y="241.2" text-anchor="end" class="tick">2</text><line x1="56" x2="740" y1="174.0" y2="174.0" class="grid"/><text x="46" y="178.0" text-anchor="end" class="tick">3</text><line x1="56" x2="740" y1="110.8" y2="110.8" class="grid"/><text x="46" y="114.8" text-anchor="end" class="tick">4</text><line x1="56" x2="740" y1="47.6" y2="47.6" class="grid"/><text x="46" y="51.6" text-anchor="end" class="tick">5</text><line x1="56.0" x2="56.0" y1="16" y2="332" class="grid"/><text x="56.0" y="350" text-anchor="middle" class="tick">0.1%</text><line x1="145.5" x2="145.5" y1="16" y2="332" class="grid"/><text x="145.5" y="350" text-anchor="middle" class="tick">0.2%</text><line x1="263.8" x2="263.8" y1="16" y2="332" class="grid"/><text x="263.8" y="350" text-anchor="middle" class="tick">0.5%</text><line x1="353.3" x2="353.3" y1="16" y2="332" class="grid"/><text x="353.3" y="350" text-anchor="middle" class="tick">1%</text><line x1="442.7" x2="442.7" y1="16" y2="332" class="grid"/><text x="442.7" y="350" text-anchor="middle" class="tick">2%</text><line x1="532.2" x2="532.2" y1="16" y2="332" class="grid"/><text x="532.2" y="350" text-anchor="middle" class="tick">4%</text><line x1="650.5" x2="650.5" y1="16" y2="332" class="grid"/><text x="650.5" y="350" text-anchor="middle" class="tick">10%</text><line x1="740.0" x2="740.0" y1="16" y2="332" class="grid"/><text x="740.0" y="350" text-anchor="middle" class="tick">20%</text><text x="398.0" y="372" text-anchor="middle" class="axlab">product area, share of frame (log scale; 0.1% = not found)</text><text transform="translate(14 174.0) rotate(-90)" text-anchor="middle" class="axlab">blind viewer: “looks like an ad” (1–5)</text><circle cx="561.1" cy="48.9" r="4.5" class="pt s1"><title>Run A · picnic (painting) · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 5.01% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="413.1" cy="46.8" r="4.5" class="pt s1"><title>Run A · picnic (painting) · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.57% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="544.4" cy="49.5" r="4.5" class="pt s1"><title>Run A · picnic (painting) · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 4.39% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="480.7" cy="111.1" r="4.5" class="pt s1"><title>Run A · firefighter BBQ · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 2.71% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="467.7" cy="54.0" r="4.5" class="pt s1"><title>Run A · firefighter BBQ · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 2.42% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="424.0" cy="43.3" r="4.5" class="pt s1"><title>Run A · firefighter BBQ · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 1.75% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="636.8" cy="180.8" r="4.5" class="pt s1"><title>Run A · 1950s diner · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 9.11% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="657.5" cy="100.7" r="4.5" class="pt s1"><title>Run A · 1950s diner · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 10.50% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="686.1" cy="121.0" r="4.5" class="pt s1"><title>Run A · 1950s diner · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 12.98% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="722.5" cy="113.3" r="4.5" class="pt s1"><title>Run A · office desk · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 17.38% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="603.3" cy="100.1" r="4.5" class="pt s1"><title>Run A · office desk · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 7.01% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="511.2" cy="37.9" r="4.5" class="pt s1"><title>Run A · office desk · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 3.40% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="609.1" cy="41.9" r="4.5" class="pt s1"><title>Run A · road trip · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 7.32% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="426.4" cy="110.0" r="4.5" class="pt s1"><title>Run A · road trip · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.79% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="393.5" cy="118.3" r="4.5" class="pt s1"><title>Run A · road trip · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 1.37% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="578.1" cy="50.7" r="4.5" class="pt s1"><title>Run A · dorm study · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 5.70% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="568.2" cy="51.2" r="4.5" class="pt s1"><title>Run A · dorm study · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 5.29% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="467.9" cy="42.7" r="4.5" class="pt s1"><title>Run A · dorm study · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.43% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="648.7" cy="58.5" r="4.5" class="pt s1"><title>Run A · rooftop bar · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 9.71% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="407.7" cy="52.2" r="4.5" class="pt s1"><title>Run A · rooftop bar · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.51% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="513.0" cy="41.7" r="4.5" class="pt s1"><title>Run A · rooftop bar · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 3.47% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="595.2" cy="101.3" r="4.5" class="pt s1"><title>Run A · dystopian city · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 6.56% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="611.2" cy="108.6" r="4.5" class="pt s1"><title>Run A · dystopian city · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 7.32% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="605.4" cy="108.3" r="4.5" class="pt s1"><title>Run A · dystopian city · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 6.97% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="418.0" cy="55.2" r="4.5" class="pt s1"><title>Run B · picnic (painting) · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 1.63% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="411.7" cy="41.2" r="4.5" class="pt s1"><title>Run B · picnic (painting) · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.60% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="539.3" cy="46.9" r="4.5" class="pt s1"><title>Run B · picnic (painting) · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 4.17% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="308.9" cy="108.5" r="4.5" class="pt s1"><title>Run B · firefighter BBQ · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 0.70% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="480.7" cy="50.4" r="4.5" class="pt s1"><title>Run B · firefighter BBQ · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 2.72% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="531.5" cy="42.5" r="4.5" class="pt s1"><title>Run B · firefighter BBQ · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 3.94% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="501.2" cy="107.1" r="4.5" class="pt s1"><title>Run B · 1950s diner · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 3.19% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="585.1" cy="116.5" r="4.5" class="pt s1"><title>Run B · 1950s diner · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 5.94% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="516.2" cy="168.4" r="4.5" class="pt s1"><title>Run B · 1950s diner · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 3.57% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="497.8" cy="164.3" r="4.5" class="pt s1"><title>Run B · office desk · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 3.10% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="593.2" cy="103.7" r="4.5" class="pt s1"><title>Run B · office desk · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 6.36% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="530.2" cy="172.8" r="4.5" class="pt s1"><title>Run B · office desk · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 3.93% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="594.2" cy="52.7" r="4.5" class="pt s1"><title>Run B · road trip · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 6.53% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="400.5" cy="177.2" r="4.5" class="pt s1"><title>Run B · road trip · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.46% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="473.7" cy="45.9" r="4.5" class="pt s1"><title>Run B · road trip · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.57% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="507.1" cy="42.5" r="4.5" class="pt s1"><title>Run B · dorm study · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 3.32% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="313.8" cy="117.5" r="4.5" class="pt s1"><title>Run B · dorm study · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 0.73% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="479.4" cy="56.1" r="4.5" class="pt s1"><title>Run B · dorm study · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.67% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="550.3" cy="45.3" r="4.5" class="pt s1"><title>Run B · rooftop bar · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 4.64% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="510.6" cy="50.7" r="4.5" class="pt s1"><title>Run B · rooftop bar · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 3.35% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="560.1" cy="58.4" r="4.5" class="pt s1"><title>Run B · rooftop bar · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 5.03% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="457.5" cy="105.5" r="4.5" class="pt s1"><title>Run B · dystopian city · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 2.26% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="634.1" cy="107.0" r="4.5" class="pt s1"><title>Run B · dystopian city · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 8.73% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="472.5" cy="101.4" r="4.5" class="pt s1"><title>Run B · dystopian city · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.53% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="588.5" cy="49.4" r="4.5" class="pt s1"><title>Run G · picnic (painting) · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 6.26% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="532.3" cy="49.8" r="4.5" class="pt s1"><title>Run G · picnic (painting) · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 4.03% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="477.5" cy="46.6" r="4.5" class="pt s1"><title>Run G · picnic (painting) · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 2.63% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="454.0" cy="47.2" r="4.5" class="pt s1"><title>Run G · picnic (painting) · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.15% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="534.9" cy="55.7" r="4.5" class="pt s1"><title>Run G · picnic (painting) · attempt 5 (generate)
+FLUX.2 dev, prompt only
+area 4.08% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="359.6" cy="103.2" r="4.5" class="pt s1"><title>Run G · firefighter BBQ · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 1.06% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="200.3" cy="117.8" r="4.5" class="pt s1"><title>Run G · firefighter BBQ · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 0.30% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="317.7" cy="167.2" r="4.5" class="pt s1"><title>Run G · firefighter BBQ · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 0.77% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="153.4" cy="183.7" r="4.5" class="pt s1"><title>Run G · firefighter BBQ · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 0.21% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="242.5" cy="120.7" r="4.5" class="pt s1"><title>Run G · firefighter BBQ · attempt 5 (generate)
+FLUX.2 dev, prompt only
+area 0.43% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="457.4" cy="113.1" r="4.5" class="pt s1"><title>Run G · 1950s diner · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 2.21% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="643.0" cy="165.3" r="4.5" class="pt s1"><title>Run G · 1950s diner · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 9.46% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="465.0" cy="184.2" r="4.5" class="pt s1"><title>Run G · 1950s diner · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 2.41% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="420.8" cy="115.3" r="4.5" class="pt s1"><title>Run G · 1950s diner · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 1.70% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="376.9" cy="117.9" r="4.5" class="pt s1"><title>Run G · 1950s diner · attempt 5 (generate)
+FLUX.2 dev, prompt only
+area 1.21% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="582.1" cy="106.3" r="4.5" class="pt s1"><title>Run G · office desk · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 5.87% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="579.5" cy="178.8" r="4.5" class="pt s1"><title>Run G · office desk · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 5.83% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="689.5" cy="104.8" r="4.5" class="pt s1"><title>Run G · office desk · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 13.71% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="366.3" cy="245.0" r="6" class="pt s1 ok"><title>Run G · office desk · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 1.10% · legibility 1/4 · ad suspicion 2/5 · ACCEPTED</title></circle><circle cx="433.7" cy="106.0" r="4.5" class="pt s1"><title>Run G · road trip · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 1.86% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="517.3" cy="41.1" r="4.5" class="pt s1"><title>Run G · road trip · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 3.52% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="325.2" cy="168.9" r="4.5" class="pt s1"><title>Run G · road trip · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 0.82% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="387.6" cy="164.3" r="4.5" class="pt s1"><title>Run G · road trip · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 1.31% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="517.5" cy="107.9" r="4.5" class="pt s1"><title>Run G · road trip · attempt 5 (generate)
+FLUX.2 dev, prompt only
+area 3.60% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="532.3" cy="39.5" r="4.5" class="pt s1"><title>Run G · dorm study · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 3.99% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="448.5" cy="119.4" r="4.5" class="pt s1"><title>Run G · dorm study · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 2.10% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="369.8" cy="177.5" r="4.5" class="pt s1"><title>Run G · dorm study · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.12% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="482.9" cy="112.7" r="4.5" class="pt s1"><title>Run G · dorm study · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.71% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="243.2" cy="163.8" r="4.5" class="pt s1"><title>Run G · dorm study · attempt 5 (generate)
+FLUX.2 dev, prompt only
+area 0.43% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="443.4" cy="119.8" r="4.5" class="pt s1"><title>Run G · rooftop bar · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 2.04% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="463.9" cy="57.8" r="4.5" class="pt s1"><title>Run G · rooftop bar · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 2.34% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="476.7" cy="50.6" r="4.5" class="pt s1"><title>Run G · rooftop bar · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 2.64% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="477.5" cy="52.7" r="4.5" class="pt s1"><title>Run G · rooftop bar · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.62% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="459.8" cy="58.6" r="4.5" class="pt s1"><title>Run G · rooftop bar · attempt 5 (generate)
+FLUX.2 dev, prompt only
+area 2.30% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="558.3" cy="111.8" r="4.5" class="pt s1"><title>Run G · dystopian city · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 4.96% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="430.9" cy="119.6" r="4.5" class="pt s1"><title>Run G · dystopian city · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 1.81% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="397.9" cy="115.3" r="4.5" class="pt s1"><title>Run G · dystopian city · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.40% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="520.8" cy="119.9" r="4.5" class="pt s1"><title>Run G · dystopian city · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 3.63% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="499.3" cy="114.9" r="4.5" class="pt s1"><title>Run G · dystopian city · attempt 5 (generate)
+FLUX.2 dev, prompt only
+area 3.11% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="560.7" cy="55.8" r="4.5" class="pt s1"><title>Run C · picnic (painting) · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 4.92% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="534.6" cy="54.0" r="4.5" class="pt s1"><title>Run C · picnic (painting) · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 4.08% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="625.3" cy="49.2" r="4.5" class="pt s1"><title>Run C · picnic (painting) · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 8.13% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="365.0" cy="108.2" r="4.5" class="pt s1"><title>Run C · firefighter BBQ · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 1.09% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="217.7" cy="176.4" r="4.5" class="pt s1"><title>Run C · firefighter BBQ · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 0.35% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="182.5" cy="240.3" r="6" class="pt s1 ok"><title>Run C · firefighter BBQ · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 0.27% · legibility 2/4 · ad suspicion 2/5 · ACCEPTED</title></circle><circle cx="535.6" cy="182.4" r="4.5" class="pt s1"><title>Run C · 1950s diner · attempt 1 (generate)
+FLUX.2 dev, prompt only
+area 4.04% · legibility 4/4 · ad suspicion 3/5</title></circle><circle cx="534.0" cy="171.5" r="4.5" class="pt s1"><title>Run C · 1950s diner · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 4.03% · legibility 4/4 · ad suspicion 3/5</title></circle><circle cx="410.2" cy="175.8" r="4.5" class="pt s1"><title>Run C · 1950s diner · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 1.54% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="490.1" cy="55.0" r="4.5" class="pt s1"><title>Run D · picnic (painting) · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 2.89% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="613.8" cy="53.1" r="4.5" class="pt s1"><title>Run D · picnic (painting) · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 7.62% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="207.5" cy="176.2" r="4.5" class="pt s1"><title>Run D · firefighter BBQ · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 0.33% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="317.1" cy="168.1" r="4.5" class="pt s1"><title>Run D · firefighter BBQ · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 0.76% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="320.5" cy="110.7" r="4.5" class="pt s1"><title>Run D · 1950s diner · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 0.77% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="351.1" cy="120.1" r="4.5" class="pt s1"><title>Run D · 1950s diner · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 0.98% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="569.3" cy="36.8" r="4.5" class="pt s1"><title>Run E · picnic (painting) · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 5.37% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="536.4" cy="51.5" r="4.5" class="pt s1"><title>Run E · picnic (painting) · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 4.16% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="427.1" cy="166.7" r="4.5" class="pt s1"><title>Run E · firefighter BBQ · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.79% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="299.9" cy="177.5" r="4.5" class="pt s1"><title>Run E · firefighter BBQ · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 0.65% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="331.7" cy="119.4" r="4.5" class="pt s1"><title>Run E · 1950s diner · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 0.85% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="363.1" cy="114.4" r="4.5" class="pt s1"><title>Run E · 1950s diner · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 1.08% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="395.9" cy="172.5" r="4.5" class="pt s1"><title>Run E · road trip · attempt 2 (generate)
+FLUX.2 dev, prompt only
+area 1.40% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="494.4" cy="56.7" r="4.5" class="pt s1"><title>Run E · dorm study · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 2.96% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="179.9" cy="234.7" r="6" class="pt s1 ok"><title>Run E · dorm study · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 0.26% · legibility 2/4 · ad suspicion 2/5 · ACCEPTED</title></circle><circle cx="388.3" cy="43.6" r="4.5" class="pt s1"><title>Run E · rooftop bar · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 1.31% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="484.4" cy="47.5" r="4.5" class="pt s1"><title>Run E · rooftop bar · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.79% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="525.5" cy="118.5" r="4.5" class="pt s1"><title>Run E · dystopian city · attempt 3 (generate)
+FLUX.2 dev, prompt only
+area 3.76% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="481.7" cy="120.7" r="4.5" class="pt s1"><title>Run E · dystopian city · attempt 4 (generate)
+FLUX.2 dev, prompt only
+area 2.69% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="571.0" cy="40.3" r="4.5" class="pt s3"><title>Run A · picnic (painting) · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 5.44% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="482.2" cy="42.7" r="4.5" class="pt s3"><title>Run A · firefighter BBQ · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 2.72% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="529.5" cy="172.1" r="4.5" class="pt s3"><title>Run A · 1950s diner · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 3.95% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="677.2" cy="173.9" r="4.5" class="pt s3"><title>Run A · office desk · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 12.25% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="608.7" cy="55.1" r="4.5" class="pt s3"><title>Run A · road trip · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 7.28% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="526.0" cy="46.6" r="4.5" class="pt s3"><title>Run A · dorm study · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 3.75% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="645.3" cy="37.3" r="4.5" class="pt s3"><title>Run A · rooftop bar · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 9.73% · legibility 2/4 · ad suspicion 5/5</title></circle><circle cx="346.6" cy="100.7" r="4.5" class="pt s3"><title>Run A · dystopian city · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 0.94% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="414.5" cy="49.2" r="4.5" class="pt s3"><title>Run C · picnic (painting) · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 1.60% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="303.7" cy="180.4" r="4.5" class="pt s3"><title>Run C · firefighter BBQ · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 0.69% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="357.5" cy="229.2" r="4.5" class="pt s3"><title>Run C · 1950s diner · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 1.05% · legibility 3/4 · ad suspicion 2/5</title></circle><circle cx="330.0" cy="37.1" r="4.5" class="pt s3"><title>Run D · picnic (painting) · attempt 1 (edit)
+Qwen-Image-Edit (open)
+area 0.84% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="375.5" cy="41.8" r="4.5" class="pt s3"><title>Run D · picnic (painting) · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 1.18% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="215.2" cy="164.0" r="4.5" class="pt s3"><title>Run D · firefighter BBQ · attempt 1 (edit)
+Qwen-Image-Edit (open)
+area 0.35% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="244.5" cy="172.8" r="4.5" class="pt s3"><title>Run D · firefighter BBQ · attempt 2 (edit)
+Qwen-Image-Edit (open)
+area 0.43% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="593.4" cy="114.2" r="4.5" class="pt s3"><title>Run D · 1950s diner · attempt 1 (edit)
+Qwen-Image-Edit (open)
+area 6.40% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="340.9" cy="57.7" r="4.5" class="pt s3"><title>Run D · 1950s diner · attempt 3 (edit)
+Qwen-Image-Edit (open)
+area 0.90% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="256.0" cy="104.2" r="4.5" class="pt s2"><title>Run E · picnic (painting) · attempt 1 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.47% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="306.4" cy="166.9" r="4.5" class="pt s2"><title>Run E · picnic (painting) · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.70% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="180.8" cy="173.4" r="4.5" class="pt s2"><title>Run E · firefighter BBQ · attempt 1 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.27% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="136.3" cy="166.9" r="4.5" class="pt s2"><title>Run E · firefighter BBQ · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.18% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="466.2" cy="170.6" r="4.5" class="pt s2"><title>Run E · 1950s diner · attempt 1 (edit)
+Gemini 3.1 Flash Image (closed)
+area 2.42% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="305.2" cy="111.2" r="4.5" class="pt s2"><title>Run E · 1950s diner · attempt 3 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.69% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="448.6" cy="306.0" r="4.5" class="pt s2"><title>Run E · office desk · attempt 1 (edit)
+Gemini 3.1 Flash Image (closed)
+area 2.09% · legibility 2/4 · ad suspicion 1/5</title></circle><circle cx="385.5" cy="306.8" r="6" class="pt s2 ok"><title>Run E · office desk · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 1.29% · legibility 2/4 · ad suspicion 1/5 · ACCEPTED</title></circle><circle cx="341.7" cy="101.7" r="4.5" class="pt s2"><title>Run E · road trip · attempt 1 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.90% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="327.5" cy="305.3" r="6" class="pt s2 ok"><title>Run E · road trip · attempt 3 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.81% · legibility 1/4 · ad suspicion 1/5 · ACCEPTED</title></circle><circle cx="220.2" cy="173.0" r="4.5" class="pt s2"><title>Run E · dorm study · attempt 1 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.36% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="121.2" cy="246.2" r="4.5" class="pt s2"><title>Run E · dorm study · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.17% · legibility 2/4 · ad suspicion 2/5</title></circle><circle cx="168.5" cy="175.5" r="4.5" class="pt s2"><title>Run E · rooftop bar · attempt 1 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.24% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="122.9" cy="306.9" r="4.5" class="pt s2"><title>Run E · rooftop bar · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.17% · legibility 1/4 · ad suspicion 1/5</title></circle><circle cx="262.2" cy="173.2" r="4.5" class="pt s2"><title>Run E · dystopian city · attempt 1 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.49% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="184.8" cy="167.5" r="4.5" class="pt s2"><title>Run E · dystopian city · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.27% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="475.9" cy="54.6" r="4.5" class="pt s2"><title>Run F · picnic (painting) · attempt 1 (generate)
+Gemini 3.1 Flash Image (closed)
+area 2.57% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="287.4" cy="52.4" r="4.5" class="pt s2"><title>Run F · picnic (painting) · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.60% · legibility 2/4 · ad suspicion 5/5</title></circle><circle cx="537.4" cy="56.4" r="4.5" class="pt s2"><title>Run F · picnic (painting) · attempt 3 (generate)
+Gemini 3.1 Flash Image (closed)
+area 4.20% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="239.4" cy="184.5" r="4.5" class="pt s2"><title>Run F · firefighter BBQ · attempt 1 (generate)
+Gemini 3.1 Flash Image (closed)
+area 0.41% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="76.4" cy="180.4" r="4.5" class="pt s2"><title>Run F · firefighter BBQ · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.12% · legibility 1/4 · ad suspicion 3/5</title></circle><circle cx="398.8" cy="56.6" r="4.5" class="pt s2"><title>Run F · firefighter BBQ · attempt 3 (generate)
+Gemini 3.1 Flash Image (closed)
+area 1.43% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="369.7" cy="233.9" r="4.5" class="pt s2"><title>Run F · 1950s diner · attempt 1 (generate)
+Gemini 3.1 Flash Image (closed)
+area 1.12% · legibility 3/4 · ad suspicion 2/5</title></circle><circle cx="130.2" cy="299.1" r="4.5" class="pt s2"><title>Run F · 1950s diner · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.18% · legibility 2/4 · ad suspicion 1/5</title></circle><circle cx="566.8" cy="243.1" r="4.5" class="pt s2"><title>Run F · 1950s diner · attempt 3 (generate)
+Gemini 3.1 Flash Image (closed)
+area 5.22% · legibility 4/4 · ad suspicion 2/5</title></circle><circle cx="588.1" cy="226.8" r="4.5" class="pt s2"><title>Run F · office desk · attempt 1 (generate)
+Gemini 3.1 Flash Image (closed)
+area 6.17% · legibility 1/4 · ad suspicion 2/5</title></circle><circle cx="499.6" cy="227.6" r="4.5" class="pt s2"><title>Run F · office desk · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 3.08% · legibility 3/4 · ad suspicion 2/5</title></circle><circle cx="368.3" cy="230.0" r="6" class="pt s2 ok"><title>Run F · office desk · attempt 3 (edit)
+Gemini 3.1 Flash Image (closed)
+area 1.11% · legibility 2/4 · ad suspicion 2/5 · ACCEPTED</title></circle><circle cx="483.5" cy="117.1" r="4.5" class="pt s2"><title>Run F · road trip · attempt 1 (generate)
+Gemini 3.1 Flash Image (closed)
+area 2.76% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="372.1" cy="229.5" r="6" class="pt s2 ok"><title>Run F · road trip · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 1.17% · legibility 1/4 · ad suspicion 2/5 · ACCEPTED</title></circle><circle cx="340.7" cy="178.9" r="4.5" class="pt s2"><title>Run F · dorm study · attempt 1 (generate)
+Gemini 3.1 Flash Image (closed)
+area 0.91% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="258.5" cy="241.4" r="6" class="pt s2 ok"><title>Run F · dorm study · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.47% · legibility 3/4 · ad suspicion 2/5 · ACCEPTED</title></circle><circle cx="405.2" cy="47.4" r="4.5" class="pt s2"><title>Run F · rooftop bar · attempt 1 (generate)
+Gemini 3.1 Flash Image (closed)
+area 1.47% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="106.7" cy="101.7" r="4.5" class="pt s2"><title>Run F · rooftop bar · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.15% · legibility 1/4 · ad suspicion 4/5</title></circle><circle cx="290.4" cy="237.8" r="4.5" class="pt s2"><title>Run F · rooftop bar · attempt 3 (generate)
+Gemini 3.1 Flash Image (closed)
+area 0.62% · legibility 2/4 · ad suspicion 2/5</title></circle><circle cx="545.5" cy="115.8" r="4.5" class="pt s2"><title>Run F · dystopian city · attempt 1 (generate)
+Gemini 3.1 Flash Image (closed)
+area 4.46% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="244.6" cy="237.7" r="4.5" class="pt s2"><title>Run F · dystopian city · attempt 2 (edit)
+Gemini 3.1 Flash Image (closed)
+area 0.43% · legibility 3/4 · ad suspicion 2/5</title></circle><circle cx="491.7" cy="175.3" r="4.5" class="pt s2"><title>Run F · dystopian city · attempt 3 (generate)
+Gemini 3.1 Flash Image (closed)
+area 2.89% · legibility 3/4 · ad suspicion 3/5</title></circle></svg><!--/SCATTER-->
+    </div>
+    <figcaption><b>Figure 3.</b> All 170 verified images across seven conditions, coloured by the model that drew the product. FLUX prompt-only images (blue) pile up at ad-suspicion 4–5 whatever their size. Gemini's (orange) spread lower. Hover a dot for the run, scene, attempt and scores.</figcaption>
+  </figure>
+
+  <div class="two">
+    <figure>
+      <div class="chart">
+        <div class="legend"><span><i class="sw s1"></i>FLUX.2 dev</span><span><i class="sw s2"></i>Gemini 3.1 Flash Image</span></div>
+        <!--LEGCURVE--><svg viewBox="0 0 560 300" role="img" aria-label="Mean blind ad suspicion by legibility level. FLUX rises from 2.0 to 4.6; Gemini stays lower, 2.2 to 3.4. The band ceiling of 2 is crossed at legibility 2 for both."><line x1="50" x2="450" y1="254.0" y2="254.0" class="grid"/><text x="40" y="258.0" text-anchor="end" class="tick">1</text><line x1="50" x2="450" y1="195.5" y2="195.5" class="grid"/><text x="40" y="199.5" text-anchor="end" class="tick">2</text><line x1="50" x2="450" y1="137.0" y2="137.0" class="grid"/><text x="40" y="141.0" text-anchor="end" class="tick">3</text><line x1="50" x2="450" y1="78.5" y2="78.5" class="grid"/><text x="40" y="82.5" text-anchor="end" class="tick">4</text><line x1="50" x2="450" y1="20.0" y2="20.0" class="grid"/><text x="40" y="24.0" text-anchor="end" class="tick">5</text><line x1="50" x2="450" y1="195.5" y2="195.5" class="ceil"/><text x="456" y="199.5" class="ceillab">subtle ceiling</text><text x="50.0" y="272" text-anchor="middle" class="tick">1 shape/colour</text><text x="183.3" y="272" text-anchor="middle" class="tick">2 partial mark</text><text x="316.7" y="272" text-anchor="middle" class="tick">3 readable</text><text x="450.0" y="272" text-anchor="middle" class="tick">4 hero</text><text x="250.0" y="294" text-anchor="middle" class="axlab">legibility of the brand (inspector, 0–4)</text><polyline fill="none" class="ln s1" points="50.0,195.5 183.3,117.5 316.7,69.4 450.0,45.1"/><circle cx="50.0" cy="195.5" r="5" class="pt s1"><title>FLUX.2 dev, prompt only · legibility 1: mean suspicion 2.00 (n=1)</title></circle><circle cx="183.3" cy="117.5" r="5" class="pt s1"><title>FLUX.2 dev, prompt only · legibility 2: mean suspicion 3.33 (n=9)</title></circle><circle cx="316.7" cy="69.4" r="5" class="pt s1"><title>FLUX.2 dev, prompt only · legibility 3: mean suspicion 4.15 (n=84)</title></circle><circle cx="450.0" cy="45.1" r="5" class="pt s1"><title>FLUX.2 dev, prompt only · legibility 4: mean suspicion 4.57 (n=21)</title></circle><text x="460.0" y="49.1" class="dlab">FLUX</text><polyline fill="none" class="ln s2" points="50.0,185.8 183.3,162.1 316.7,111.4 450.0,137.0"/><circle cx="50.0" cy="185.8" r="5" class="pt s2"><title>Gemini 3.1 Flash Image (closed) · legibility 1: mean suspicion 2.17 (n=6)</title></circle><circle cx="183.3" cy="162.1" r="5" class="pt s2"><title>Gemini 3.1 Flash Image (closed) · legibility 2: mean suspicion 2.57 (n=14)</title></circle><circle cx="316.7" cy="111.4" r="5" class="pt s2"><title>Gemini 3.1 Flash Image (closed) · legibility 3: mean suspicion 3.44 (n=16)</title></circle><circle cx="450.0" cy="137.0" r="5" class="pt s2"><title>Gemini 3.1 Flash Image (closed) · legibility 4: mean suspicion 3.00 (n=2)</title></circle><text x="460.0" y="141.0" class="dlab">Gemini</text></svg><!--/LEGCURVE-->
+      </div>
+      <figcaption><b>Figure 4. Readable means "advert".</b> Mean blind ad-suspicion rises with legibility for both models. At legibility 2 (a partial wordmark), FLUX already averages 3.3, above the subtle ceiling. From legibility 2 upward, Gemini sits about 0.7 lower, so its products read as integrated props rather than inserts. At legibility 1 the two are level (n = 1 for FLUX).</figcaption>
+    </figure>
+    <div class="callout">
+      <span class="lbl">Why the band is nearly empty</span>
+      <p>The band asks for two things the automated viewer treats as mutually exclusive: a brand a viewer <em>can</em> identify (Gupta &amp; Lord's recall floor) and an image a viewer <em>doesn't</em> read as advertising (Cowley &amp; Barron's ceiling). For FLUX with prompt-only control, those overlap in 2 of 115 images, both from repair rounds that used an "among the drinks" or "on a nightstand in the background" anchor. The blind pass is a primed, worst-case detector, because its question mentions advertising. Human viewers may be far less sensitive, and the user study measures exactly that.</p>
+    </div>
+  </div>
+
+  <figure>
+    <div class="strip">
+      <div class="step"><img src="final_img/trace_base.jpg" alt="Baseline office desk at night"><span class="lbl">Baseline</span><span class="p">an office desk at night with city lights through the window, cinematic lighting</span></div>
+      <div class="step"><img src="final_img/trace_1.jpg" alt="Attempt 1: glowing Apple laptop"><span class="pill bad">too prominent</span><span class="stat">area 5.9% · legib 3 · ad? 4</span><span class="p">…, <mark>an Apple laptop at the far edge of the desk</mark>, …</span><span class="fb">→ distant anchor + depth cue + dilution</span></div>
+      <div class="step"><img src="final_img/trace_2.jpg" alt="Attempt 2: laptop still prominent"><span class="pill bad">too prominent</span><span class="stat">area 5.8% · legib 3 · ad? 3</span><span class="p">…<mark>a small Apple laptop softly out of focus at the far left corner</mark>…</span><span class="fb">→ fewer product words + occlusion</span></div>
+      <div class="step"><img src="final_img/trace_3.jpg" alt="Attempt 3: laptop larger"><span class="pill bad">too prominent</span><span class="stat">area 13.7% · legib 3 · ad? 4</span><span class="p">…<mark>a closed Apple laptop softly out of focus in shadows at the far edge</mark>…</span><span class="fb">→ 2 misses on the same issue: re-plan to candidate 2</span></div>
+      <div class="step"><img src="final_img/trace_4.jpg" alt="Attempt 4: small phone at the far edge of the desk"><span class="pill ok">accepted</span><span class="stat">area 1.1% · legib 1 · ad? 2</span><span class="p">…<mark>an Apple iPhone at the far edge of the desk</mark>…</span></div>
+    </div>
+    <figcaption><b>Figure 5. One repair trace (run G, office desk).</b> Two feedback rounds changed the wording but not FLUX's rendering of the laptop, whose logo stays lit. The escalation to the next plan candidate produced an accepted image. But the phone is identifiable only by shape (legibility 1), so this is a weak placement by the brief's own standard.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="trio">
+      <div><img src="final_img/C1.jpg" alt="Firefighter BBQ with a small Coca-Cola can among drinks on a background table"><span class="pill ok">accepted · C</span><span class="stat">area 0.27% · legib 2 · ad? 2 · FLUX, prompt repair</span></div>
+      <div><img src="final_img/E5.jpg" alt="Dorm study with a Red Bull can on a background nightstand"><span class="pill ok">accepted · E</span><span class="stat">area 0.26% · legib 2 · ad? 2 · FLUX, prompt repair</span></div>
+      <div><img src="final_img/diner_base.jpg" alt="Baseline 1950s diner full of Coca-Cola signs with no injection"><span class="pill bad">baseline, no injection</span><span class="stat">FLUX drew Coca-Cola signs by itself</span></div>
+    </div>
+    <figcaption><b>Figure 6.</b> Left and centre: the two FLUX prompt-only images that met the band with a partly legible brand. Both came from repair rounds that used "among the drinks on a table in the background" and "on a nightstand in the background". Right: the diner <em>baseline</em> is already full of Coca-Cola signage. FLUX learned the association from its training data, so part of the "placement" in era scenes happens with no rewriter at all.</figcaption>
+  </figure>
+</section>
+
+<!-- ====================================================== 6 -->
+<section id="closed">
+  <h2>6 · Closed-source models</h2>
+  <p>I tested closed image models in two roles: as the <b>editor</b> (repairs, and VPP insertion into the FLUX baseline), and as the <b>generator</b>. On a head-to-head insertion into the same picnic painting, the editors behaved very differently.</p>
+  <figure>
+    <div class="quad">
+      <div><img src="final_img/ed_base.jpg" alt="Baseline picnic painting"><h3>Baseline</h3><span class="stat">FLUX.2 dev</span></div>
+      <div><img src="final_img/ed_qwen.jpg" alt="Qwen edit: bottle added, label sharp and front-facing"><h3>Qwen-Image-Edit 2511</h3><span class="stat">open · ~10 s GPU · drift 0.02% · area 0.8% · legib 3 · ad? 5</span></div>
+      <div><img src="final_img/ed_gemini.jpg" alt="Gemini edit: small bottle half hidden behind the basket"><h3>Gemini 3.1 Flash Image</h3><span class="stat">closed · $0.068 · 13 s · drift 0.19%</span></div>
+      <div><img src="final_img/ed_gpt.jpg" alt="GPT edit: small bottle behind the basket, whole image slightly re-rendered"><h3>GPT-5.4 Image 2</h3><span class="stat">closed · $0.236 · 132 s · drift 9.9%</span></div>
+    </div>
+    <figcaption><b>Figure 7.</b> The same insertion into the same image. Both closed editors produced the brief ("small, half hidden behind the basket"). Qwen follows position well but draws a crisp, front-facing label, and it can't resize an existing object: "make it half the size" barely changed the area in run A. GPT-5.4 re-rendered the whole painting. Gemini was the best trade-off and was used for runs E and F. The Qwen and Gemini instructions came from different planner steps (vision planner vs hand-written), so this is illustrative, not a controlled comparison.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="quad">
+      <div><img src="final_img/E3.jpg" alt="Office desk with a small Apple laptop inserted"><span class="pill ok">accepted · E</span><span class="stat">office desk · Gemini insert · area 1.3% · legib 2 · ad? 1</span></div>
+      <div><img src="final_img/E4.jpg" alt="Car interior with a red can deep in the console"><span class="pill ok">accepted · E</span><span class="stat">road trip · remove → reinsert · area 0.8% · legib 1 · ad? 1</span></div>
+      <div><img src="final_img/F5.jpg" alt="Gemini-generated dorm study with a Red Bull can among cluttered branded items"><span class="pill ok">accepted · F</span><span class="stat">dorm · Gemini gen + edit · legib 3 · ad? 2 · blind saw Red Bull, Carhartt, Apple</span></div>
+      <div><img src="final_img/F0.jpg" alt="Gemini-generated picnic with a large Coca-Cola bottle and cooler in the foreground"><span class="pill bad">failed · F</span><span class="stat">picnic · Gemini gen, attempt 1 · area 2.6% · legib 3 · ad? 5</span></div>
+    </div>
+    <figcaption><b>Figure 8.</b> Closed-model outcomes. Both closed conditions accepted 3 of 8, and the <em>same</em> three scenes (office desk, road trip, dorm study): cluttered, modern interiors where a phone or can is expected. 5 of their 6 acceptances came from Gemini <b>edits</b> (4 directly from the two-step remove → reinsert), not from generation. Gemini as a generator over-featured the brand just like FLUX (right). The dorm image shows <b>brand clutter as camouflage</b>: with several brands visible, one more didn't read as an advert.</figcaption>
+  </figure>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Question</th><th>Open (FLUX.2 + Qwen)</th><th>Closed (Gemini 3.1 Flash Image)</th></tr></thead>
+    <tbody>
+      <tr><td>Accepted, subtle band</td><td>1/8 (G), plus 1/3 (C)</td><td>3/8 (E), 3/8 (F)</td></tr>
+      <tr><td>Legible and unsuspicious images</td><td>2 of 115 FLUX prompt-only; 1 of 17 Qwen edits</td><td>11 of 38</td></tr>
+      <tr><td>Cost per injected prompt</td><td>$0.04–0.08 OpenRouter + ~1 GPU-min Comfy</td><td>~$0.35 OpenRouter (85–90% image calls)</td></tr>
+      <tr><td>Seed control and paired design</td><td>Yes: same seed, same baseline</td><td>No seed; baseline and attempt are independent samples</td></tr>
+      <tr><td>Hidden rewriting in between</td><td>None: the prompt sent is the prompt used</td><td>Unknown: vendor models may rewrite or augment prompts</td></tr>
+      <tr><td>Fit for the thesis question</td><td>Direct: tests a prompt-layer agent</td><td>Upper-bound comparison only</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ====================================================== 7 -->
+<section id="fid">
+  <h2>7 · Fidelity to the user's prompt</h2>
+  <div class="two">
+    <figure>
+      <div class="chart"><!--CLIP--><svg viewBox="0 0 620 254" role="img" aria-label="Mean CLIPScore change of the first attempt versus the same-seed baseline, by condition. v1 conditions lose about 0.028; v2 loses 0.010; VPP conditions are near zero."><line x1="190.0" x2="190.0" y1="10" y2="226" class="grid"/><text x="190.0" y="242" text-anchor="middle" class="tick">-0.04</text><line x1="264.0" x2="264.0" y1="10" y2="226" class="grid"/><text x="264.0" y="242" text-anchor="middle" class="tick">-0.03</text><line x1="338.0" x2="338.0" y1="10" y2="226" class="grid"/><text x="338.0" y="242" text-anchor="middle" class="tick">-0.02</text><line x1="412.0" x2="412.0" y1="10" y2="226" class="grid"/><text x="412.0" y="242" text-anchor="middle" class="tick">-0.01</text><line x1="486.0" x2="486.0" y1="10" y2="226" class="zero"/><text x="486.0" y="242" text-anchor="middle" class="tick">+0.00</text><line x1="560.0" x2="560.0" y1="10" y2="226" class="grid"/><text x="560.0" y="242" text-anchor="middle" class="tick">+0.01</text><text x="180" y="29" text-anchor="end" class="rowlab">A · v1 + Qwen edit (n=8)</text><line x1="486.0" x2="276.6" y1="25" y2="25" class="stem"/><circle cx="276.6" cy="25" r="6" class="pt s1"><title>Run A: mean Δ CLIPScore attempt 1 -0.0283; final -0.0279</title></circle><text x="266.6" y="29" text-anchor="end" class="vlab">-0.028</text><text x="180" y="59" text-anchor="end" class="rowlab">B · v1 + prompt repair (n=8)</text><line x1="486.0" x2="276.6" y1="55" y2="55" class="stem"/><circle cx="276.6" cy="55" r="6" class="pt s1"><title>Run B: mean Δ CLIPScore attempt 1 -0.0283; final -0.0263</title></circle><text x="266.6" y="59" text-anchor="end" class="vlab">-0.028</text><text x="180" y="89" text-anchor="end" class="rowlab">G · v2 + prompt repair (n=8)</text><line x1="486.0" x2="410.5" y1="85" y2="85" class="stem"/><circle cx="410.5" cy="85" r="6" class="pt s1"><title>Run G: mean Δ CLIPScore attempt 1 -0.0102; final -0.0099</title></circle><text x="400.5" y="89" text-anchor="end" class="vlab">-0.010</text><text x="180" y="119" text-anchor="end" class="rowlab">C · v2 + Qwen edit (n=3)</text><line x1="486.0" x2="457.9" y1="115" y2="115" class="stem"/><circle cx="457.9" cy="115" r="6" class="pt s1"><title>Run C: mean Δ CLIPScore attempt 1 -0.0038; final -0.0000</title></circle><text x="447.9" y="119" text-anchor="end" class="vlab">-0.004</text><text x="180" y="149" text-anchor="end" class="rowlab">D · VPP, Qwen insert (n=3)</text><line x1="486.0" x2="512.6" y1="145" y2="145" class="stem"/><circle cx="512.6" cy="145" r="6" class="pt s1"><title>Run D: mean Δ CLIPScore attempt 1 +0.0036; final +0.0013</title></circle><text x="522.6" y="149" text-anchor="start" class="vlab">+0.004</text><text x="180" y="179" text-anchor="end" class="rowlab">E · VPP, Gemini insert (n=8)</text><line x1="486.0" x2="493.4" y1="175" y2="175" class="stem"/><circle cx="493.4" cy="175" r="6" class="pt s1"><title>Run E: mean Δ CLIPScore attempt 1 +0.0010; final -0.0002</title></circle><text x="503.4" y="179" text-anchor="start" class="vlab">+0.001</text><text x="180" y="209" text-anchor="end" class="rowlab">F · Gemini gen + edit (n=8)</text><line x1="486.0" x2="462.3" y1="205" y2="205" class="stem"/><circle cx="462.3" cy="205" r="6" class="pt s1"><title>Run F: mean Δ CLIPScore attempt 1 -0.0032; final -0.0045</title></circle><text x="452.3" y="209" text-anchor="end" class="vlab">-0.003</text></svg><!--/CLIP--></div>
+      <figcaption><b>Figure 9.</b> Mean CLIPScore change of the first attempt vs the same-seed baseline, scored against the <em>original</em> prompt (OpenAI CLIP ViT-B/32). v1 loses 0.028, and up to 0.075 on the dystopian city. v2 loses 0.010. VPP conditions are near zero by construction, since the baseline is kept. F is shown for completeness, but its baseline is an independent Gemini sample.</figcaption>
+    </figure>
+    <div class="callout">
+      <span class="lbl">Metric notes</span>
+      <p>Baseline CLIPScores range 0.295–0.373. All but the road trip (0.295) clear the ~0.30 "good" level Thesis B cited. v2's final images stay within 0.02 of their baselines in 6 of 8 prompts, and the other two are at −0.021.</p>
+      <p><b>VQAScore.</b> The canonical CLIP-FlanT5 backbone needs a GPU with 12–24 GB. <code>scripts/vqascore_t2v.py</code> runs it on Colab or Katana over any run folder. A GPT-4o log-probability stand-in was tried and discarded: it returned 1.000 for almost every image, so it couldn't distinguish conditions ($0.14).</p>
+      <p>The informed inspector's own fidelity score (1–5) rated nearly every image 5, so it was lenient compared with CLIPScore. Relying on CLIP for fidelity is the safer choice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== 8 -->
+<section id="cost">
+  <h2>8 · Cost and compute</h2>
+  <div class="two">
+    <figure>
+      <div class="chart">
+        <div class="legend"><span><i class="sw s1 sq"></i>LLM calls (Gemini 3.7 Flash)</span><span><i class="sw s2 sq"></i>closed image model</span></div>
+        <!--COST--><svg viewBox="0 0 620 254" role="img" aria-label="OpenRouter cost per injected prompt by condition. Open-model conditions cost 4 to 11 cents, mostly LLM calls; the closed-image conditions cost about 35 cents, mostly image generation and editing."><line x1="190.0" x2="190.0" y1="10" y2="226" class="grid"/><text x="190.0" y="242" text-anchor="middle" class="tick">$0.00</text><line x1="280.0" x2="280.0" y1="10" y2="226" class="grid"/><text x="280.0" y="242" text-anchor="middle" class="tick">$0.10</text><line x1="370.0" x2="370.0" y1="10" y2="226" class="grid"/><text x="370.0" y="242" text-anchor="middle" class="tick">$0.20</text><line x1="460.0" x2="460.0" y1="10" y2="226" class="grid"/><text x="460.0" y="242" text-anchor="middle" class="tick">$0.30</text><line x1="550.0" x2="550.0" y1="10" y2="226" class="grid"/><text x="550.0" y="242" text-anchor="middle" class="tick">$0.40</text><text x="180" y="29" text-anchor="end" class="rowlab">A · v1 + Qwen edit</text><rect x="190.0" y="16" width="39.3" height="18" rx="2" class="bar s1"><title>Run A: LLM calls $0.044/prompt</title></rect><text x="235.3" y="29" class="vlab">$0.044</text><text x="180" y="59" text-anchor="end" class="rowlab">B · v1 + prompt repair</text><rect x="190.0" y="46" width="43.1" height="18" rx="2" class="bar s1"><title>Run B: LLM calls $0.048/prompt</title></rect><text x="239.1" y="59" class="vlab">$0.048</text><text x="180" y="89" text-anchor="end" class="rowlab">G · v2 + prompt repair</text><rect x="190.0" y="76" width="71.6" height="18" rx="2" class="bar s1"><title>Run G: LLM calls $0.080/prompt</title></rect><text x="267.6" y="89" class="vlab">$0.080</text><text x="180" y="119" text-anchor="end" class="rowlab">C · v2 + Qwen edit</text><rect x="190.0" y="106" width="91.8" height="18" rx="2" class="bar s1"><title>Run C: LLM calls $0.102/prompt</title></rect><text x="287.8" y="119" class="vlab">$0.102</text><text x="180" y="149" text-anchor="end" class="rowlab">D · VPP, Qwen insert</text><rect x="190.0" y="136" width="96.3" height="18" rx="2" class="bar s1"><title>Run D: LLM calls $0.107/prompt</title></rect><text x="292.3" y="149" class="vlab">$0.107</text><text x="180" y="179" text-anchor="end" class="rowlab">E · VPP, Gemini insert</text><rect x="190.0" y="166" width="56.4" height="18" rx="2" class="bar s1"><title>Run E: LLM calls $0.063/prompt</title></rect><rect x="248.4" y="166" width="264.8" height="18" rx="2" class="bar s2"><title>Run E: closed image model $0.296/prompt</title></rect><text x="519.2" y="179" class="vlab">$0.359</text><text x="180" y="209" text-anchor="end" class="rowlab">F · Gemini gen + edit</text><rect x="190.0" y="196" width="27.1" height="18" rx="2" class="bar s1"><title>Run F: LLM calls $0.030/prompt</title></rect><rect x="219.1" y="196" width="286.4" height="18" rx="2" class="bar s2"><title>Run F: closed image model $0.321/prompt</title></rect><text x="511.6" y="209" class="vlab">$0.351</text></svg><!--/COST-->
+      </div>
+      <figcaption><b>Figure 10.</b> OpenRouter spend per injected prompt. The prompt-rewriting pipeline costs 4–8 cents per prompt, dominated by the two verification passes. Closed image models multiply that by about 8.</figcaption>
+    </figure>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Item</th><th class="num">Spend</th></tr></thead>
+      <tbody>
+        <tr><td>Gemini 3.1 Flash Image edits (53)</td><td class="num">$3.59</td></tr>
+        <tr><td>Gemini 3.1 Flash Image generations (21)</td><td class="num">$1.41</td></tr>
+        <tr><td>Informed verify (Gemini 3.7 Flash)</td><td class="num">$1.05</td></tr>
+        <tr><td>Rewrites incl. lint fixes and feedback</td><td class="num">$0.69</td></tr>
+        <tr><td>Blind verify</td><td class="num">$0.49</td></tr>
+        <tr><td>Repair writer</td><td class="num">$0.49</td></tr>
+        <tr><td>GPT-5.4 Image 2 test edit (1)</td><td class="num">$0.24</td></tr>
+        <tr><td>GPT-4o VQAScore stand-in (discarded)</td><td class="num">$0.14</td></tr>
+        <tr><td>Plan, classify, VPP plan</td><td class="num">$0.18</td></tr>
+        <tr><td><b>OpenRouter total</b> (cap $10)</td><td class="num"><b>$8.29</b></td></tr>
+        <tr><td>Comfy Cloud: 153 FLUX.2 jobs (avg 19.7 s) + 37 Qwen edits (avg 10.1 s)</td><td class="num">56 GPU-min</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <p class="muted">Operational notes: the Comfy account runs 1 job at a time (Standard plan), and queue waits averaged about 2 minutes when several runs shared it. One run lost a prompt to a network timeout, and one process stalled for about 30 minutes. Both were fixed (tolerant polling, 1-hour queue-aware timeout, <code>--resume</code>). A Creator plan (3 concurrent jobs) would cut wall time about 3×.</p>
+</section>
+
+<!-- ====================================================== 9 -->
+<section id="disc">
+  <h2>9 · Discussion</h2>
+  <ol class="tight">
+    <li><b>Controllable vs uncontrollable variables.</b> A prompt-layer agent can control <em>whether</em>, <em>which brand</em>, <em>where</em> and roughly <em>how big</em>. It can't reliably control <em>how legibly</em> the model draws the mark, which is the variable both the literature and the verifier say decides detectability. Brand tokens are strong, and the model's prior is the advert-style rendering.</li>
+    <li><b>Specificity has a cost the literature predicts.</b> Describing a product in detail is the prompt equivalent of a "hero" placement, and the images, the blind viewer and CLIPScore all react the way Cowley &amp; Barron's prominence result would lead you to expect.</li>
+    <li><b>Scene type matters more than wording.</b> All accepted images came from cluttered modern interiors: a desk, a car, a dorm, a backyard drinks table. Those are places where the object is expected and other objects compete for attention. Painted, sparse or era-specific scenes (the picnic, the diner, the city) never passed. That argues for making scene clutter an input to the classifier's INJECT decision.</li>
+    <li><b>VLMs as detectors.</b> Per condition, the blind pass named the brand in 77–100% of all images and flagged most as ads. Tang et al. found humans mostly fail to notice covert text ads. If humans also miss these images while a VLM catches them, automated screening is a practical defence, and that's a strong result for RQ2.</li>
+    <li><b>Organic placement already exists.</b> FLUX adds Coca-Cola to a 1950s diner unprompted. Any detectability study needs its baseline condition to control for brands the model inserts by itself.</li>
+    <li><b>Ethics.</b> Every industry decision has a pipeline counterpart except the deal and the consent that comes with it. Under Australia's AANA practice note, a visible branded product can itself count as the disclosure. The user study's post-disclosure measures test whether viewers agree.</li>
+  </ol>
+</section>
+
+<!-- ====================================================== 10 -->
+<section id="lim">
+  <h2>10 · Limitations</h2>
+  <ul class="tight">
+    <li>n = 8 injected prompts per condition, one seed. Differences of one or two acceptances are within noise. The pattern across 170 images is the robust part.</li>
+    <li>The verifier is one VLM (Gemini 3.7 Flash) that hasn't been validated against human judgements. The blind prompt asks about advertising, which primes it.</li>
+    <li>The subtle band's thresholds come from the literature, not calibrated on people. Acceptance is highly sensitive to them (see the acceptance table in §5).</li>
+    <li>C and D are partial (3 prompts each). E and F mix mechanisms: E fell back to FLUX regeneration on some repairs, and F has no seed pairing.</li>
+    <li>Classifier checked on 17 prompts with a stand-in prompt; Thesis B's validated "prompt 2" isn't in yet. Qwen-Image was not yet run as a second generator.</li>
+  </ul>
+</section>
+
+<!-- ====================================================== 11 -->
+<section id="next">
+  <h2>11 · Recommended next steps</h2>
+  <ol class="tight">
+    <li><b>Make the blind VLM a measurement, not a gate.</b> Accept on the informed metrics (area, centrality, eye-draw, legibility ≤3), and report blind ad-suspicion as the automated detectability score next to the human study's.</li>
+    <li><b>Test legibility-light forms</b> in the catalogue, where identity is carried by colour and shape (the red can, the contour bottle, the swoosh, a silver laptop with its lid closed away from the camera). That targets legibility 1–2, the only region the viewer didn't flag.</li>
+    <li><b>Add scene clutter to the classifier</b> (sparse, painted and era scenes lean SKIP) and use "among the X" anchors by default, since those produced both legible FLUX acceptances.</li>
+    <li><b>Run the second open generator</b> (Qwen-Image 2512 is on Comfy Cloud) and 3 seeds per prompt on 30–50 prompts for the thesis numbers. At about $0.06 and about 2 GPU-minutes per prompt (with baselines), 50 prompts × 3 seeds ≈ $9 and 5 GPU-hours.</li>
+    <li><b>Run VQAScore</b> (CLIP-FlanT5) on a GPU over runs A, B and G, then assemble the user-study set from accepted and near-miss images, paired with baselines. <code>injections.csv</code> is ready for disclosure.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Reproduce</h2>
+  <p class="mono">python -m adplace run pilot_prompts.txt --name G --repair regen --rewriter v2 --reuse pilot-edit --reuse-upto plan --max-attempts 5<br>python -m adplace.clipscore runs/G · python -m adplace.rejudge runs/G · python -m adplace report runs/G<br>python docs/final_stats.py &amp;&amp; python docs/build_final_charts.py</p>
+  <ol class="refs">
+    <li>Literature, regulation and industry sources: see the <a href="https://claude.ai/artifact/BBWcmuKbrXaczu3B3J1eWC">research brief</a> (Gupta &amp; Lord 1998; d'Astous &amp; Séguin 1999; Law &amp; Braun 2000; Russell 2002; Cowley &amp; Barron 2008; Matthes et al. 2012; Boerman et al. 2012; Ofcom s.9; AVMSD 2018/1808; AANA 2.7; GARM; OpenAI 2026).</li>
+    <li>Tang, B. J. et al. (2025). Ads that talk back. UbiComp 2025. <a href="https://arxiv.org/abs/2409.15436">arXiv:2409.15436</a></li>
+    <li>Alam, M. M., Sokhandan, N. &amp; Goodman, E. (2024). Automated virtual product placement and assessment in images using diffusion models. CVPR AI4CC. <a href="https://arxiv.org/abs/2405.01130">arXiv:2405.01130</a></li>
+    <li>Hessel, J. et al. (2021). CLIPScore: A reference-free evaluation metric for image captioning. EMNLP. <a href="https://arxiv.org/abs/2104.08718">arXiv:2104.08718</a></li>
+    <li>Lin, Z. et al. (2024). Evaluating text-to-visual generation with image-to-text generation (VQAScore). ECCV. <a href="https://arxiv.org/abs/2404.01291">arXiv:2404.01291</a></li>
+  </ol>
+</section>
+</div>

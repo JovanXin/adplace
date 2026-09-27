@@ -1,0 +1,64 @@
+<title>adplace Prompt Appendix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+:root{--bg:#f4f5f7;--surface:#fff;--code:#f0f2f5;--ink:#15181c;--muted:#56606b;--line:#d8dce2;--accent:#2c4f86;--accent-ink:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#111317;--surface:#1a1d22;--code:#14171b;--ink:#e7e9ec;--muted:#a2aab4;--line:#2e333b;--accent:#8fb0e6;--accent-ink:#0e1420}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#111317;--surface:#1a1d22;--code:#14171b;--ink:#e7e9ec;--muted:#a2aab4;--line:#2e333b;--accent:#8fb0e6;--accent-ink:#0e1420}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 "IBM Plex Sans",system-ui,sans-serif;padding-inline:16px;padding-block:32px 64px}
+main{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1,h2{font-family:"Source Serif 4",Georgia,serif;margin:0;text-wrap:balance}
+h1{font-size:clamp(26px,4vw,36px)} h2{font-size:22px}
+h3{margin:0;font-size:16px;font-weight:600}
+p{margin:0;max-width:70ch}
+.muted{color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:6px}
+nav a{font-size:13px;color:var(--accent);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:2px 10px}
+nav a:hover{border-color:var(--accent)}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:12px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+dl{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 12px;margin:0;font-size:13.5px}
+dt{color:var(--muted)} dd{margin:0;overflow-wrap:anywhere}
+pre{margin:0;background:var(--code);border:1px solid var(--line);border-radius:7px;padding:12px 14px;font:12.5px/1.55 "IBM Plex Mono",ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px}
+button.copy{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:3px 10px;font:inherit;font-size:13px;cursor:pointer}
+button.copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details.run{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;scroll-margin-top:12px}
+details.run summary{cursor:pointer;display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
+details.run summary span{color:var(--muted);font-size:13px}
+.tbl{overflow-x:auto;margin-top:10px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;vertical-align:top;padding:5px 8px;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.act{color:var(--muted);white-space:nowrap}
+td:last-child{min-width:320px}
+</style>
+<main>
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <span class="muted" style="font-size:13px">adplace · Thesis C · generated from the code and run records</span>
+    <h1>Prompt appendix</h1>
+    <p>Every prompt the pipeline uses. Part A is the system prompt for each LLM stage, with the model and what the stage sends as the user message. Part B is every prompt actually sent to an image model, per run, prompt and attempt, including edit instructions for the edit conditions. The same content is in <code>docs/prompts_appendix.md</code> for the thesis.</p>
+    <p class="muted"><!--COUNTS--></p>
+  </header>
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2>A. LLM stage prompts</h2>
+    <nav><!--NAV_A--></nav>
+    <!--SEC_A-->
+  </section>
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <h2>B. Prompts sent to the image model</h2>
+    <nav><!--NAV_B--></nav>
+    <!--SEC_B-->
+  </section>
+</main>
+<script>
+document.addEventListener("click", async e => {
+  const b = e.target.closest("button.copy"); if (!b) return;
+  const pre = document.getElementById(b.dataset.for);
+  try { await navigator.clipboard.writeText(pre.textContent); b.textContent = "Copied"; }
+  catch { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Press ⌘C"; }
+  setTimeout(() => b.textContent = "Copy", 1600);
+});
+</script>

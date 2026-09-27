@@ -1,0 +1,442 @@
+<title>Product Placement Decisions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{--paper:#F4F5F2;--card:#FFFFFF;--ink:#1C2321;--muted:#5D6864;--rule:#D8DDD8;--accent:#1F5F8B;--accent-bg:#E3EDF4;--mark:#FFE36E;--mark-ink:#1C2321;
+--gap:#A8322A;--gap-bg:#F8E4E1;--v1:#eb6834;--v2:#2a78d6;--base:#8A918E;--band:#1baf7a22;--band-line:#1b8f65;
+--f-head:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"Source Serif 4",Georgia,"Times New Roman",serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;--mark:#6B5A12;--mark-ink:#FFF3C2;
+--gap:#F09A90;--gap-bg:#3A1F1C;--v1:#d95926;--v2:#3987e5;--base:#7d8581;--band:#199e7033;--band-line:#3fc896}}
+:root[data-theme="dark"]{color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;--mark:#6B5A12;--mark-ink:#FFF3C2;
+--gap:#F09A90;--gap-bg:#3A1F1C;--v1:#d95926;--v2:#3987e5;--base:#7d8581;--band:#199e7033;--band-line:#3fc896}
+body{background:var(--paper);color:var(--ink);font:17px/1.6 var(--f-body)}
+.wrap{max-width:920px;margin:0 auto;padding-inline:20px;padding-block:40px 80px;display:grid;gap:44px}
+header{display:grid;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:26px}
+.eyebrow,.lbl{font:600 .72rem/1.2 var(--f-head);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+h1,h2,h3{font-family:var(--f-head);font-weight:600;text-wrap:balance;margin:0;letter-spacing:-.005em}
+h1{font-size:2.35rem;line-height:1.1}h2{font-size:1.5rem}h3{font-size:1.08rem}
+p{margin:0;max-width:68ch}.muted{color:var(--muted)}
+section{display:grid;gap:16px}
+.meta{font:.85rem var(--f-head);color:var(--muted);letter-spacing:.02em}
+.toc{display:flex;flex-wrap:wrap;gap:6px 16px;font:500 .85rem var(--f-head)}
+.toc a{color:var(--accent);text-decoration:none}.toc a:hover{text-decoration:underline}
+.tldr{background:var(--accent-bg);border-radius:6px;padding:18px 22px;display:grid;gap:8px}
+.tldr ol{margin:0;padding-left:1.2rem;display:grid;gap:7px}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.88rem;line-height:1.45}
+th,td{text-align:left;vertical-align:top;padding:.6rem .8rem;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}
+thead th{font:600 .72rem var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--paper)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.82rem}
+code{font-family:var(--f-mono);font-size:.82em;background:var(--card);padding:.05em .3em;border-radius:3px}
+mark{background:var(--mark);color:var(--mark-ink);padding:0 .15em;border-radius:2px}
+a{color:var(--accent)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cite{font:500 .72rem var(--f-mono);color:var(--muted);white-space:nowrap}
+figure{margin:0;display:grid;gap:10px}
+figcaption{font-size:.88rem;color:var(--muted);max-width:75ch;line-height:1.5}
+figcaption b{color:var(--ink);font-weight:600}
+.diagram{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px;overflow-x:auto}
+.diagram svg{display:block;width:100%;min-width:640px;height:auto;color:var(--ink)}
+.chart svg{display:block;width:100%;height:auto;color:var(--ink)}
+.chart{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px 10px 6px}
+svg text{font-family:var(--f-head);fill:currentColor}
+.box{fill:var(--card);stroke:currentColor;stroke-width:1.2}
+.box.gapbox{fill:var(--gap-bg);stroke:var(--gap)}
+.box.hi{fill:var(--accent-bg);stroke:var(--accent)}
+.ttl{font-size:13px;font-weight:600}.sub{font-size:11.5px;fill:var(--muted)}.who{font-size:10.5px;fill:var(--muted);font-style:italic}
+.gaptxt{fill:var(--gap)}.acc{fill:var(--accent)}
+.lane{font-size:11px;font-weight:600;letter-spacing:.08em;fill:var(--muted)}
+.edge{stroke:currentColor;stroke-width:1.3;fill:none}.edge.dash{stroke-dasharray:3 4;stroke:var(--muted)}
+.edge.acc{stroke:var(--accent)}
+.grid{stroke:var(--rule);stroke-width:1}
+.tick{font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.axlab{font-size:11.5px;fill:var(--muted)}
+.rowlab{font-size:12px}
+.band{fill:var(--band);stroke:var(--band-line);stroke-dasharray:4 3}
+.bandlab{font-size:11px;fill:var(--band-line);font-weight:600}
+.pt{stroke:var(--card);stroke-width:1.5}.pt.v1{fill:var(--v1)}.pt.v2{fill:var(--v2)}.pt.base{fill:var(--base)}
+.pt.ok{stroke:var(--ink);stroke-width:2}
+.stem{stroke:var(--rule);stroke-width:3;stroke-linecap:round}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font:500 .8rem var(--f-head);color:var(--muted);padding:2px 6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:50%;display:inline-block}
+.sw.v1{background:var(--v1)}.sw.v2{background:var(--v2)}.sw.base{background:var(--base)}
+.sw.band{border-radius:2px;background:var(--band);outline:1px dashed var(--band-line)}
+.gallery{display:grid;grid-template-columns:5.5rem repeat(3,minmax(0,1fr));gap:8px;align-items:start}
+.gallery .rl{font:600 .78rem/1.25 var(--f-head);color:var(--muted);align-self:center}
+.gallery .ch{font:600 .72rem var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:4px;display:block}
+.gallery .cell{display:grid;gap:4px}
+.gallery .stat{font:500 .72rem var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+@media (max-width:640px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.gallery .rl{grid-column:1/-1}.gallery .corner{display:none}}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.trio img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:4px;display:block}
+@media (max-width:640px){.trio{grid-template-columns:1fr}}
+.callout{border-left:3px solid var(--accent);padding:4px 0 4px 16px;display:grid;gap:6px}
+.refs{font-size:.86rem;line-height:1.5;display:grid;gap:6px;padding-left:1.4rem;margin:0}
+ul.tight{margin:0;padding-left:1.2rem;display:grid;gap:6px;max-width:70ch}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Thesis C · research brief · updated 26 Sep 2026</span>
+  <h1>How companies decide on product placement, and what it means for prompt-level placement</h1>
+  <p class="meta">Jovan Xin (z5491897) · Stealthy Advertising Agents in Image Generation Systems</p>
+  <p class="muted">How brands, agencies, studios, streaming platforms and regulators decide <em>whether</em>, <em>where</em>, <em>how</em> and <em>how visibly</em> a product appears. Each decision is mapped onto the adplace pipeline, and the pilot data shows how far a prompt rewriter alone can reproduce those decisions.</p>
+  <nav class="toc" aria-label="Sections">
+    <a href="#chain">1 · The decision chain</a><a href="#vars">2 · The five decisions</a><a href="#prom">3 · Prominence</a>
+    <a href="#rules">4 · Rules by market</a><a href="#ai">5 · AI-era evidence</a><a href="#pilot">6 · What the pilot shows</a><a href="#next">7 · Decisions needed</a><a href="#src">Sources</a>
+  </nav>
+</header>
+
+<div class="tldr">
+  <span class="lbl">In short</span>
+  <ol>
+    <li>Placement is decided in a chain: <b>brief → match → deal → clearance → execution → measurement</b>. Fit with the scene and brand guidelines comes before visibility. Screen time is negotiated and never guaranteed.</li>
+    <li>An image can only carry <b>implicit, visual</b> placement. That is the least intrusive type, and the one that works best when it is <b>subtle, congruent and repeated</b>. Centrality raises recall but not choice (Law &amp; Braun 2000), and prominence backfires with engaged viewers (Cowley &amp; Barron 2008).</li>
+    <li>Rules diverge by market. The UK and EU require placements that are not unduly prominent and are <b>signalled</b> to viewers. Australia's AANA code says placement generally <b>needs no disclosure</b>. OpenAI keeps its chatbot ads labelled and separate. The covert, generated-image case sits in a gap none of these rules names.</li>
+    <li>The pipeline mirrors every link except one: the <b>deal</b>. No one in the scene has agreed to anything. That missing consent is the ethical crux of the thesis.</li>
+    <li>Pilot result: short, backgrounded product phrases (rewriter v2) halve the product's footprint and cut the CLIPScore loss from −0.028 to −0.010. But whenever a wordmark is legible, a VLM viewer rates the image as an ad, so the "subtle but recognisable" band is <b>nearly empty for prompt-only control</b>.</li>
+  </ol>
+</div>
+
+<!-- ============================================================ 1 -->
+<section id="chain">
+  <h2>1 · The decision chain in industry, and its counterpart in the pipeline</h2>
+  <p>Traditional placement is a negotiated, multi-party process. A brand briefs an agency. The agency breaks down scripts for scenes that fit. A deal is struck, the production's lawyers clear the mark, the art department or a VFX vendor executes it, and a tracking firm values the exposure afterwards. Virtual placement (Mirriad, Amazon Prime Video) moves "execution" into post-production, but keeps the other links: publishers approve every insertion, and context models check the scene's tone first.</p>
+
+  <figure>
+    <div class="diagram">
+    <svg viewBox="0 0 960 360" role="img" aria-label="Two lanes of six stages. Industry: brief, match, deal, clearance, execution, measure and signal. adplace: catalogue, classifier, no deal, gate, planner plus rewriter plus FLUX, verifier with a loop back to the rewriter. The deal stage has no counterpart in adplace.">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+        <marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker>
+      </defs>
+      <text x="20" y="22" class="lane">FILM · TV · STREAMING</text>
+      <g>
+        <rect x="20" y="32" width="140" height="92" rx="6" class="box"/>
+        <text x="32" y="54" class="ttl">1 Brief</text><text x="32" y="74" class="sub">KPIs, audience,</text><text x="32" y="89" class="sub">do's and don'ts</text><text x="32" y="112" class="who">brand marketing</text>
+        <rect x="176" y="32" width="140" height="92" rx="6" class="box"/>
+        <text x="188" y="54" class="ttl">2 Match</text><text x="188" y="74" class="sub">script breakdown:</text><text x="188" y="89" class="sub">scene fit, tone, era</text><text x="188" y="112" class="who">placement agency</text>
+        <rect x="332" y="32" width="140" height="92" rx="6" class="box"/>
+        <text x="344" y="54" class="ttl">3 Deal</text><text x="344" y="74" class="sub">barter · fee ·</text><text x="344" y="89" class="sub">promo tie-in</text><text x="344" y="112" class="who">brand + studio</text>
+        <rect x="488" y="32" width="140" height="92" rx="6" class="box"/>
+        <text x="500" y="54" class="ttl">4 Clearance</text><text x="500" y="74" class="sub">mark approved,</text><text x="500" y="89" class="sub">else "greeked"</text><text x="500" y="112" class="who">legal · art dept</text>
+        <rect x="644" y="32" width="140" height="92" rx="6" class="box"/>
+        <text x="656" y="54" class="ttl">5 Execution</text><text x="656" y="74" class="sub">prop, set dressing,</text><text x="656" y="89" class="sub">or VPP in post</text><text x="656" y="112" class="who">props · VFX</text>
+        <rect x="800" y="32" width="140" height="92" rx="6" class="box"/>
+        <text x="812" y="54" class="ttl">6 Measure, signal</text><text x="812" y="74" class="sub">screen time, logo</text><text x="812" y="89" class="sub">visibility; "P" logo</text><text x="812" y="112" class="who">trackers · broadcaster</text>
+      </g>
+      <g class="edge" marker-end="url(#ah)">
+        <line x1="160" y1="78" x2="174" y2="78"/><line x1="316" y1="78" x2="330" y2="78"/><line x1="472" y1="78" x2="486" y2="78"/><line x1="628" y1="78" x2="642" y2="78"/><line x1="784" y1="78" x2="798" y2="78"/>
+      </g>
+      <g class="edge dash">
+        <line x1="90" y1="124" x2="90" y2="200"/><line x1="246" y1="124" x2="246" y2="200"/><line x1="402" y1="124" x2="402" y2="200"/><line x1="558" y1="124" x2="558" y2="200"/><line x1="714" y1="124" x2="714" y2="200"/><line x1="870" y1="124" x2="870" y2="200"/>
+      </g>
+      <text x="20" y="194" class="lane">ADPLACE · PER PROMPT</text>
+      <g>
+        <rect x="20" y="204" width="140" height="92" rx="6" class="box"/>
+        <text x="32" y="226" class="ttl">brands.yaml</text><text x="32" y="246" class="sub">fits, avoid,</text><text x="32" y="261" class="sub">portrayal rules</text><text x="32" y="284" class="who">advertiser catalogue</text>
+        <rect x="176" y="204" width="140" height="92" rx="6" class="box"/>
+        <text x="188" y="226" class="ttl">Classifier</text><text x="188" y="246" class="sub">INJECT / SKIP /</text><text x="188" y="261" class="sub">EXCLUDE + brand</text><text x="188" y="284" class="who">Gemini 3.7 Flash</text>
+        <rect x="332" y="204" width="140" height="92" rx="6" class="box gapbox"/>
+        <text x="344" y="226" class="ttl gaptxt">No deal</text><text x="344" y="246" class="sub gaptxt">nobody in the scene</text><text x="344" y="261" class="sub gaptxt">agreed to anything</text><text x="344" y="284" class="who gaptxt">the ethical gap</text>
+        <rect x="488" y="204" width="140" height="92" rx="6" class="box"/>
+        <text x="500" y="226" class="ttl">Gate</text><text x="500" y="246" class="sub">existing brand,</text><text x="500" y="261" class="sub">HFSS / alcohol flags</text><text x="500" y="284" class="who">keyword + rules</text>
+        <rect x="644" y="204" width="140" height="92" rx="6" class="box hi"/>
+        <text x="656" y="226" class="ttl">Plan + rewrite</text><text x="656" y="246" class="sub">≤15-word phrase</text><text x="656" y="261" class="sub">→ FLUX.2, same seed</text><text x="656" y="284" class="who">the thesis mechanism</text>
+        <rect x="800" y="204" width="140" height="92" rx="6" class="box hi"/>
+        <text x="812" y="226" class="ttl">Verify</text><text x="812" y="246" class="sub">area, legibility,</text><text x="812" y="261" class="sub">blind "is it an ad?"</text><text x="812" y="284" class="who">injections.csv logged</text>
+      </g>
+      <g class="edge" marker-end="url(#ah)">
+        <line x1="160" y1="250" x2="174" y2="250"/><line x1="316" y1="250" x2="330" y2="250"/><line x1="472" y1="250" x2="486" y2="250"/><line x1="628" y1="250" x2="642" y2="250"/><line x1="784" y1="250" x2="798" y2="250"/>
+      </g>
+      <path d="M870 296 V330 H714 V300" class="edge acc" marker-end="url(#ahA)"/>
+      <text x="792" y="348" text-anchor="middle" class="sub acc">fails band → revise prompt, regenerate (≤5×)</text>
+    </svg>
+    </div>
+    <figcaption><b>Figure 1.</b> Each industry decision has a pipeline counterpart except the deal. The repair loop (blue) is the automated equivalent of re-shooting or re-compositing until a placement meets its brief. Sources for the industry lane: BEN; Hollywood Branded; The Hustle; Mirriad; Amazon VPP.</figcaption>
+  </figure>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Stage</th><th>How it is decided in practice</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Brief</td><td>Brands pick opportunities that match their KPIs and guidelines, not a particular star. Contracts spell out do's and don'ts (never with a villain, never broken, never with a competitor).</td><td class="cite">BEN; Hollywood Branded</td></tr>
+      <tr><td>Match</td><td>Agencies read scripts for scenes where the product would plausibly already be there. Amazon's VPP team says placement "should fit an emotional tone" (an energy drink in a gym scene, not a calm family dinner).</td><td class="cite">Chaturvedi 2023/2026</td></tr>
+      <tr><td>Deal</td><td>Three structures. <b>Barter</b>: free product for screen time, reportedly about 60% of placements. <b>Fee</b>: an integration fee with contractual "deliverables". <b>Promotional tie-in</b>: a small fee plus a large co-marketing spend; the brand buys the right to say "as seen in". Screen time is not guaranteed.</td><td class="cite">The Hustle; BEN</td></tr>
+      <tr><td>Clearance</td><td>Productions need permission to show a recognisable mark. If they don't get it, the art department <b>"greeks"</b> the logo (tape, fake labels, blur). Greeking is also used to deny free exposure to brands that haven't paid.</td><td class="cite">Greeking guides; Wikipedia</td></tr>
+      <tr><td>Execution</td><td>The cheapest and most common tier is prop or set dressing. Story integration costs the most. VPP inserts products into existing "real estate" after filming, with publisher approval for every insertion.</td><td class="cite">BEN; Mirriad FAQ</td></tr>
+      <tr><td>Measure</td><td>Trackers such as Concave value exposure from screen time, <b>product discernibility</b>, <b>logo visibility</b>, mentions and audience size. Brand-lift studies measure recall and intent.</td><td class="cite">Concave; BEN</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="vars">
+  <h2>2 · The five decisions, and what the research says about each</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Decision</th><th>Industry options</th><th>Research evidence</th><th>Pipeline setting</th></tr></thead>
+    <tbody>
+      <tr><td><b>Whether</b> to place</td><td>Brand-safety "floor" (content no advertiser supports) plus suitability tiers (low, medium, high risk) that each brand sets for itself.</td><td>GARM Brand Safety Floor + Suitability Framework (11 categories, 3 risk tiers). Regulators ban placement in news and children's content.</td><td>Keyword gate + classifier <code>EXCLUDE</code> (floor) and <code>SKIP</code> (suitability). 17/17 pilot prompts matched my expected labels.</td></tr>
+      <tr><td><b>Which</b> brand</td><td>Audience fit, category, competitor exclusivity.</td><td>Congruent placements persuade; incongruent ones are remembered but "seem out of place" and are discounted (Russell 2002).</td><td>Classifier ranks brands by fit; <code>brands.yaml</code> <code>fits</code>/<code>avoid</code>/<code>competitors</code>.</td></tr>
+      <tr><td><b>What type</b></td><td>Implicit (visible only), integrated explicit (used and named by a character), non-integrated explicit (sponsor mention).</td><td>Implicit placement is the least intrusive (d'Astous &amp; Séguin 1999). Visual placements work best when only weakly tied to the plot (Russell 2002).</td><td>A still image can only carry <b>implicit, visual</b> placement. Strategies: environmental, attach to surface, substitute implied object, incidental use.</td></tr>
+      <tr><td><b>How prominent</b></td><td>Negotiated screen time, framing, "hero" moments.</td><td>Prominence raises recall (Gupta &amp; Lord 1998) but not choice (Law &amp; Braun 2000), and lowers attitudes among engaged viewers (Cowley &amp; Barron 2008).</td><td>Prominence band on area, centrality, legibility, eye-draw and blind ad-suspicion (§3, §6).</td></tr>
+      <tr><td><b>Whether to disclose</b></td><td>Required in UK/EU broadcasting, generally not required in Australia, labelled in chatbot ads.</td><td>Disclosure increases brand memory, but also activates persuasion knowledge, which can lower brand attitude (Boerman et al. 2012).</td><td>Undisclosed by design (the object of study). Every injection is logged for post-study disclosure.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="prom">
+  <h2>3 · Prominence: where the placement should sit</h2>
+  <p>The literature pulls in two directions. Visibility buys recall, but recall is not the goal: Law &amp; Braun found that products central to the plot were remembered more, yet centrality had <em>no reliable effect on product choice</em>. Meanwhile the attitude cost of prominence falls on the most engaged viewers, and a person who just typed a prompt is maximally engaged with their image. Matthes et al. found mere-exposure gains only for frequent, subtle placements. A generator that serves millions of images is the ultimate frequent, subtle channel.</p>
+  <figure>
+    <div class="diagram">
+    <svg viewBox="0 0 900 250" role="img" aria-label="A prominence ladder of five placement strategies from environmental to hero integration. The subtle band covers the first three; recall rises to the right; attitude backlash applies to the right; mere-exposure gains apply only on the left.">
+      <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+      <rect x="20" y="96" width="498" height="62" rx="6" fill="var(--band)" stroke="var(--band-line)" stroke-dasharray="4 3"/>
+      <text x="30" y="90" class="bandlab">target: subtle band (implicit, background)</text>
+      <g>
+        <rect x="30" y="106" width="150" height="42" rx="5" class="box"/><text x="105" y="124" text-anchor="middle" class="ttl">Environmental</text><text x="105" y="140" text-anchor="middle" class="sub">far sign, fridge</text>
+        <rect x="196" y="106" width="150" height="42" rx="5" class="box"/><text x="271" y="124" text-anchor="middle" class="ttl">Attach to surface</text><text x="271" y="140" text-anchor="middle" class="sub">prop on a shelf</text>
+        <rect x="362" y="106" width="150" height="42" rx="5" class="box"/><text x="437" y="124" text-anchor="middle" class="ttl">Substitute implied</text><text x="437" y="140" text-anchor="middle" class="sub">"a drink" → a Coke</text>
+        <rect x="548" y="106" width="150" height="42" rx="5" class="box"/><text x="623" y="124" text-anchor="middle" class="ttl">Incidental use</text><text x="623" y="140" text-anchor="middle" class="sub">secondary person holds it</text>
+        <rect x="714" y="106" width="160" height="42" rx="5" class="box gapbox"/><text x="794" y="124" text-anchor="middle" class="ttl gaptxt">Hero / integrated</text><text x="794" y="140" text-anchor="middle" class="sub gaptxt">never generated</text>
+      </g>
+      <line x1="30" y1="178" x2="874" y2="178" class="edge" marker-end="url(#ah2)"/>
+      <text x="30" y="198" class="sub">less prominent</text><text x="874" y="198" text-anchor="end" class="sub">more prominent</text>
+      <g class="sub">
+        <line x1="362" y1="30" x2="874" y2="30" class="edge" marker-end="url(#ah2)"/><text x="362" y="22" class="sub">recall rises (Gupta &amp; Lord 1998); choice does not (Law &amp; Braun 2000)</text>
+        <line x1="548" y1="62" x2="874" y2="62" class="edge"/><line x1="548" y1="56" x2="548" y2="68" class="edge"/><line x1="874" y1="56" x2="874" y2="68" class="edge"/><text x="548" y="54" class="sub">attitude backlash, engaged viewers (Cowley &amp; Barron 2008)</text>
+        <line x1="30" y1="226" x2="512" y2="226" class="edge"/><line x1="30" y1="220" x2="30" y2="232" class="edge"/><line x1="512" y1="220" x2="512" y2="232" class="edge"/><text x="30" y="244" class="sub">mere-exposure gains only here (Matthes et al. 2012) · d'Astous &amp; Séguin: "implicit"</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption><b>Figure 2.</b> The planner's strategies ordered by prominence. This is a schematic of the literature's direction of effects, not a plotted dataset. The pipeline targets the shaded band and never produces the hero tier.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="rules">
+  <h2>4 · Rules by market</h2>
+  <p>Two regulatory ideas recur everywhere: placement must not be <b>unduly prominent</b> or <b>promotional</b>, and audiences should be able to <b>tell advertising from content</b>. Markets differ sharply on whether placement must be flagged. Australia, where this thesis is written, is the most permissive.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Regime</th><th>Prominence</th><th>Disclosure</th><th>Banned or restricted</th></tr></thead>
+    <tbody>
+      <tr><td><b>UK</b> · Ofcom Broadcasting Code s.9</td><td>Not unduly prominent (9.10), not promotional (9.9)</td><td>Signalled with a "P" logo (9.14)</td><td>Banned in news and children's programmes; tobacco and prescription medicines banned; alcohol, HFSS food and gambling restricted</td></tr>
+      <tr><td><b>EU</b> · AVMSD 2018/1808, Art. 11</td><td>No undue prominence; must not directly encourage purchase</td><td>Identified at the start and end of the programme and after ad breaks</td><td>News, current affairs, consumer affairs, religious and children's programmes; tobacco and prescription medicines</td></tr>
+      <tr><td><b>Australia</b> · AANA Code of Ethics 2.7 + Practice Note</td><td>Not addressed</td><td>Advertising must be "clearly distinguishable". The Practice Note says paid placement with no other claims <b>may need no label</b>, because the branded product itself is taken to signal it. Influencers must disclose.</td><td>Covered by separate food, alcohol and children's codes</td></tr>
+      <tr><td><b>Industry</b> · GARM framework (WFA)</td><td>n/a (adjacency, not placement)</td><td>n/a</td><td>Brand-safety floor of 11 categories plus three suitability tiers, the template for EXCLUDE and SKIP</td></tr>
+      <tr><td><b>AI platform</b> · OpenAI ChatGPT ads (2026)</td><td>Ads kept separate from answers; "do not influence answers"</td><td>Always labelled as sponsored</td><td>Not near health, mental-health or political topics; not shown to under-18s</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">The covert generated-image case falls between these. It is not broadcast, so Ofcom and the AVMSD don't apply. It isn't editorial content produced under a deal, and it contradicts the platform policies AI companies have published. Under AANA's reasoning, a visible brand could itself count as the "signal", which is the argument the user study's post-disclosure measures can test.</p>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="ai">
+  <h2>5 · AI-era evidence</h2>
+  <ul class="tight">
+    <li><b>Text chatbots already do this, and users don't notice.</b> Tang et al. (UbiComp 2025) injected personalised ads into chatbot replies (n = 179). Most participants did not recognise them, and some <em>preferred</em> the responses with hidden ads.</li>
+    <li><b>Incentives distort LLM behaviour.</b> Wu et al. (2026) found most tested LLMs "forsake user welfare for company incentives" when sponsorship conflicts with the user's interest. For example, GPT 5.1 inserted sponsored options into purchasing flows 94% of the time.</li>
+    <li><b>Image placement has been automated, but openly.</b> Alam et al. (CVPR AI4CC 2024) segment a region, inpaint the product with a fine-tuned diffusion model, and check that it is present. Amazon's VPP inserts products into existing shows. Both are consented, post-production placements. This thesis studies the undisclosed, prompt-level variant.</li>
+    <li><b>Commercial AI ads are, for now, disclosed and separate</b> (OpenAI 2026). The thesis characterises what happens if they aren't, so it can be detected and regulated.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ 6 -->
+<section id="pilot">
+  <h2>6 · What the pilot shows</h2>
+  <p>I ran 17 prompts: 8 INJECT, 6 SKIP, 3 EXCLUDE (all matched my expected labels). FLUX.2 dev on Comfy Cloud generated every image, with the same seed as the baseline, and repairs were made by rewriting the prompt only. <b>v1</b> is the Thesis B-style rewriter, which spells out location, scale, orientation and lighting in 30–45 words. <b>v2</b> is the rewriter built after the first run: a phrase of 15 words or fewer, attached to a background anchor. A vision model measured every image, and a separate "blind" pass, which was told nothing about the product, rated how much it looked like an ad.</p>
+
+  <figure>
+    <div class="gallery">
+      <span class="corner"></span><span class="ch">Baseline (original prompt)</span><span class="ch">v1 rewrite, attempt 1</span><span class="ch">v2 rewrite</span>
+      <span class="rl">Picnic painting · Coca-Cola</span>
+      <div class="cell"><img src="brief_img/picnic_base.jpg" alt="Vintage painting of a family picnic on the beach, no product" loading="lazy"></div>
+      <div class="cell"><img src="brief_img/picnic_v1.jpg" alt="Same prompt with v1 rewrite: a large cooler and Coca-Cola bottle dominate the foreground" loading="lazy"><span class="stat">area 5.0% · legib 3/4 · ad? 5/5</span></div>
+      <div class="cell"><img src="brief_img/picnic_v2.jpg" alt="v2 rewrite: the family is back in focus, but a large Coca-Cola bottle stands beside them" loading="lazy"><span class="stat">area 6.3% · legib 4/4 · ad? 5/5</span></div>
+      <span class="rl">Firefighter BBQ · Coca-Cola</span>
+      <div class="cell"><img src="brief_img/bbq_base.jpg" alt="Firefighters grilling in a backyard with friends" loading="lazy"></div>
+      <div class="cell"><img src="brief_img/bbq_v1.jpg" alt="v1 rewrite: a Coca-Cola bottle on a cooler lid dominates the left foreground" loading="lazy"><span class="stat">area 2.7% · legib 3/4 · ad? 4/5</span></div>
+      <div class="cell"><img src="brief_img/bbq_v2.jpg" alt="v2 after three prompt repairs: a small Coca-Cola can on a distant table" loading="lazy"><span class="stat">area 0.2% · legib 3/4 · ad? 3/5 (repair 4)</span></div>
+      <span class="rl">Rooftop bar · Heineken</span>
+      <div class="cell"><img src="brief_img/bar_base.jpg" alt="Friends watching football on a big screen at a rooftop bar" loading="lazy"></div>
+      <div class="cell"><img src="brief_img/bar_v1.jpg" alt="v1 rewrite: a Heineken bottle on a table fills the foreground" loading="lazy"><span class="stat">area 9.7% · legib 3/4 · ad? 5/5</span></div>
+      <div class="cell"><img src="brief_img/bar_v2.jpg" alt="v2 rewrite: the crowd and screen are the subject; a Heineken bottle sits on a side table" loading="lazy"><span class="stat">area 2.0% · legib 3/4 · ad? 4/5</span></div>
+    </div>
+    <figcaption><b>Figure 3.</b> Long product descriptions make FLUX re-compose the scene around the product. v2 usually restores the user's subject: the firefighter, the crowd and the screen return to centre. But the product is still drawn sharp and label-forward. The picnic shows v2 can still fail on attempt 1. v1 prompt for the picnic: <em>"…on the far left in the midground resting on the sand beside a vintage metal cooler, a single painted Coca-Cola glass bottle stands half the height of the cooler…"</em>; v2: <em>"…a painted Coca-Cola bottle half hidden beside a cooler in the background"</em>.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="chart">
+      <div class="legend"><span><i class="sw v1"></i>v1 rewriter (48 images)</span><span><i class="sw v2"></i>v2 rewriter (39 images)</span><span><i class="sw band"></i>subtle band</span><span>ringed = accepted</span></div>
+      <!--SCATTER--><svg viewBox="0 0 720 360" role="img" aria-label="Scatter of product area against blind-viewer ad suspicion for 87 prompt-only images. Almost every point sits above the subtle band ceiling of 2; v2 points sit further left (smaller) than v1 points."><rect x="140.3" y="193.6" width="364.1" height="118.4" class="band"/><text x="322.3" y="209.6" text-anchor="middle" class="bandlab">subtle band (target)</text><line x1="56" x2="700" y1="282.4" y2="282.4" class="grid"/><text x="46" y="286.4" text-anchor="end" class="tick">1</text><line x1="56" x2="700" y1="223.2" y2="223.2" class="grid"/><text x="46" y="227.2" text-anchor="end" class="tick">2</text><line x1="56" x2="700" y1="164.0" y2="164.0" class="grid"/><text x="46" y="168.0" text-anchor="end" class="tick">3</text><line x1="56" x2="700" y1="104.8" y2="104.8" class="grid"/><text x="46" y="108.8" text-anchor="end" class="tick">4</text><line x1="56" x2="700" y1="45.6" y2="45.6" class="grid"/><text x="46" y="49.6" text-anchor="end" class="tick">5</text><line x1="56.0" x2="56.0" y1="16" y2="312" class="grid"/><text x="56.0" y="330" text-anchor="middle" class="tick">0.1%</text><line x1="140.3" x2="140.3" y1="16" y2="312" class="grid"/><text x="140.3" y="330" text-anchor="middle" class="tick">0.2%</text><line x1="251.6" x2="251.6" y1="16" y2="312" class="grid"/><text x="251.6" y="330" text-anchor="middle" class="tick">0.5%</text><line x1="335.9" x2="335.9" y1="16" y2="312" class="grid"/><text x="335.9" y="330" text-anchor="middle" class="tick">1%</text><line x1="420.1" x2="420.1" y1="16" y2="312" class="grid"/><text x="420.1" y="330" text-anchor="middle" class="tick">2%</text><line x1="504.4" x2="504.4" y1="16" y2="312" class="grid"/><text x="504.4" y="330" text-anchor="middle" class="tick">4%</text><line x1="615.7" x2="615.7" y1="16" y2="312" class="grid"/><text x="615.7" y="330" text-anchor="middle" class="tick">10%</text><line x1="700.0" x2="700.0" y1="16" y2="312" class="grid"/><text x="700.0" y="330" text-anchor="middle" class="tick">20%</text><text x="378.0" y="352" text-anchor="middle" class="axlab">product area, share of frame (log scale)</text><text transform="translate(14 164.0) rotate(-90)" text-anchor="middle" class="axlab">blind viewer: “looks like an ad” (1–5)</text><circle cx="531.0" cy="37.9" r="4.5" class="pt v1"><title>picnic (painting) · v1 attempt 1
+area 5.01% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="391.2" cy="36.2" r="4.5" class="pt v1"><title>picnic (painting) · v1 attempt 3
+area 1.57% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="515.9" cy="42.6" r="4.5" class="pt v1"><title>picnic (painting) · v1 attempt 4
+area 4.39% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="455.3" cy="105.0" r="4.5" class="pt v1"><title>firefighter BBQ · v1 attempt 1
+area 2.71% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="441.3" cy="44.1" r="4.5" class="pt v1"><title>firefighter BBQ · v1 attempt 3
+area 2.42% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="402.3" cy="36.6" r="4.5" class="pt v1"><title>firefighter BBQ · v1 attempt 4
+area 1.75% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="604.1" cy="171.2" r="4.5" class="pt v1"><title>1950s diner · v1 attempt 1
+area 9.11% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="620.1" cy="98.7" r="4.5" class="pt v1"><title>1950s diner · v1 attempt 3
+area 10.50% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="648.0" cy="114.6" r="4.5" class="pt v1"><title>1950s diner · v1 attempt 4
+area 12.98% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="683.2" cy="102.5" r="4.5" class="pt v1"><title>office desk · v1 attempt 1
+area 17.38% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="574.5" cy="94.8" r="4.5" class="pt v1"><title>office desk · v1 attempt 3
+area 7.01% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="485.9" cy="41.0" r="4.5" class="pt v1"><title>office desk · v1 attempt 4
+area 3.40% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="576.5" cy="37.2" r="4.5" class="pt v1"><title>road trip · v1 attempt 1
+area 7.32% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="405.7" cy="111.8" r="4.5" class="pt v1"><title>road trip · v1 attempt 3
+area 1.79% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="372.7" cy="106.6" r="4.5" class="pt v1"><title>road trip · v1 attempt 4
+area 1.37% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="548.1" cy="42.8" r="4.5" class="pt v1"><title>dorm study · v1 attempt 1
+area 5.70% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="538.4" cy="36.0" r="4.5" class="pt v1"><title>dorm study · v1 attempt 3
+area 5.29% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="442.2" cy="39.1" r="4.5" class="pt v1"><title>dorm study · v1 attempt 4
+area 2.43% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="612.9" cy="44.0" r="4.5" class="pt v1"><title>rooftop bar · v1 attempt 1
+area 9.71% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="385.1" cy="47.5" r="4.5" class="pt v1"><title>rooftop bar · v1 attempt 3
+area 1.51% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="486.8" cy="41.2" r="4.5" class="pt v1"><title>rooftop bar · v1 attempt 4
+area 3.47% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="565.7" cy="109.2" r="4.5" class="pt v1"><title>dystopian city · v1 attempt 1
+area 6.56% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="576.7" cy="106.4" r="4.5" class="pt v1"><title>dystopian city · v1 attempt 3
+area 7.32% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="572.0" cy="113.1" r="4.5" class="pt v1"><title>dystopian city · v1 attempt 4
+area 6.97% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="396.0" cy="40.9" r="4.5" class="pt v1"><title>picnic (painting) · v1 attempt 2
+area 1.63% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="394.7" cy="37.2" r="4.5" class="pt v1"><title>picnic (painting) · v1 attempt 3
+area 1.60% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="509.2" cy="51.3" r="4.5" class="pt v1"><title>picnic (painting) · v1 attempt 4
+area 4.17% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="291.0" cy="104.6" r="4.5" class="pt v1"><title>firefighter BBQ · v1 attempt 2
+area 0.70% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="455.6" cy="49.3" r="4.5" class="pt v1"><title>firefighter BBQ · v1 attempt 3
+area 2.72% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="503.7" cy="47.2" r="4.5" class="pt v1"><title>firefighter BBQ · v1 attempt 4
+area 3.94% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="478.3" cy="100.7" r="4.5" class="pt v1"><title>1950s diner · v1 attempt 2
+area 3.19% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="553.2" cy="106.9" r="4.5" class="pt v1"><title>1950s diner · v1 attempt 3
+area 5.94% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="491.0" cy="163.0" r="4.5" class="pt v1"><title>1950s diner · v1 attempt 4
+area 3.57% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="474.8" cy="173.8" r="4.5" class="pt v1"><title>office desk · v1 attempt 2
+area 3.10% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="560.6" cy="108.4" r="4.5" class="pt v1"><title>office desk · v1 attempt 3
+area 6.36% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="500.5" cy="168.4" r="4.5" class="pt v1"><title>office desk · v1 attempt 4
+area 3.93% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="564.5" cy="56.4" r="4.5" class="pt v1"><title>road trip · v1 attempt 2
+area 6.53% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="383.1" cy="159.3" r="4.5" class="pt v1"><title>road trip · v1 attempt 3
+area 1.46% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="450.2" cy="49.3" r="4.5" class="pt v1"><title>road trip · v1 attempt 4
+area 2.57% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="479.9" cy="44.8" r="4.5" class="pt v1"><title>dorm study · v1 attempt 2
+area 3.32% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="295.6" cy="96.4" r="4.5" class="pt v1"><title>dorm study · v1 attempt 3
+area 0.73% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="453.6" cy="51.5" r="4.5" class="pt v1"><title>dorm study · v1 attempt 4
+area 2.67% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="521.0" cy="40.0" r="4.5" class="pt v1"><title>rooftop bar · v1 attempt 2
+area 4.64% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="482.3" cy="53.8" r="4.5" class="pt v1"><title>rooftop bar · v1 attempt 3
+area 3.35% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="530.4" cy="44.5" r="4.5" class="pt v1"><title>rooftop bar · v1 attempt 4
+area 5.03% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="435.3" cy="113.2" r="4.5" class="pt v1"><title>dystopian city · v1 attempt 2
+area 2.26% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="600.6" cy="112.8" r="4.5" class="pt v1"><title>dystopian city · v1 attempt 3
+area 8.73% · legibility 4/4 · ad suspicion 4/5</title></circle><circle cx="448.0" cy="102.9" r="4.5" class="pt v1"><title>dystopian city · v1 attempt 4
+area 2.53% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="558.3" cy="54.1" r="4.5" class="pt v2"><title>picnic (painting) · v2 attempt 1
+area 6.26% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="507.2" cy="37.9" r="4.5" class="pt v2"><title>picnic (painting) · v2 attempt 2
+area 4.03% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="452.1" cy="39.7" r="4.5" class="pt v2"><title>picnic (painting) · v2 attempt 3
+area 2.63% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="428.0" cy="45.3" r="4.5" class="pt v2"><title>picnic (painting) · v2 attempt 4
+area 2.15% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="507.0" cy="40.4" r="4.5" class="pt v2"><title>picnic (painting) · v2 attempt 5
+area 4.08% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="341.1" cy="103.0" r="4.5" class="pt v2"><title>firefighter BBQ · v2 attempt 1
+area 1.06% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="189.8" cy="106.3" r="4.5" class="pt v2"><title>firefighter BBQ · v2 attempt 2
+area 0.30% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="305.1" cy="168.2" r="4.5" class="pt v2"><title>firefighter BBQ · v2 attempt 3
+area 0.77% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="146.8" cy="166.6" r="4.5" class="pt v2"><title>firefighter BBQ · v2 attempt 4
+area 0.21% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="233.4" cy="95.0" r="4.5" class="pt v2"><title>firefighter BBQ · v2 attempt 5
+area 0.43% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="434.1" cy="111.0" r="4.5" class="pt v2"><title>1950s diner · v2 attempt 1
+area 2.21% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="610.5" cy="170.6" r="4.5" class="pt v2"><title>1950s diner · v2 attempt 2
+area 9.46% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="442.4" cy="161.8" r="4.5" class="pt v2"><title>1950s diner · v2 attempt 3
+area 2.41% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="398.9" cy="107.8" r="4.5" class="pt v2"><title>1950s diner · v2 attempt 4
+area 1.70% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="357.3" cy="95.3" r="4.5" class="pt v2"><title>1950s diner · v2 attempt 5
+area 1.21% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="549.8" cy="97.4" r="4.5" class="pt v2"><title>office desk · v2 attempt 1
+area 5.87% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="549.5" cy="154.2" r="4.5" class="pt v2"><title>office desk · v2 attempt 2
+area 5.83% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="652.1" cy="97.1" r="4.5" class="pt v2"><title>office desk · v2 attempt 3
+area 13.71% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="346.3" cy="220.2" r="6" class="pt v2 ok"><title>office desk · v2 attempt 4
+area 1.10% · legibility 1/4 · ad suspicion 2/5 · ACCEPTED</title></circle><circle cx="409.3" cy="113.0" r="4.5" class="pt v2"><title>road trip · v2 attempt 1
+area 1.86% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="489.2" cy="37.9" r="4.5" class="pt v2"><title>road trip · v2 attempt 2
+area 3.52% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="310.3" cy="160.6" r="4.5" class="pt v2"><title>road trip · v2 attempt 3
+area 0.82% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="367.9" cy="155.7" r="4.5" class="pt v2"><title>road trip · v2 attempt 4
+area 1.31% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="493.1" cy="115.6" r="4.5" class="pt v2"><title>road trip · v2 attempt 5
+area 3.60% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="504.1" cy="45.2" r="4.5" class="pt v2"><title>dorm study · v2 attempt 1
+area 3.99% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="424.4" cy="96.0" r="4.5" class="pt v2"><title>dorm study · v2 attempt 2
+area 2.10% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="349.0" cy="158.8" r="4.5" class="pt v2"><title>dorm study · v2 attempt 3
+area 1.12% · legibility 3/4 · ad suspicion 3/5</title></circle><circle cx="458.5" cy="97.4" r="4.5" class="pt v2"><title>dorm study · v2 attempt 4
+area 2.71% · legibility 2/4 · ad suspicion 4/5</title></circle><circle cx="231.7" cy="173.9" r="4.5" class="pt v2"><title>dorm study · v2 attempt 5
+area 0.43% · legibility 2/4 · ad suspicion 3/5</title></circle><circle cx="422.7" cy="97.0" r="4.5" class="pt v2"><title>rooftop bar · v2 attempt 1
+area 2.04% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="439.4" cy="35.2" r="4.5" class="pt v2"><title>rooftop bar · v2 attempt 2
+area 2.34% · legibility 3/4 · ad suspicion 5/5</title></circle><circle cx="454.0" cy="56.1" r="4.5" class="pt v2"><title>rooftop bar · v2 attempt 3
+area 2.64% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="454.4" cy="49.9" r="4.5" class="pt v2"><title>rooftop bar · v2 attempt 4
+area 2.62% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="435.9" cy="42.7" r="4.5" class="pt v2"><title>rooftop bar · v2 attempt 5
+area 2.30% · legibility 4/4 · ad suspicion 5/5</title></circle><circle cx="529.2" cy="110.8" r="4.5" class="pt v2"><title>dystopian city · v2 attempt 1
+area 4.96% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="408.3" cy="110.9" r="4.5" class="pt v2"><title>dystopian city · v2 attempt 2
+area 1.81% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="376.4" cy="98.7" r="4.5" class="pt v2"><title>dystopian city · v2 attempt 3
+area 1.40% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="493.7" cy="115.5" r="4.5" class="pt v2"><title>dystopian city · v2 attempt 4
+area 3.63% · legibility 3/4 · ad suspicion 4/5</title></circle><circle cx="475.4" cy="111.5" r="4.5" class="pt v2"><title>dystopian city · v2 attempt 5
+area 3.11% · legibility 3/4 · ad suspicion 4/5</title></circle></svg><!--/SCATTER-->
+    </div>
+    <figcaption><b>Figure 4. Almost nothing fits in the band.</b> Each dot is one generated image, from all prompt-only attempts in runs A, B and G. v2 moves placements left: median area 2.3% vs 3.5%. But the blind viewer rates 86 of the 87 images at 3 or higher, and every image where it could read the wordmark (legibility ≥2) scored at least 3. The single image under the ceiling is a phone recognisable only by shape. Hover a dot for details.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="chart">
+      <div class="legend"><span><i class="sw base"></i>baseline (original prompt)</span><span><i class="sw v1"></i>v1 rewrite</span><span><i class="sw v2"></i>v2 rewrite</span></div>
+      <!--DUMBBELL--><svg viewBox="0 0 720 342" role="img" aria-label="CLIPScore against the original prompt for each pilot prompt: baseline, v1 first attempt and v2 first attempt. v2 stays closer to the baseline in 5 of 8 prompts; mean change −0.028 for v1 and −0.010 for v2."><line x1="214.2" x2="214.2" y1="20" y2="308" class="grid"/><text x="214.2" y="326" text-anchor="middle" class="tick">0.24</text><line x1="342.7" x2="342.7" y1="20" y2="308" class="grid"/><text x="342.7" y="326" text-anchor="middle" class="tick">0.28</text><line x1="471.2" x2="471.2" y1="20" y2="308" class="grid"/><text x="471.2" y="326" text-anchor="middle" class="tick">0.32</text><line x1="599.6" x2="599.6" y1="20" y2="308" class="grid"/><text x="599.6" y="326" text-anchor="middle" class="tick">0.36</text><text x="138" y="51.0" text-anchor="end" class="rowlab">dystopian city</text><line x1="199.1" x2="440.3" y1="47.0" y2="47.0" class="stem"/><circle cx="440.3" cy="47.0" r="6" class="pt base"><title>dystopian city · baseline: 0.310 (Δ +0.000 vs baseline)</title></circle><circle cx="199.1" cy="47.0" r="6" class="pt v1"><title>dystopian city · v1 rewrite: 0.235 (Δ -0.075 vs baseline)</title></circle><circle cx="372.9" cy="47.0" r="6" class="pt v2"><title>dystopian city · v2 rewrite: 0.289 (Δ -0.021 vs baseline)</title></circle><text x="138" y="85.0" text-anchor="end" class="rowlab">dorm study</text><line x1="415.3" x2="609.6" y1="81.0" y2="81.0" class="stem"/><circle cx="609.6" cy="81.0" r="6" class="pt base"><title>dorm study · baseline: 0.363 (Δ +0.000 vs baseline)</title></circle><circle cx="415.3" cy="81.0" r="6" class="pt v1"><title>dorm study · v1 rewrite: 0.303 (Δ -0.060 vs baseline)</title></circle><circle cx="524.2" cy="81.0" r="6" class="pt v2"><title>dorm study · v2 rewrite: 0.337 (Δ -0.027 vs baseline)</title></circle><text x="138" y="119.0" text-anchor="end" class="rowlab">picnic (painting)</text><line x1="509.4" x2="641.1" y1="115.0" y2="115.0" class="stem"/><circle cx="641.1" cy="115.0" r="6" class="pt base"><title>picnic (painting) · baseline: 0.373 (Δ +0.000 vs baseline)</title></circle><circle cx="509.4" cy="115.0" r="6" class="pt v1"><title>picnic (painting) · v1 rewrite: 0.332 (Δ -0.041 vs baseline)</title></circle><circle cx="606.1" cy="115.0" r="6" class="pt v2"><title>picnic (painting) · v2 rewrite: 0.362 (Δ -0.011 vs baseline)</title></circle><text x="138" y="153.0" text-anchor="end" class="rowlab">office desk</text><line x1="457.0" x2="548.3" y1="149.0" y2="149.0" class="stem"/><circle cx="548.3" cy="149.0" r="6" class="pt base"><title>office desk · baseline: 0.344 (Δ +0.000 vs baseline)</title></circle><circle cx="457.0" cy="149.0" r="6" class="pt v1"><title>office desk · v1 rewrite: 0.316 (Δ -0.028 vs baseline)</title></circle><circle cx="531.2" cy="149.0" r="6" class="pt v2"><title>office desk · v2 rewrite: 0.339 (Δ -0.005 vs baseline)</title></circle><text x="138" y="187.0" text-anchor="end" class="rowlab">1950s diner</text><line x1="499.4" x2="554.0" y1="183.0" y2="183.0" class="stem"/><circle cx="554.0" cy="183.0" r="6" class="pt base"><title>1950s diner · baseline: 0.346 (Δ +0.000 vs baseline)</title></circle><circle cx="499.4" cy="183.0" r="6" class="pt v1"><title>1950s diner · v1 rewrite: 0.329 (Δ -0.017 vs baseline)</title></circle><circle cx="518.7" cy="183.0" r="6" class="pt v2"><title>1950s diner · v2 rewrite: 0.335 (Δ -0.011 vs baseline)</title></circle><text x="138" y="221.0" text-anchor="end" class="rowlab">rooftop bar</text><line x1="444.5" x2="498.5" y1="217.0" y2="217.0" class="stem"/><circle cx="498.5" cy="217.0" r="6" class="pt base"><title>rooftop bar · baseline: 0.329 (Δ +0.000 vs baseline)</title></circle><circle cx="478.2" cy="217.0" r="6" class="pt v1"><title>rooftop bar · v1 rewrite: 0.322 (Δ -0.006 vs baseline)</title></circle><circle cx="444.5" cy="217.0" r="6" class="pt v2"><title>rooftop bar · v2 rewrite: 0.312 (Δ -0.017 vs baseline)</title></circle><text x="138" y="255.0" text-anchor="end" class="rowlab">firefighter BBQ</text><line x1="558.9" x2="565.6" y1="251.0" y2="251.0" class="stem"/><circle cx="565.6" cy="251.0" r="6" class="pt base"><title>firefighter BBQ · baseline: 0.349 (Δ +0.000 vs baseline)</title></circle><circle cx="565.0" cy="251.0" r="6" class="pt v1"><title>firefighter BBQ · v1 rewrite: 0.349 (Δ -0.000 vs baseline)</title></circle><circle cx="558.9" cy="251.0" r="6" class="pt v2"><title>firefighter BBQ · v2 rewrite: 0.347 (Δ -0.002 vs baseline)</title></circle><text x="138" y="289.0" text-anchor="end" class="rowlab">road trip</text><line x1="390.6" x2="429.1" y1="285.0" y2="285.0" class="stem"/><circle cx="390.6" cy="285.0" r="6" class="pt base"><title>road trip · baseline: 0.295 (Δ +0.000 vs baseline)</title></circle><circle cx="397.6" cy="285.0" r="6" class="pt v1"><title>road trip · v1 rewrite: 0.297 (Δ +0.002 vs baseline)</title></circle><circle cx="429.1" cy="285.0" r="6" class="pt v2"><title>road trip · v2 rewrite: 0.307 (Δ +0.012 vs baseline)</title></circle></svg><!--/DUMBBELL-->
+    </div>
+    <figcaption><b>Figure 5. v2 preserves the user's intent better.</b> CLIPScore (OpenAI CLIP ViT-B/32 cosine) of each first attempt against the <em>original</em> prompt, on the same seed as the baseline. Mean change vs baseline: <b>−0.028 for v1, −0.010 for v2</b>. v2 is closer to the baseline in 5 of 8 prompts, and the dystopian city recovers most (−0.075 → −0.021). VQAScore needs the CLIP-FlanT5 model on a GPU; <code>scripts/vqascore_t2v.py</code> is ready to run on Colab or Katana.</figcaption>
+  </figure>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Prompts accepted within the attempt budget (n = 8)</th><th class="num">A · v1 + image edit</th><th class="num">B · v1 + prompt repair</th><th class="num">G · v2 + prompt repair</th></tr></thead>
+    <tbody>
+      <tr><td>Subtle band (as run)</td><td class="num">0</td><td class="num">0</td><td class="num">1</td></tr>
+      <tr><td>Subtle band, blind ad-suspicion not used as a gate</td><td class="num">1</td><td class="num">1</td><td class="num">3</td></tr>
+      <tr><td>Moderate band</td><td class="num">0</td><td class="num">2</td><td class="num">5</td></tr>
+      <tr><td>Moderate band, blind ad-suspicion not used as a gate</td><td class="num">3</td><td class="num">5</td><td class="num">8</td></tr>
+      <tr><td>Mean CLIPScore change of attempt 1 vs baseline</td><td class="num">−0.028</td><td class="num">−0.028</td><td class="num">−0.010</td></tr>
+      <tr><td>OpenRouter cost per injected prompt</td><td class="num">$0.044</td><td class="num">$0.048</td><td class="num">$0.080*</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">Re-judged offline from the saved verifier outputs, so no extra generation. A and B share their first attempts; G used up to 5 attempts, A and B up to 4. *G includes prompts re-run after a stalled process.</p>
+
+  <figure>
+    <div class="trio">
+      <div><img src="brief_img/diner_base.jpg" alt="Baseline 1950s diner image full of Coca-Cola signs, generated with no injection" loading="lazy"></div>
+      <div><img src="brief_img/city_v2.jpg" alt="Dystopian city at night with a small Coca-Cola sign on a distant building" loading="lazy"></div>
+      <div><img src="brief_img/desk_accepted.jpg" alt="Night office desk with a smartphone at the far edge" loading="lazy"></div>
+    </div>
+    <figcaption><b>Figure 6.</b> Left: the <b>unmodified</b> 1950s-diner baseline is already full of Coca-Cola signs. FLUX has learned the brand–era association, which means some "organic" placement happens without any rewriter. Centre: a v2 near-miss, a small sign on a distant facade (area 1.8%) that the blind viewer still called "highly visible". Right: the only image accepted under the subtle band. An iPhone is recognisable only by shape (legibility 1/4), and the blind viewer named no brand. It is a weak placement.</figcaption>
+  </figure>
+
+  <div class="callout">
+    <span class="lbl">Reading</span>
+    <p>The rewriter can now control <em>where</em> and roughly <em>how big</em> a product is, and it keeps the user's scene. What it cannot control through the prompt is <em>how legibly</em> FLUX draws the logo. Brand tokens are strong, and FLUX renders named brands crisp and camera-facing. That lines up with the literature's trade-off: the recall floor and the attitude ceiling don't overlap for an automated viewer. Whether they overlap for <em>human</em> viewers is exactly what the user study measures, since a VLM that is effectively asked "is this an ad?" is a primed, worst-case detector.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 7 -->
+<section id="next">
+  <h2>7 · Decisions needed</h2>
+  <ul class="tight">
+    <li><b>Which band defines success?</b> Keep <em>subtle</em> as the literature-backed target and report acceptance under <em>moderate</em> as well, or make them two user-study conditions. The latter would test the Cowley &amp; Barron involvement effect directly.</li>
+    <li><b>Is the blind VLM a gate or a measurement?</b> I propose treating it as a <em>detectability measurement</em> (RQ2) rather than an acceptance gate. It is also evidence that off-the-shelf VLMs can serve as covert-ad detectors, which is useful for the discussion chapter.</li>
+    <li><b>Alcohol.</b> The classifier allowed Heineken at a rooftop bar with adults, as the catalogue rules permit. OpenAI's ad policy bans the category. Should the catalogue exclude it?</li>
+    <li><b>Legibility control.</b> One more prompt-level lever is worth testing: brand forms whose identity is carried by colour and shape rather than text (the red can, the contour bottle, the swoosh). That targets legibility 1–2, the only region the blind viewer did not flag.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ sources -->
+<section id="src">
+  <h2>Sources</h2>
+  <ol class="refs">
+    <li>Gupta, P. B. &amp; Lord, K. R. (1998). Product placement in movies: The effect of prominence and mode on audience recall. <i>J. Current Issues &amp; Research in Advertising</i>, 20(1), 47–59. <a href="https://www.tandfonline.com/doi/abs/10.1080/10641734.1998.10505076">doi</a></li>
+    <li>d'Astous, A. &amp; Séguin, N. (1999). Consumer reactions to product placement strategies in television sponsorship. <i>European Journal of Marketing</i>, 33(9/10), 896–910. <a href="https://www.emerald.com/insight/content/doi/10.1108/03090569910285832/full/html">doi</a></li>
+    <li>Law, S. &amp; Braun, K. A. (2000). I'll have what she's having: Gauging the impact of product placements on viewers. <i>Psychology &amp; Marketing</i>, 17(12), 1059–1075. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/1520-6793(200012)17:12%3C1059::AID-MAR3%3E3.0.CO;2-V">doi</a></li>
+    <li>Russell, C. A. (2002). Investigating the effectiveness of product placements in television shows. <i>J. Consumer Research</i>, 29(3), 306–318. <a href="https://academic.oup.com/jcr/article-abstract/29/3/306/1800894">doi</a></li>
+    <li>Karrh, J. A., McKee, K. B. &amp; Pardun, C. J. (2003). Practitioners' evolving views on product placement effectiveness. <i>J. Advertising Research</i>, 43(2), 138–149. <a href="https://www.cambridge.org/core/journals/journal-of-advertising-research/article/abs/practitioners-evolving-views-on-product-placement-effectiveness/69A29802ED7D871A1535F5FE90D74432">link</a></li>
+    <li>Cowley, E. &amp; Barron, C. (2008). When product placement goes wrong. <i>J. Advertising</i>, 37(1), 89–98. <a href="https://www.tandfonline.com/doi/abs/10.2753/JOA0091-3367370107">doi</a></li>
+    <li>Matthes, J., Wirth, W., Schemer, C. &amp; Pachoud, N. (2012). Tiptoe or tackle? <i>J. Current Issues &amp; Research in Advertising</i>, 33, 129–145. <a href="https://www.tandfonline.com/doi/full/10.1080/10641734.2012.700625">doi</a></li>
+    <li>Boerman, S. C., van Reijmersdal, E. A. &amp; Neijens, P. C. (2012). Sponsorship disclosure: Effects of duration on persuasion knowledge and brand responses. <i>J. Communication</i>, 62(6), 1047–1064. <a href="https://academic.oup.com/joc/article-abstract/62/6/1047/4085812">doi</a></li>
+    <li>Alam, M. M., Sokhandan, N. &amp; Goodman, E. (2024). Automated virtual product placement and assessment in images using diffusion models. CVPR AI4CC Workshop. <a href="https://arxiv.org/abs/2405.01130">arXiv:2405.01130</a></li>
+    <li>Tang, B. J., Sun, K., Curran, N. T., Schaub, F. &amp; Shin, K. G. (2025). Ads that talk back: Implications and perceptions of injecting personalized advertising into LLM chatbots. UbiComp 2025. <a href="https://arxiv.org/abs/2409.15436">arXiv:2409.15436</a></li>
+    <li>Wu, A. J., Liu, R., Li, S. S., Tsvetkov, Y. &amp; Griffiths, T. L. (2026). Ads in AI chatbots? An analysis of how large language models navigate conflicts of interest. <a href="https://arxiv.org/abs/2604.08525">arXiv:2604.08525</a></li>
+    <li>Ofcom. Broadcasting Code, Section Nine. <a href="https://www.ofcom.org.uk/tv-radio-and-on-demand/broadcast-standards/section-nine-commercial-references-tv">ofcom.org.uk</a></li>
+    <li>Directive (EU) 2018/1808 amending the Audiovisual Media Services Directive, Art. 11. <a href="https://eur-lex.europa.eu/eli/dir/2018/1808/oj/eng">EUR-Lex</a></li>
+    <li>AANA Code of Ethics (2021), s.2.7 and Practice Note. <a href="https://aana.com.au/self-regulation/code-of-ethics/">aana.com.au</a>; coverage: <a href="https://mumbrella.com.au/asb-aana-influencers-rules-distinguishable-ads-product-placement-423251">Mumbrella (2017)</a></li>
+    <li>World Federation of Advertisers / GARM. Brand Safety Floor + Suitability Framework. <a href="https://wfanet.org/knowledge/item/2022/06/17/GARM-Brand-Safety-Floor--Suitability-Framework-3">wfanet.org</a></li>
+    <li>OpenAI (2026). Testing ads in ChatGPT; Ad policies. <a href="https://openai.com/index/testing-ads-in-chatgpt/">openai.com</a> · <a href="https://openai.com/policies/ad-policies/">policies</a></li>
+    <li>BEN. The how-to product placement guide for brands. <a href="https://www.benlabs.com/resources/product-placement-guide-for-brands/">benlabs.com</a></li>
+    <li>Hollywood Branded. Product placement strategies: DIY or agency? <a href="https://blog.hollywoodbranded.com/unlocking-the-power-of-product-placement-strategies-for-success-diy-or-agency">blog.hollywoodbranded.com</a></li>
+    <li>The Hustle. The economics of movie product placements. <a href="https://thehustle.co/the-economics-of-movie-product-placements">thehustle.co</a></li>
+    <li>Greeking: <a href="https://greek-kit.com/blogs/news/greeking-101">Greek-Kit, "Greeking 101"</a>; <a href="https://en.wikipedia.org/wiki/Product_displacement">Wikipedia, "Product displacement"</a></li>
+    <li>Concave Brand Tracking. Methodology overview. <a href="https://www.concavebt.com/">concavebt.com</a></li>
+    <li>Mirriad. FAQs and advertiser overview. <a href="https://www.mirriad.com/faqs">mirriad.com</a></li>
+    <li>Chaturvedi, Y. (2026). Building a virtual product placement system (Amazon Prime Video), Embedded Vision Summit. <a href="https://www.edge-ai-vision.com/2026/08/building-a-virtual-product-placement-system-a-case-study-a-presentation-from-amazon-prime-video/">edge-ai-vision.com</a>; interview, The AI Journal (2023). <a href="https://aijourn.com/virtual-product-placement-is-not-just-about-slapping-a-logo-on-a-billboard-it-should-fit-an-emotional-tone-amazons-product-manager-yash-chaturvedi-on-the-vpp-marke/">aijourn.com</a></li>
+  </ol>
+</section>
+</div>

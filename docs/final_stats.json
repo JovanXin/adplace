@@ -1,0 +1,612 @@
+{
+ "A": {
+  "dir": "pilot-edit",
+  "label": "v1 rewriter \u00b7 FLUX \u00b7 Qwen-Edit repair",
+  "n": 8,
+  "accepted": 0,
+  "first_try": 0,
+  "mean_attempts": 4,
+  "variants": {
+   "subtle": 0,
+   "subtle_noblind": 1,
+   "moderate": 0,
+   "moderate_noblind": 3
+  },
+  "codes": {
+   "TOO_PROMINENT": 32,
+   "BAD_INTEGRATION": 2,
+   "DUPLICATES": 6,
+   "FIDELITY_LOSS": 1
+  },
+  "n_images": 32,
+  "median_area": 0.0515,
+  "mean_leg": 3.12,
+  "mean_susp": 4.47,
+  "brand_seen_pct": 100,
+  "mean_drift": 0.024,
+  "clip": [
+   {
+    "idx": 0,
+    "base": 0.3729,
+    "att1": 0.3319,
+    "final": 0.3319
+   },
+   {
+    "idx": 1,
+    "base": 0.3494,
+    "att1": 0.3492,
+    "final": 0.3492
+   },
+   {
+    "idx": 2,
+    "base": 0.3458,
+    "att1": 0.3288,
+    "final": 0.332
+   },
+   {
+    "idx": 3,
+    "base": 0.344,
+    "att1": 0.3156,
+    "final": 0.3156
+   },
+   {
+    "idx": 4,
+    "base": 0.2949,
+    "att1": 0.2971,
+    "final": 0.2971
+   },
+   {
+    "idx": 5,
+    "base": 0.3631,
+    "att1": 0.3026,
+    "final": 0.3026
+   },
+   {
+    "idx": 6,
+    "base": 0.3285,
+    "att1": 0.3222,
+    "final": 0.3222
+   },
+   {
+    "idx": 16,
+    "base": 0.3104,
+    "att1": 0.2353,
+    "final": 0.2353
+   }
+  ],
+  "clip_d_att1": -0.0283,
+  "clip_d_final": -0.0279,
+  "usd": 0.349,
+  "usd_img": 0,
+  "usd_per_prompt": 0.044,
+  "comfy_jobs": 40,
+  "closed_images": 0,
+  "accepted_idx": []
+ },
+ "B": {
+  "dir": "pilot-regen",
+  "label": "v1 rewriter \u00b7 FLUX \u00b7 prompt repair",
+  "n": 8,
+  "accepted": 0,
+  "first_try": 0,
+  "mean_attempts": 4,
+  "variants": {
+   "subtle": 0,
+   "subtle_noblind": 1,
+   "moderate": 2,
+   "moderate_noblind": 5
+  },
+  "codes": {
+   "TOO_PROMINENT": 32,
+   "DUPLICATES": 6,
+   "BAD_INTEGRATION": 6,
+   "FIDELITY_LOSS": 1
+  },
+  "n_images": 24,
+  "median_area": 0.0326,
+  "mean_leg": 3.21,
+  "mean_susp": 4.33,
+  "brand_seen_pct": 100,
+  "mean_drift": null,
+  "clip": [
+   {
+    "idx": 0,
+    "base": 0.3729,
+    "att1": 0.3319,
+    "final": 0.3319
+   },
+   {
+    "idx": 1,
+    "base": 0.3494,
+    "att1": 0.3492,
+    "final": 0.3492
+   },
+   {
+    "idx": 2,
+    "base": 0.3458,
+    "att1": 0.3288,
+    "final": 0.345
+   },
+   {
+    "idx": 3,
+    "base": 0.344,
+    "att1": 0.3156,
+    "final": 0.3156
+   },
+   {
+    "idx": 4,
+    "base": 0.2949,
+    "att1": 0.2971,
+    "final": 0.2971
+   },
+   {
+    "idx": 5,
+    "base": 0.3631,
+    "att1": 0.3026,
+    "final": 0.3026
+   },
+   {
+    "idx": 6,
+    "base": 0.3285,
+    "att1": 0.3222,
+    "final": 0.3222
+   },
+   {
+    "idx": 16,
+    "base": 0.3104,
+    "att1": 0.2353,
+    "final": 0.2353
+   }
+  ],
+  "clip_d_att1": -0.0283,
+  "clip_d_final": -0.0263,
+  "usd": 0.383,
+  "usd_img": 0,
+  "usd_per_prompt": 0.048,
+  "comfy_jobs": 26,
+  "closed_images": 0,
+  "accepted_idx": []
+ },
+ "G": {
+  "dir": "pilot-v2-regen",
+  "label": "v2 rewriter \u00b7 FLUX \u00b7 prompt repair",
+  "n": 8,
+  "accepted": 1,
+  "first_try": 0,
+  "mean_attempts": 4.88,
+  "variants": {
+   "subtle": 1,
+   "subtle_noblind": 3,
+   "moderate": 5,
+   "moderate_noblind": 8
+  },
+  "codes": {
+   "FIDELITY_LOSS": 3,
+   "ARTIFACTS": 1,
+   "TOO_PROMINENT": 38,
+   "BAD_INTEGRATION": 4,
+   "DUPLICATES": 3
+  },
+  "n_images": 39,
+  "median_area": 0.023,
+  "mean_leg": 2.95,
+  "mean_susp": 4,
+  "brand_seen_pct": 97.0,
+  "mean_drift": null,
+  "clip": [
+   {
+    "idx": 0,
+    "base": 0.3729,
+    "att1": 0.362,
+    "final": 0.3649
+   },
+   {
+    "idx": 1,
+    "base": 0.3494,
+    "att1": 0.3473,
+    "final": 0.3473
+   },
+   {
+    "idx": 2,
+    "base": 0.3458,
+    "att1": 0.3348,
+    "final": 0.3348
+   },
+   {
+    "idx": 3,
+    "base": 0.344,
+    "att1": 0.3387,
+    "final": 0.3321
+   },
+   {
+    "idx": 4,
+    "base": 0.2949,
+    "att1": 0.3069,
+    "final": 0.3069
+   },
+   {
+    "idx": 5,
+    "base": 0.3631,
+    "att1": 0.3365,
+    "final": 0.3424
+   },
+   {
+    "idx": 6,
+    "base": 0.3285,
+    "att1": 0.3117,
+    "final": 0.3117
+   },
+   {
+    "idx": 16,
+    "base": 0.3104,
+    "att1": 0.2894,
+    "final": 0.2894
+   }
+  ],
+  "clip_d_att1": -0.0102,
+  "clip_d_final": -0.0099,
+  "usd": 0.636,
+  "usd_img": 0,
+  "usd_per_prompt": 0.08,
+  "comfy_jobs": 53,
+  "closed_images": 0,
+  "accepted_idx": [
+   3
+  ]
+ },
+ "C": {
+  "dir": "pilot-v2",
+  "label": "v2 rewriter \u00b7 FLUX \u00b7 Qwen-Edit repair (partial)",
+  "n": 3,
+  "accepted": 1,
+  "first_try": 0,
+  "mean_attempts": 4,
+  "variants": {
+   "subtle": 1,
+   "subtle_noblind": 1,
+   "moderate": 0,
+   "moderate_noblind": 1
+  },
+  "codes": {
+   "TOO_PROMINENT": 10,
+   "BAD_INTEGRATION": 2,
+   "FIDELITY_LOSS": 2,
+   "ARTIFACTS": 1,
+   "DUPLICATES": 4
+  },
+  "n_images": 12,
+  "median_area": 0.0157,
+  "mean_leg": 3.08,
+  "mean_susp": 3.58,
+  "brand_seen_pct": 100,
+  "mean_drift": 0.1221,
+  "clip": [
+   {
+    "idx": 0,
+    "base": 0.3729,
+    "att1": 0.3645,
+    "final": 0.3649
+   },
+   {
+    "idx": 1,
+    "base": 0.3494,
+    "att1": 0.3473,
+    "final": 0.363
+   },
+   {
+    "idx": 2,
+    "base": 0.3458,
+    "att1": 0.3448,
+    "final": 0.3401
+   }
+  ],
+  "clip_d_att1": -0.0038,
+  "clip_d_final": -0.0,
+  "usd": 0.306,
+  "usd_img": 0,
+  "usd_per_prompt": 0.102,
+  "comfy_jobs": 31,
+  "closed_images": 0,
+  "accepted_idx": [
+   1
+  ]
+ },
+ "D": {
+  "dir": "pilot-vpp",
+  "label": "VPP \u00b7 FLUX baseline + Qwen-Edit insert (partial)",
+  "n": 3,
+  "accepted": 0,
+  "first_try": 0,
+  "mean_attempts": 4,
+  "variants": {
+   "subtle": 0,
+   "subtle_noblind": 0,
+   "moderate": 0,
+   "moderate_noblind": 2
+  },
+  "codes": {
+   "TOO_PROMINENT": 12,
+   "FIDELITY_LOSS": 3,
+   "ARTIFACTS": 1,
+   "DUPLICATES": 3,
+   "BAD_INTEGRATION": 1
+  },
+  "n_images": 12,
+  "median_area": 0.0087,
+  "mean_leg": 2.92,
+  "mean_susp": 4.08,
+  "brand_seen_pct": 100,
+  "mean_drift": 0.0344,
+  "clip": [
+   {
+    "idx": 0,
+    "base": 0.3729,
+    "att1": 0.3719,
+    "final": 0.3719
+   },
+   {
+    "idx": 1,
+    "base": 0.3494,
+    "att1": 0.3508,
+    "final": 0.3508
+   },
+   {
+    "idx": 2,
+    "base": 0.3458,
+    "att1": 0.3562,
+    "final": 0.3493
+   }
+  ],
+  "clip_d_att1": 0.0036,
+  "clip_d_final": 0.0013,
+  "usd": 0.321,
+  "usd_img": 0,
+  "usd_per_prompt": 0.107,
+  "comfy_jobs": 27,
+  "closed_images": 0,
+  "accepted_idx": []
+ },
+ "E": {
+  "dir": "pilot-vpp-gemini",
+  "label": "VPP \u00b7 FLUX baseline + Gemini 3.1 Flash Image insert",
+  "n": 8,
+  "accepted": 3,
+  "first_try": 0,
+  "mean_attempts": 3.62,
+  "variants": {
+   "subtle": 3,
+   "subtle_noblind": 6,
+   "moderate": 5,
+   "moderate_noblind": 8
+  },
+  "codes": {
+   "TOO_PROMINENT": 24,
+   "ARTIFACTS": 2,
+   "BAD_INTEGRATION": 2,
+   "ON_SUBJECT": 1,
+   "ABSENT": 3,
+   "DUPLICATES": 1,
+   "FIDELITY_LOSS": 2
+  },
+  "n_images": 29,
+  "median_area": 0.0085,
+  "mean_leg": 2.59,
+  "mean_susp": 3.24,
+  "brand_seen_pct": 93.0,
+  "mean_drift": 0.0053,
+  "clip": [
+   {
+    "idx": 0,
+    "base": 0.3729,
+    "att1": 0.3657,
+    "final": 0.3657
+   },
+   {
+    "idx": 1,
+    "base": 0.3494,
+    "att1": 0.3512,
+    "final": 0.3396
+   },
+   {
+    "idx": 2,
+    "base": 0.3458,
+    "att1": 0.3531,
+    "final": 0.348
+   },
+   {
+    "idx": 3,
+    "base": 0.344,
+    "att1": 0.3468,
+    "final": 0.3501
+   },
+   {
+    "idx": 4,
+    "base": 0.2949,
+    "att1": 0.2972,
+    "final": 0.324
+   },
+   {
+    "idx": 5,
+    "base": 0.3631,
+    "att1": 0.367,
+    "final": 0.3443
+   },
+   {
+    "idx": 6,
+    "base": 0.3285,
+    "att1": 0.3282,
+    "final": 0.3282
+   },
+   {
+    "idx": 16,
+    "base": 0.3104,
+    "att1": 0.3077,
+    "final": 0.3077
+   }
+  ],
+  "clip_d_att1": 0.001,
+  "clip_d_final": -0.0002,
+  "usd": 2.873,
+  "usd_img": 2.372,
+  "usd_per_prompt": 0.359,
+  "comfy_jobs": 13,
+  "closed_images": 35,
+  "accepted_idx": [
+   3,
+   4,
+   5
+  ]
+ },
+ "F": {
+  "dir": "pilot-gemini-gen",
+  "label": "v2 rewriter \u00b7 Gemini 3.1 Flash Image gen + edit",
+  "n": 8,
+  "accepted": 3,
+  "first_try": 0,
+  "mean_attempts": 2.75,
+  "variants": {
+   "subtle": 3,
+   "subtle_noblind": 4,
+   "moderate": 4,
+   "moderate_noblind": 6
+  },
+  "codes": {
+   "TOO_PROMINENT": 16,
+   "ARTIFACTS": 2,
+   "BAD_INTEGRATION": 2,
+   "ABSENT": 3,
+   "DUPLICATES": 1,
+   "ON_SUBJECT": 1,
+   "GARBLED_BRAND": 1
+  },
+  "n_images": 22,
+  "median_area": 0.0115,
+  "mean_leg": 2.45,
+  "mean_susp": 3.09,
+  "brand_seen_pct": 77.0,
+  "mean_drift": 0.0013,
+  "clip": [
+   {
+    "idx": 0,
+    "base": 0.3803,
+    "att1": 0.366,
+    "final": 0.366
+   },
+   {
+    "idx": 1,
+    "base": 0.3164,
+    "att1": 0.3188,
+    "final": 0.3188
+   },
+   {
+    "idx": 2,
+    "base": 0.3288,
+    "att1": 0.3348,
+    "final": 0.3176
+   },
+   {
+    "idx": 3,
+    "base": 0.3227,
+    "att1": 0.3186,
+    "final": 0.3111
+   },
+   {
+    "idx": 4,
+    "base": 0.2915,
+    "att1": 0.2823,
+    "final": 0.3071
+   },
+   {
+    "idx": 5,
+    "base": 0.2885,
+    "att1": 0.2949,
+    "final": 0.2899
+   },
+   {
+    "idx": 6,
+    "base": 0.3083,
+    "att1": 0.3178,
+    "final": 0.3119
+   },
+   {
+    "idx": 16,
+    "base": 0.287,
+    "att1": 0.265,
+    "final": 0.265
+   }
+  ],
+  "clip_d_att1": -0.0032,
+  "clip_d_final": -0.0045,
+  "usd": 2.805,
+  "usd_img": 2.564,
+  "usd_per_prompt": 0.351,
+  "comfy_jobs": 0,
+  "closed_images": 38,
+  "accepted_idx": [
+   3,
+   4,
+   5
+  ]
+ },
+ "_totals": {
+  "openrouter_usd": 8.29,
+  "by_task": [
+   {
+    "task": "edit",
+    "model": "google/gemini-3.1-flash-image",
+    "usd": 3.592
+   },
+   {
+    "task": "generate",
+    "model": "google/gemini-3.1-flash-image",
+    "usd": 1.411
+   },
+   {
+    "task": "verify_informed",
+    "model": "google/gemini-3.7-flash",
+    "usd": 1.049
+   },
+   {
+    "task": "rewrite",
+    "model": "google/gemini-3.7-flash",
+    "usd": 0.691
+   },
+   {
+    "task": "verify_blind",
+    "model": "google/gemini-3.7-flash",
+    "usd": 0.494
+   },
+   {
+    "task": "repair",
+    "model": "google/gemini-3.7-flash",
+    "usd": 0.492
+   },
+   {
+    "task": "edit",
+    "model": "openai/gpt-5.4-image-2",
+    "usd": 0.236
+   },
+   {
+    "task": "vqascore",
+    "model": "openai/gpt-4o",
+    "usd": 0.142
+   },
+   {
+    "task": "plan",
+    "model": "google/gemini-3.7-flash",
+    "usd": 0.069
+   },
+   {
+    "task": "vpp_plan",
+    "model": "google/gemini-3.7-flash",
+    "usd": 0.059
+   },
+   {
+    "task": "classify",
+    "model": "google/gemini-3.7-flash",
+    "usd": 0.055
+   }
+  ],
+  "comfy_jobs": 190
+ }
+}

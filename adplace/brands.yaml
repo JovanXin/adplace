@@ -1,0 +1,164 @@
+# Advertiser catalogue. Each brand lists the physical forms it can take in a scene,
+# which contexts it fits, and the advertiser's own portrayal rules (the kind of
+# conditions brands write into placement contracts, e.g. never with villains).
+# `render_reliability` reflects Thesis A 4.2: famous marks render well, stylised ones don't.
+
+coca-cola:
+  display: Coca-Cola
+  category: soft drink
+  restricted: [hfss]            # UK Ofcom 9.13: HFSS placement banned in UK-made programmes
+  render_reliability: high
+  forms:
+    - {form: "contour glass bottle", era: [vintage, 1950s, retro, any], cue: "red label with white script partly visible"}
+    - {form: "red aluminium can", era: [modern, contemporary, any], cue: "red can, white script turned partly away"}
+    - {form: "paper cup with red print", era: [modern], cue: "fountain cup, red print"}
+    - {form: "enamel wall sign", era: [vintage, retro], cue: "small weathered red sign"}
+    - {form: "red glass-front drinks fridge", era: [modern], cue: "small fridge behind counter"}
+  fits: [picnic, bbq, beach, diner, cinema, party, road trip, convenience store, stadium, summer, casual meal, office break]
+  avoid: [children as focal consumers, hospital, gym/fitness focus, fine dining, health]
+  portrayal_rules:
+    - never held or consumed by a child
+    - never in a violent, criminal or tragic scene
+    - not next to a competing soft-drink brand
+  competitors: [pepsi]
+
+pepsi:
+  display: Pepsi
+  category: soft drink
+  restricted: [hfss]
+  render_reliability: high
+  forms:
+    - {form: "blue can", era: [modern, any], cue: "blue can with red-white-blue globe partly visible"}
+    - {form: "plastic bottle", era: [modern], cue: "blue label"}
+  fits: [party, stadium, gaming, casual meal, convenience store, summer]
+  avoid: [children as focal consumers, health]
+  portrayal_rules: [never held or consumed by a child, never in violent or tragic scenes]
+  competitors: [coca-cola]
+
+nike:
+  display: Nike
+  category: sportswear
+  restricted: []
+  render_reliability: high
+  forms:
+    - {form: "running shoes", era: [modern, contemporary], cue: "small swoosh on the side of the shoe"}
+    - {form: "gym bag", era: [modern], cue: "swoosh on the bag"}
+    - {form: "cap", era: [modern], cue: "small swoosh on the front"}
+  fits: [running, gym, street, park, basketball, athlete, urban, commute, youth sport (adult athletes)]
+  avoid: [formal events, historical settings before 1970, fantasy/medieval]
+  portrayal_rules: [not worn by someone committing a crime, not in injury/defeat focus]
+  competitors: [adidas]
+
+adidas:
+  display: Adidas
+  category: sportswear
+  restricted: []
+  render_reliability: high
+  forms:
+    - {form: "three-stripe trainers", era: [modern, retro], cue: "three stripes on the side"}
+    - {form: "track jacket", era: [modern, retro], cue: "three stripes on the sleeve"}
+  fits: [football, street, running, gym, retro 80s/90s]
+  avoid: [formal events, historical before 1950, fantasy/medieval]
+  portrayal_rules: [not worn by someone committing a crime]
+  competitors: [nike]
+
+apple:
+  display: Apple
+  category: consumer electronics
+  restricted: []
+  render_reliability: high
+  forms:
+    - {form: "silver laptop", era: [modern], cue: "apple logo on the lid"}
+    - {form: "smartphone", era: [modern], cue: "apple logo on the back"}
+    - {form: "white earbuds", era: [modern], cue: "white stem earbuds"}
+  fits: [office, cafe, study, student, creative studio, commute, home office]
+  avoid: [historical, fantasy, outdoor wilderness]
+  portrayal_rules: [never used by a villain or antagonist, never shown broken]
+  competitors: [samsung]
+
+samsung:
+  display: Samsung
+  category: consumer electronics
+  restricted: []
+  render_reliability: medium
+  forms:
+    - {form: "smartphone", era: [modern], cue: "samsung wordmark on the back"}
+    - {form: "flat-screen TV", era: [modern], cue: "small wordmark on the bezel"}
+  fits: [living room, office, commute, sports bar]
+  avoid: [historical, fantasy]
+  portrayal_rules: [never shown broken]
+  competitors: [apple]
+
+starbucks:
+  display: Starbucks
+  category: coffee
+  restricted: []
+  render_reliability: high
+  forms:
+    - {form: "white paper cup with green siren logo", era: [modern], cue: "green circular logo on the cup, partly turned away"}
+  fits: [office, commute, study, city street, morning, cafe, meeting]
+  avoid: [historical, fantasy, rural wilderness]
+  portrayal_rules: [not in scenes of illness or tragedy]
+  competitors: []
+
+mcdonalds:
+  display: McDonald's
+  category: fast food
+  restricted: [hfss]
+  render_reliability: high
+  forms:
+    - {form: "paper takeaway bag", era: [modern], cue: "golden arches on the bag"}
+    - {form: "fries carton", era: [modern], cue: "red carton, arches"}
+  fits: [road trip, casual meal, late night, city street, car]
+  avoid: [children as focal consumers, health, fine dining]
+  portrayal_rules: [never with children as focal consumers]
+  competitors: []
+
+red-bull:
+  display: Red Bull
+  category: energy drink
+  restricted: [hfss]
+  render_reliability: high
+  forms:
+    - {form: "slim silver-blue can", era: [modern], cue: "slim can, red-yellow emblem"}
+  fits: [extreme sport, gaming, study all-nighter, festival, motorsport]
+  avoid: [children, health, calm/relaxation]
+  portrayal_rules: [never with children]
+  competitors: []
+
+xbox:
+  display: Xbox
+  category: gaming
+  restricted: []
+  render_reliability: high
+  forms:
+    - {form: "black game controller", era: [modern], cue: "green-white X button logo"}
+    - {form: "black console", era: [modern], cue: "small X logo"}
+  fits: [living room, gaming, teen bedroom (adult occupants), dorm]
+  avoid: [historical, fantasy, outdoor]
+  portrayal_rules: [not in scenes of violence between people]
+  competitors: []
+
+ikea:
+  display: IKEA
+  category: home furnishing
+  restricted: []
+  render_reliability: medium
+  forms:
+    - {form: "blue shopping bag", era: [modern], cue: "large blue bag with yellow handles"}
+  fits: [moving house, apartment, home renovation, flat-pack]
+  avoid: [historical, fantasy, outdoor wilderness]
+  portrayal_rules: []
+  competitors: []
+
+heineken:
+  display: Heineken
+  category: beer
+  restricted: [alcohol]          # banned by OpenAI ad policy; restricted by Ofcom 9.13
+  render_reliability: high
+  forms:
+    - {form: "green glass bottle", era: [modern, any], cue: "green bottle, red star"}
+  fits: [bar, bbq (adults), football watch party, rooftop]
+  avoid: [children, driving, work, health, religious]
+  portrayal_rules: [never near minors, never near driving]
+  competitors: []

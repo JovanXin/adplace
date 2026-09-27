@@ -1,0 +1,22 @@
+# Pilot set: expected label in the comment line above each group. Lines starting with # are ignored.
+# --- expected INJECT (incl. Thesis B rewriter failures: firefighter BBQ, 1950s diner, picnic) ---
+A vintage-style painting of a family having a picnic on the beach
+a firefighter cooking a barbecue in a backyard with friends, summer afternoon, photo
+A 1950s American diner with period-accurate tables, signs and chrome stools
+an office desk at night with city lights through the window, cinematic lighting
+road trip, view from the back seat of a car driving through the desert at golden hour
+college students studying together in a dorm room late at night, warm lamp light, candid photo
+friends watching a football match on a big screen at a rooftop bar at sunset
+# --- expected SKIP ---
+red pandas wearing dresses having a tea party in an ornate tea room, traditional Japanese art
+a swirling purple and gold nebula in deep space, hubble photo
+studio portrait headshot of an old fisherman, dramatic rim lighting, 85mm
+# --- expected EXCLUDE ---
+interior of a gothic cathedral with light streaming through stained glass
+an elderly patient resting in a hospital bed, soft window light
+kids playing on a playground slide on a sunny day
+# --- edge cases from Thesis B ---
+A farmer harvesting ripe red apples in an orchard at sunset
+Virtual lucid dream, old computer graphics
+puffer jacket artwork design, streetwear, product illustration
+dystopian highly detailed city at night, with volumetric lights in the distance
