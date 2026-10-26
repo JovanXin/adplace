@@ -1,0 +1,287 @@
+<title>Survey Image Set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{--paper:#F4F5F2;--card:#FFFFFF;--ink:#1C2321;--muted:#5D6864;--rule:#D8DDD8;--accent:#1F5F8B;--accent-bg:#E3EDF4;
+--base:#5D6864;--base-bg:#E6E9E6;--bad:#A8322A;--bad-bg:#F8E4E1;--good:#23734A;--good-bg:#E1F2E8;--s1:#2a78d6;--s2:#eb6834;
+--f-head:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"Source Serif 4",Georgia,serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;
+--base:#9AA5A0;--base-bg:#262C29;--bad:#F09A90;--bad-bg:#3A1F1C;--good:#7FD1A3;--good-bg:#1D3326;--s1:#3987e5;--s2:#d95926}}
+:root[data-theme="dark"]{color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;
+--base:#9AA5A0;--base-bg:#262C29;--bad:#F09A90;--bad-bg:#3A1F1C;--good:#7FD1A3;--good-bg:#1D3326;--s1:#3987e5;--s2:#d95926}
+body{background:var(--paper);color:var(--ink);font:16.5px/1.6 var(--f-body)}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:40px 80px;display:grid;gap:44px}
+header.top{display:grid;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+.eyebrow,.lbl{font:600 .72rem/1.2 var(--f-head);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+h1,h2,h3{font-family:var(--f-head);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:2.3rem;line-height:1.1}h2{font-size:1.45rem}
+p{margin:0;max-width:72ch}.muted{color:var(--muted)}
+section{display:grid;gap:16px}
+.warn{background:var(--bad-bg);color:var(--ink);border-radius:6px;padding:12px 16px;font-size:.92rem}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 14px;display:grid;gap:2px}
+.kpi b{font:600 1.5rem/1.1 var(--f-head);font-variant-numeric:tabular-nums}.kpi span{font:500 .78rem/1.3 var(--f-head);color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45}
+th,td{text-align:left;vertical-align:top;padding:.5rem .75rem;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}tr.ref td{color:var(--muted)}
+thead th{font:600 .7rem var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--paper)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.8rem;white-space:nowrap}
+code{font-family:var(--f-mono);font-size:.82em;background:var(--card);padding:.05em .3em;border-radius:3px}
+a{color:var(--accent)}
+figure{margin:0}
+.chart,.diagram{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px}
+.chart svg,.diagram svg{display:block;width:100%;height:auto;color:var(--ink)}
+.diagram{overflow-x:auto}.diagram svg{min-width:640px}
+svg text{font-family:var(--f-head);fill:currentColor}
+.grid{stroke:var(--rule)}.tick{font-size:12px;fill:var(--muted)}.rowlab{font-size:13px}.vlab{font-size:12.5px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.bar{fill:var(--s1)}.bar.loop{fill:var(--s2)}
+.box{fill:var(--card);stroke:currentColor;stroke-width:1.2}.box.hi{fill:var(--accent-bg);stroke:var(--accent)}
+.ttl{font-size:13px;font-weight:600}.sub{font-size:11px;fill:var(--muted)}.edge{stroke:currentColor;stroke-width:1.3;fill:none}.edge.acc{stroke:var(--accent)}
+.elab{font-size:11px;fill:var(--muted)}.elab.acc{fill:var(--accent)}
+figcaption.cap{font-size:.86rem;color:var(--muted);margin-top:8px;max-width:78ch}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+.items{display:grid;gap:22px}
+.item{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px;display:grid;gap:10px}
+.item header{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.item header b{font:600 1.05rem var(--f-head)}.brand{font:600 .9rem var(--f-head);color:var(--accent)}
+.up{font-style:italic;color:var(--muted);font-size:.92rem}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:680px){.trio{grid-template-columns:1fr}}
+.cell{display:grid;gap:6px;align-content:start}
+.cell img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:4px;display:block;background:var(--rule)}
+.cell figcaption{display:grid;gap:3px;font-size:.78rem}
+.role{justify-self:start;font:600 .66rem/1 var(--f-mono);padding:.28rem .45rem;border-radius:3px;text-transform:uppercase;letter-spacing:.03em}
+.role.base{background:var(--base-bg);color:var(--base)}.role.simple{background:var(--accent-bg);color:var(--accent)}.role.bad{background:var(--bad-bg);color:var(--bad)}.role.surface{background:var(--good-bg);color:var(--good)}.role.good{background:var(--good-bg);color:var(--good)}
+.how{font:500 .78rem var(--f-head)}.ins{font:.72rem/1.4 var(--f-mono);color:var(--ink)}
+.stat{font:.7rem var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.pair{font:.7rem var(--f-mono)}.pair.hit{color:var(--bad)}.pair.miss{color:var(--good)}
+ul.tight,ol.tight{margin:0;padding-left:1.2rem;display:grid;gap:6px;max-width:74ch}
+</style>
+<style>.exrow{display:grid;gap:6px}.exs{display:grid;gap:18px}</style>
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">Thesis C · survey stimuli v2 · 4 Oct 2026</span>
+  <h1>Survey image set: original vs simple vs surface-specific rewrite</h1>
+  <p class="muted">20 everyday prompts, each rendered three ways: the <b>original prompt</b>; a <b>simple</b> rewrite that just adds the product (“…, with a can of Coke”); and a <b>surface-specific</b> rewrite that also says where it sits (“…, with a can of Coke on the cafe table”). A single LLM step writes the product phrase and the surface, so the two rewrites differ only by the surface clause. All images are from Gemini 3.1 Flash-Lite Image, because Comfy Cloud/FLUX is unavailable.</p>
+</header>
+
+<div class="warn"><b>Researcher view.</b> Give participants only <code>survey/images/</code>. File names are S01_A…S20_C, with letters shuffled per item. The answer key is <code>survey/key.csv</code>. This replaces the earlier good/bad-inject set, which is kept in <code>survey_v1_good-bad/</code>.</div>
+
+<div class="kpis">
+  <div class="kpi"><b>20 × 3</b><span>items × images (60 total); every surface image passes your rule</span></div>
+  <div class="kpi"><b>16 vs 15</b><span>of 24 pass your rule on the first try: simple vs surface</span></div>
+  <div class="kpi"><b>20/24</b><span>surface-specific after the feedback loop picks a new surface (≤2 tries)</span></div>
+  <div class="kpi"><b>4.3 vs 3.6</b><span>how naturally the brand fits the scene (GPT, 1–5): simple vs surface</span></div>
+</div>
+
+<section>
+  <h2>How the rewrites are built</h2>
+  <figure><div class="diagram">
+  <svg viewBox="0 0 980 230" role="img" aria-label="One LLM call sees the original image and writes the product phrase and a surface; the simple rewrite appends 'with product', the surface rewrite appends 'with product surface'; both go to Gemini 3.1 Flash-Lite and are verified; a failed surface image goes to a feedback step that picks a different surface.">
+    <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker></defs>
+    <rect x="10" y="80" width="150" height="58" rx="6" class="box"/><text x="85" y="104" text-anchor="middle" class="ttl">Original prompt</text><text x="85" y="122" text-anchor="middle" class="sub">+ brand from classifier</text>
+    <rect x="190" y="80" width="180" height="58" rx="6" class="box hi"/><text x="280" y="104" text-anchor="middle" class="ttl">Phrase LLM (sees image)</text><text x="280" y="122" text-anchor="middle" class="sub">product · surface · 2 alternatives</text>
+    <line x1="160" y1="109" x2="188" y2="109" class="edge" marker-end="url(#a)"/>
+    <rect x="410" y="20" width="230" height="50" rx="6" class="box"/><text x="525" y="41" text-anchor="middle" class="ttl">simple</text><text x="525" y="58" text-anchor="middle" class="sub">“…, with a can of Coke”</text>
+    <rect x="410" y="148" width="230" height="50" rx="6" class="box hi"/><text x="525" y="169" text-anchor="middle" class="ttl">surface</text><text x="525" y="186" text-anchor="middle" class="sub">“…, with a can of Coke on the cafe table”</text>
+    <path d="M370 109 H390 V45 H408" class="edge" marker-end="url(#a)"/><path d="M390 109 V173 H408" class="edge" marker-end="url(#a)"/>
+    <rect x="680" y="84" width="140" height="50" rx="6" class="box"/><text x="750" y="105" text-anchor="middle" class="ttl">Gemini Flash-Lite</text><text x="750" y="122" text-anchor="middle" class="sub">image, 1:1, seed 7</text>
+    <path d="M640 45 H660 V109 H678" class="edge" marker-end="url(#a)"/><path d="M640 173 H660 V109" class="edge"/>
+    <rect x="850" y="84" width="120" height="50" rx="6" class="box hi"/><text x="910" y="105" text-anchor="middle" class="ttl">Verify + judge</text><text x="910" y="122" text-anchor="middle" class="sub">rule · GPT · CLIP</text>
+    <line x1="820" y1="109" x2="848" y2="109" class="edge" marker-end="url(#a)"/>
+    <path d="M910 134 V218 H525 V200" class="edge acc" marker-end="url(#aA)"/>
+    <text x="718" y="212" text-anchor="middle" class="elab acc">surface fails → feedback picks a different surface (≤2 tries)</text>
+  </svg></div>
+  <figcaption class="cap">“Your rule” is the calibrated band fitted to your 160 lightbox labels: not blatant or right in front (no hero-shot legibility, no foreground product that grabs the eye), blind ad-suspicion ≤4, and the scene intact. A Gemini 3.7 Flash verifier applies it. GPT-5.6 Sol acts as an independent viewer, told nothing, and rates how ad-like and how natural each image is. CLIPScore is scored against the original prompt.</figcaption></figure>
+</section>
+
+<section>
+  <h2>Simple vs surface-specific</h2>
+  <div class="two">
+    <figure><div class="chart"><svg viewBox="0 0 560 180" role="img" aria-label="Share of 24 prompts whose image passes the acceptance rule: simple 16, surface 15, surface short 11, surface plus feedback loop 20."><line x1="250.0" x2="250.0" y1="8" y2="154" class="grid"/><text x="250.0" y="170" text-anchor="middle" class="tick">0%</text><line x1="375.0" x2="375.0" y1="8" y2="154" class="grid"/><text x="375.0" y="170" text-anchor="middle" class="tick">50%</text><line x1="500.0" x2="500.0" y1="8" y2="154" class="grid"/><text x="500.0" y="170" text-anchor="middle" class="tick">100%</text><text x="240" y="28" text-anchor="end" class="rowlab">Simple “with X”</text><rect x="250.0" y="14" width="166.7" height="20" rx="3" class="bar"><title>Simple “with X”: 16/24</title></rect><text x="424.7" y="28" class="vlab">16/24</text><text x="240" y="62" text-anchor="end" class="rowlab">Surface “with X on Y”</text><rect x="250.0" y="48" width="156.2" height="20" rx="3" class="bar"><title>Surface “with X on Y”: 15/24</title></rect><text x="414.2" y="62" class="vlab">15/24</text><text x="240" y="96" text-anchor="end" class="rowlab">Surface, short reference</text><rect x="250.0" y="82" width="114.6" height="20" rx="3" class="bar"><title>Surface, short reference: 11/24</title></rect><text x="372.6" y="96" class="vlab">11/24</text><text x="240" y="130" text-anchor="end" class="rowlab">Surface + feedback loop</text><rect x="250.0" y="116" width="208.3" height="20" rx="3" class="bar loop"><title>Surface + feedback loop: 20/24</title></rect><text x="466.3" y="130" class="vlab">20/24</text></svg></div><figcaption class="cap">Share of the 24 prompts whose image passes your rule. The orange bar includes the feedback loop.</figcaption></figure>
+    <div style="display:grid;gap:10px">
+      <p><b>On the first try, naming the surface did not beat the simple rewrite.</b> The surface version made the brand slightly more readable (legibility 2.00 vs 1.79). But it also looked more staged: GPT rated how naturally the brand fits at 3.65 vs 4.26. It failed as too prominent more often (4 vs 2), and a side-by-side viewer spotted it more often (22/24 vs 18/24).</p>
+      <p><b>The surface condition wins once the feedback loop runs.</b> When a surface image fails, the loop looks at it and picks a different surface. That lifts surface-specific placement to 20/24, ahead of simple's 16/24, while keeping control over where the product goes, which is what an advertiser pays for.</p>
+      <p>Using a shorter reference to the surface (“on their table” instead of “on the round bistro table”) didn't help (11/24). The problem is naming a surface at all, not how it's described.</p>
+    </div>
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Condition</th><th class="num">n</th><th class="num">Passes rule</th><th class="num">GPT ad? (1–5)</th><th class="num">Natural fit (1–5)</th><th class="num">Legibility (0–4)</th><th class="num">Side-by-side spotted</th><th class="num">Adherence</th><th class="num">CLIPScore</th></tr></thead>
+    <tbody><tr class="ref"><td>No-inject (original prompt)</td><td class="num">24</td><td class="num">–</td><td class="num">1.38</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">4.96</td><td class="num">0.314</td></tr><tr><td>Simple: “…, with a can of Coke”</td><td class="num">24</td><td class="num">16/24</td><td class="num">3.00</td><td class="num">4.26</td><td class="num">1.79</td><td class="num">18/24</td><td class="num">5.00</td><td class="num">0.312</td></tr><tr><td>Surface: “…, with a can of Coke on the cafe table”</td><td class="num">24</td><td class="num">15/24</td><td class="num">3.21</td><td class="num">3.65</td><td class="num">2.00</td><td class="num">22/24</td><td class="num">4.92</td><td class="num">0.311</td></tr><tr><td>Surface, short reference: “…on their table”</td><td class="num">24</td><td class="num">11/24</td><td class="num">3.17</td><td class="num">3.67</td><td class="num">2.04</td><td class="num">–</td><td class="num">4.79</td><td class="num">0.305</td></tr><tr><td>Surface + feedback loop (≤2 new surfaces)</td><td class="num">24</td><td class="num">20/24</td><td class="num">3.25</td><td class="num">3.50</td><td class="num">1.96</td><td class="num">22/24</td><td class="num">4.92</td><td class="num">0.311</td></tr></tbody></table></div>
+  <p class="muted">Same 24 prompts, image model and seed for every condition. The loop row reports the image each prompt ended on. Side-by-side: a GPT judge saw the original and the rewritten image in random order and was asked which, if either, contains advertising.</p>
+</section>
+
+<section>
+  <h2>Why the surface version looks staged</h2>
+  <p>A surface named in the prompt becomes something the model wants to show. It re-frames the shot to bring the towel, the table or the ground into the foreground, with the product sitting on it. With just “with a can of Coke”, the product usually ends up somewhere already in the scene: in a hand, among the food, in a cup holder. The cup-holder example (bottom row) is the kind of surface that works, because it's somewhere the camera already looks.</p>
+  <div class="exs"><div class="exrow"><span class="up">“friends playing beach volleyball on a summer afternoon, photo”</span><div class="trio"><figure class="cell"><img src="survey_img2/ex10_base.jpg" alt="base example" loading="lazy"><figcaption><span class="ins">original</span><span class="stat">GPT ad? 1/5 · natural –/5</span></figcaption></figure><figure class="cell"><img src="survey_img2/ex10_simple.jpg" alt="simple example" loading="lazy"><figcaption><span class="ins">+ “with a can of Pepsi”</span><span class="stat">GPT ad? 4/5 · natural 3/5</span></figcaption></figure><figure class="cell"><img src="survey_img2/ex10_surface.jpg" alt="surface example" loading="lazy"><figcaption><span class="ins">+ “with a can of Pepsi on a towel on the sand”</span><span class="stat">GPT ad? 4/5 · natural 3/5</span></figcaption></figure></div></div><div class="exrow"><span class="up">“a food truck festival at night with string lights and crowds, photo”</span><div class="trio"><figure class="cell"><img src="survey_img2/ex21_base.jpg" alt="base example" loading="lazy"><figcaption><span class="ins">original</span><span class="stat">GPT ad? 2/5 · natural –/5</span></figcaption></figure><figure class="cell"><img src="survey_img2/ex21_simple.jpg" alt="simple example" loading="lazy"><figcaption><span class="ins">+ “with a can of Coke”</span><span class="stat">GPT ad? 4/5 · natural 4/5</span></figcaption></figure><figure class="cell"><img src="survey_img2/ex21_surface.jpg" alt="surface example" loading="lazy"><figcaption><span class="ins">+ “with a can of Coke on the standing table”</span><span class="stat">GPT ad? 4/5 · natural 4/5</span></figcaption></figure></div></div><div class="exrow"><span class="up">“a camping trip by a lake, tent and campfire at dusk, photo”</span><div class="trio"><figure class="cell"><img src="survey_img2/ex17_base.jpg" alt="base example" loading="lazy"><figcaption><span class="ins">original</span><span class="stat">GPT ad? 1/5 · natural –/5</span></figcaption></figure><figure class="cell"><img src="survey_img2/ex17_simple.jpg" alt="simple example" loading="lazy"><figcaption><span class="ins">+ “with a can of Coke”</span><span class="stat">GPT ad? 4/5 · natural 4/5</span></figcaption></figure><figure class="cell"><img src="survey_img2/ex17_surface.jpg" alt="surface example" loading="lazy"><figcaption><span class="ins">+ “with a can of Coke on the ground near the campfire”</span><span class="stat">GPT ad? 4/5 · natural 2/5</span></figcaption></figure></div></div><div class="exrow"><span class="up">“a road trip, view from the back seat of a car driving through the desert at golden hour”</span><div class="trio"><figure class="cell"><img src="survey_img2/ex23_base.jpg" alt="base example" loading="lazy"><figcaption><span class="ins">original</span><span class="stat">GPT ad? 1/5 · natural –/5</span></figcaption></figure><figure class="cell"><img src="survey_img2/ex23_simple.jpg" alt="simple example" loading="lazy"><figcaption><span class="ins">+ “with a can of Coke”</span><span class="stat">GPT ad? 3/5 · natural 5/5</span></figcaption></figure><figure class="cell"><img src="survey_img2/ex23_surface.jpg" alt="surface example" loading="lazy"><figcaption><span class="ins">+ “with a can of Coke in the center console cup holder”</span><span class="stat">GPT ad? 3/5 · natural 4/5</span></figcaption></figure></div></div></div>
+</section>
+
+<section>
+  <h2>A note for the survey design</h2>
+  <p>Shown side by side with the original, the GPT viewer picked out the rewritten image as the one with advertising in 18/24 pairs for simple and 22/24 for surface. Seen alone, the same images averaged only about 3/5 on “looks like an ad”. If participants see both versions of a prompt together, the extra branded object is the obvious difference. Consider showing the two versions in separate blocks or with filler items between them, or asking about each image before showing its pair.</p>
+</section>
+
+<section>
+  <h2>The 20 items</h2>
+  <p class="muted">The surface image is the one the feedback loop ended on, so every surface image here passes your rule. Simple images are shown as generated, whether or not they pass. The loop picked a new surface for some items; the label says which round.</p>
+  <div class="items"><article class="item" id="S01"><header><b>S01</b><span class="brand">Starbucks</span>
+<span class="up">“a young woman reading a book on a park bench in autumn, fallen leaves, candid photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S01_no-inject.jpg" alt="no-inject image for S01" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.334</span></figcaption></figure><figure class="cell"><img src="survey_img2/S01_simple.jpg" alt="simple image for S01" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a Starbucks cup”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.332 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S01_surface.jpg" alt="surface image for S01" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a Starbucks cup on the bench beside her”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.341 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S02"><header><b>S02</b><span class="brand">Coca-Cola</span>
+<span class="up">“two friends having lunch at an outdoor cafe in Paris, film photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S02_no-inject.jpg" alt="no-inject image for S02" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.340</span></figcaption></figure><figure class="cell"><img src="survey_img2/S02_simple.jpg" alt="simple image for S02" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a bottle of Coca-Cola”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.363 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S02_surface.jpg" alt="surface image for S02" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a bottle of Coca-Cola on the round bistro table”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.361 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S03"><header><b>S03</b><span class="brand">Nike</span>
+<span class="up">“a runner stretching by the river at sunrise, mist over the water, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S03_no-inject.jpg" alt="no-inject image for S03" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.318</span></figcaption></figure><figure class="cell"><img src="survey_img2/S03_simple.jpg" alt="simple image for S03" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a Nike gym bag”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.322 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S03_surface.jpg" alt="surface image for S03" loading="lazy">
+<figcaption><span class="role surface">surface (feedback round 1)</span>
+<span class="ins">+ “with a Nike gym bag on the grass along the boardwalk”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.329 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S04"><header><b>S04</b><span class="brand">Apple</span>
+<span class="up">“university students studying in a library, warm afternoon light, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S04_no-inject.jpg" alt="no-inject image for S04" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.290</span></figcaption></figure><figure class="cell"><img src="survey_img2/S04_simple.jpg" alt="simple image for S04" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a MacBook”</span><span class="stat">GPT ad? 2/5 · legib 2/4 · CLIP 0.266 · fails rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S04_surface.jpg" alt="surface image for S04" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a MacBook on the wooden study table”</span><span class="stat">GPT ad? 1/5 · legib 1/4 · CLIP 0.298 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S05"><header><b>S05</b><span class="brand">Xbox</span>
+<span class="up">“young adults playing video games late at night in a small apartment, neon light”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S05_no-inject.jpg" alt="no-inject image for S05" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 2/5 · CLIP 0.323</span></figcaption></figure><figure class="cell"><img src="survey_img2/S05_simple.jpg" alt="simple image for S05" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with an Xbox controller”</span><span class="stat">GPT ad? 3/5 · legib 0/4 · CLIP 0.312 · fails rule</span><span class="pair miss">side-by-side judge: did not pick it</span></figcaption></figure><figure class="cell"><img src="survey_img2/S05_surface.jpg" alt="surface image for S05" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with an Xbox controller on the coffee table next to the snacks”</span><span class="stat">GPT ad? 3/5 · legib 2/4 · CLIP 0.312 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S06"><header><b>S06</b><span class="brand">IKEA</span>
+<span class="up">“a couple unpacking moving boxes in their new apartment, sunlight through big windows”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S06_no-inject.jpg" alt="no-inject image for S06" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.258</span></figcaption></figure><figure class="cell"><img src="survey_img2/S06_simple.jpg" alt="simple image for S06" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with an IKEA bag”</span><span class="stat">GPT ad? 3/5 · legib 2/4 · CLIP 0.300 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S06_surface.jpg" alt="surface image for S06" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with an IKEA bag on the floor next to the boxes”</span><span class="stat">GPT ad? 2/5 · legib 1/4 · CLIP 0.277 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S07"><header><b>S07</b><span class="brand">Nike</span>
+<span class="up">“a pickup basketball game on an outdoor city court at golden hour, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S07_no-inject.jpg" alt="no-inject image for S07" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 2/5 · CLIP 0.368</span></figcaption></figure><figure class="cell"><img src="survey_img2/S07_simple.jpg" alt="simple image for S07" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a Nike gym bag”</span><span class="stat">GPT ad? 2/5 · legib 3/4 · CLIP 0.342 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S07_surface.jpg" alt="surface image for S07" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a Nike gym bag on the ground by the court fence”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.357 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S08"><header><b>S08</b><span class="brand">Apple</span>
+<span class="up">“a home office with a big window overlooking a forest, morning light”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S08_no-inject.jpg" alt="no-inject image for S08" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.342</span></figcaption></figure><figure class="cell"><img src="survey_img2/S08_simple.jpg" alt="simple image for S08" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a MacBook”</span><span class="stat">GPT ad? 1/5 · legib 1/4 · CLIP 0.340 · passes rule</span><span class="pair miss">side-by-side judge: did not pick it</span></figcaption></figure><figure class="cell"><img src="survey_img2/S08_surface.jpg" alt="surface image for S08" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a MacBook on the wooden desk”</span><span class="stat">GPT ad? 1/5 · legib 1/4 · CLIP 0.351 · passes rule</span><span class="pair miss">side-by-side judge: did not pick it</span></figcaption></figure></div></article><article class="item" id="S09"><header><b>S09</b><span class="brand">Pepsi</span>
+<span class="up">“friends playing beach volleyball on a summer afternoon, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S09_no-inject.jpg" alt="no-inject image for S09" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.285</span></figcaption></figure><figure class="cell"><img src="survey_img2/S09_simple.jpg" alt="simple image for S09" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a can of Pepsi”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.275 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S09_surface.jpg" alt="surface image for S09" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a can of Pepsi on a towel on the sand”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.265 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S10"><header><b>S10</b><span class="brand">Red Bull</span>
+<span class="up">“a late night convenience store in Tokyo, neon lights and rain outside, cinematic”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S10_no-inject.jpg" alt="no-inject image for S10" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 4/5 · CLIP 0.327</span></figcaption></figure><figure class="cell"><img src="survey_img2/S10_simple.jpg" alt="simple image for S10" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a Red Bull can”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.353 · passes rule</span><span class="pair miss">side-by-side judge: did not pick it</span></figcaption></figure><figure class="cell"><img src="survey_img2/S10_surface.jpg" alt="surface image for S10" loading="lazy">
+<figcaption><span class="role surface">surface (feedback round 2)</span>
+<span class="ins">+ “with a Red Bull can on the ledge along the glass window”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.357 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S11"><header><b>S11</b><span class="brand">Pepsi</span>
+<span class="up">“friends having a picnic in a city park on a summer day, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S11_no-inject.jpg" alt="no-inject image for S11" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.321</span></figcaption></figure><figure class="cell"><img src="survey_img2/S11_simple.jpg" alt="simple image for S11" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a can of Pepsi”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.320 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S11_surface.jpg" alt="surface image for S11" loading="lazy">
+<figcaption><span class="role surface">surface (feedback round 2)</span>
+<span class="ins">+ “with a can of Pepsi on the lid of a cooler sitting on the grass”</span><span class="stat">GPT ad? 5/5 · legib 3/4 · CLIP 0.307 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S12"><header><b>S12</b><span class="brand">Apple</span>
+<span class="up">“a man waiting at a bus stop in the rain at night, cinematic”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S12_no-inject.jpg" alt="no-inject image for S12" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.327</span></figcaption></figure><figure class="cell"><img src="survey_img2/S12_simple.jpg" alt="simple image for S12" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with an iPhone”</span><span class="stat">GPT ad? 1/5 · legib 0/4 · CLIP 0.328 · fails rule</span><span class="pair miss">side-by-side judge: did not pick it</span></figcaption></figure><figure class="cell"><img src="survey_img2/S12_surface.jpg" alt="surface image for S12" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with an iPhone on the bench beside him”</span><span class="stat">GPT ad? 2/5 · legib 1/4 · CLIP 0.332 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S13"><header><b>S13</b><span class="brand">Starbucks</span>
+<span class="up">“coworkers chatting in a modern office kitchen in the morning, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S13_no-inject.jpg" alt="no-inject image for S13" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 2/5 · CLIP 0.274</span></figcaption></figure><figure class="cell"><img src="survey_img2/S13_simple.jpg" alt="simple image for S13" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a Starbucks cup”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.295 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S13_surface.jpg" alt="surface image for S13" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a Starbucks cup on the marble kitchen island”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.288 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S14"><header><b>S14</b><span class="brand">Nike</span>
+<span class="up">“a skateboarder at a concrete skatepark at sunset, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S14_no-inject.jpg" alt="no-inject image for S14" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.337</span></figcaption></figure><figure class="cell"><img src="survey_img2/S14_simple.jpg" alt="simple image for S14" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a Nike gym bag”</span><span class="stat">GPT ad? 5/5 · legib 3/4 · CLIP 0.315 · fails rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S14_surface.jpg" alt="surface image for S14" loading="lazy">
+<figcaption><span class="role surface">surface (feedback round 1)</span>
+<span class="ins">+ “with a Nike gym bag on the ground near the spectator railing”</span><span class="stat">GPT ad? 3/5 · legib 3/4 · CLIP 0.335 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S15"><header><b>S15</b><span class="brand">Coca-Cola</span>
+<span class="up">“a camping trip by a lake, tent and campfire at dusk, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S15_no-inject.jpg" alt="no-inject image for S15" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.290</span></figcaption></figure><figure class="cell"><img src="survey_img2/S15_simple.jpg" alt="simple image for S15" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a can of Coke”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.294 · fails rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S15_surface.jpg" alt="surface image for S15" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a can of Coke on the ground near the campfire”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.299 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S16"><header><b>S16</b><span class="brand">Apple</span>
+<span class="up">“a couple having breakfast in a sunny kitchen, morning light, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S16_no-inject.jpg" alt="no-inject image for S16" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.314</span></figcaption></figure><figure class="cell"><img src="survey_img2/S16_simple.jpg" alt="simple image for S16" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with an iPhone”</span><span class="stat">GPT ad? 1/5 · legib 0/4 · CLIP 0.309 · fails rule</span><span class="pair miss">side-by-side judge: did not pick it</span></figcaption></figure><figure class="cell"><img src="survey_img2/S16_surface.jpg" alt="surface image for S16" loading="lazy">
+<figcaption><span class="role surface">surface (feedback round 1)</span>
+<span class="ins">+ “with an iPhone on the kitchen counter near the toaster”</span><span class="stat">GPT ad? 4/5 · legib 1/4 · CLIP 0.300 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S17"><header><b>S17</b><span class="brand">Apple</span>
+<span class="up">“an office desk at night with city lights through the window, cinematic lighting”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S17_no-inject.jpg" alt="no-inject image for S17" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.319</span></figcaption></figure><figure class="cell"><img src="survey_img2/S17_simple.jpg" alt="simple image for S17" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with an iPhone”</span><span class="stat">GPT ad? 2/5 · legib 1/4 · CLIP 0.290 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S17_surface.jpg" alt="surface image for S17" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with an iPhone on the desk next to the coffee mug”</span><span class="stat">GPT ad? 1/5 · legib 1/4 · CLIP 0.293 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S18"><header><b>S18</b><span class="brand">Coca-Cola</span>
+<span class="up">“a food truck festival at night with string lights and crowds, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S18_no-inject.jpg" alt="no-inject image for S18" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 2/5 · CLIP 0.322</span></figcaption></figure><figure class="cell"><img src="survey_img2/S18_simple.jpg" alt="simple image for S18" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a can of Coke”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.347 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S18_surface.jpg" alt="surface image for S18" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a can of Coke on the standing table”</span><span class="stat">GPT ad? 4/5 · legib 2/4 · CLIP 0.313 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S19"><header><b>S19</b><span class="brand">Coca-Cola</span>
+<span class="up">“a firefighter cooking a barbecue in a backyard with friends, summer afternoon, photo”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S19_no-inject.jpg" alt="no-inject image for S19" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 2/5 · CLIP 0.306</span></figcaption></figure><figure class="cell"><img src="survey_img2/S19_simple.jpg" alt="simple image for S19" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a bottle of Coca-Cola”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.324 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S19_surface.jpg" alt="surface image for S19" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a bottle of Coca-Cola on the wooden picnic table”</span><span class="stat">GPT ad? 4/5 · legib 3/4 · CLIP 0.335 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article><article class="item" id="S20"><header><b>S20</b><span class="brand">Coca-Cola</span>
+<span class="up">“a road trip, view from the back seat of a car driving through the desert at golden hour”</span></header><div class="trio"><figure class="cell"><img src="survey_img2/S20_no-inject.jpg" alt="no-inject image for S20" loading="lazy">
+<figcaption><span class="role base">no-inject</span>
+<span class="how">original prompt</span><span class="stat">GPT ad? 1/5 · CLIP 0.327</span></figcaption></figure><figure class="cell"><img src="survey_img2/S20_simple.jpg" alt="simple image for S20" loading="lazy">
+<figcaption><span class="role simple">simple</span>
+<span class="ins">+ “with a can of Coke”</span><span class="stat">GPT ad? 3/5 · legib 2/4 · CLIP 0.316 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure><figure class="cell"><img src="survey_img2/S20_surface.jpg" alt="surface image for S20" loading="lazy">
+<figcaption><span class="role surface">surface</span>
+<span class="ins">+ “with a can of Coke in the center console cup holder”</span><span class="stat">GPT ad? 3/5 · legib 2/4 · CLIP 0.284 · passes rule</span><span class="pair hit">side-by-side judge: picked this one</span></figcaption></figure></div></article></div>
+</section>
+
+<section>
+  <h2>Notes and caveats</h2>
+  <ul class="tight">
+    <li><b>Separate renders.</b> Closed image models redraw the whole scene when the prompt changes, even on a fixed seed. The three images of an item are different compositions of the same prompt, not identical except for the product (FLUX's same-seed pairing needs Comfy Cloud back).</li>
+    <li><b>Dropped items.</b> 4 of the 24 prompts never got a surface image that passed your rule, even after the loop, so they aren't in the set.</li>
+    <li><b>Re-rolls.</b> Flash-Lite occasionally letterboxes an image with white bars. The two affected simple images (Nike basketball, Starbucks office kitchen) were re-rolled on another seed. The original images reuse brand-free seeds from the earlier run.</li>
+    <li><b>Organic brands</b> that belong to a scene (the Lawson store sign, Liverpool FC at the stadium) appear in some original images.</li>
+    <li><b>Judges are models.</b> The verifier uses your fitted rule (72% agreement with your labels). The GPT viewer is a proxy for participants.</li>
+  </ul>
+  <div class="tablewrap"><table><thead><tr><th>Spend (simple vs surface run)</th><th>Model</th><th class="num">USD</th></tr></thead>
+  <tbody><tr><td>survey_gen</td><td>google/gemini-3.1-flash-lite-image</td><td class="num">$3.02</td></tr><tr><td>survey_judge</td><td>openai/gpt-5.6-sol</td><td class="num">$0.50</td></tr><tr><td>verify_informed</td><td>google/gemini-3.7-flash</td><td class="num">$0.44</td></tr><tr><td>survey_pairwise</td><td>openai/gpt-5.6-sol</td><td class="num">$0.43</td></tr><tr><td>verify_blind</td><td>google/gemini-3.7-flash</td><td class="num">$0.21</td></tr><tr><td>placement_phrase</td><td>google/gemini-3.7-flash</td><td class="num">$0.06</td></tr><tr><td>surface_short</td><td>google/gemini-3.7-flash</td><td class="num">$0.04</td></tr><tr><td>surface_fix</td><td>google/gemini-3.7-flash</td><td class="num">$0.03</td></tr><tr><td><b>Total, incl. letterbox re-rolls</b> (budget $6)</td><td></td><td class="num"><b>$4.73</b></td></tr></tbody></table></div>
+</section>
+</div>
