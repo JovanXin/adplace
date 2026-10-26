@@ -1,0 +1,346 @@
+<title>adplace Supervisor Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: one reading column; run sheet and timeline as ruled tables; callouts only for "say this" and "before you present". */
+:root{--paper:#F4F5F2;--card:#FFFFFF;--ink:#1C2321;--muted:#5D6864;--rule:#D8DDD8;--accent:#1F5F8B;--accent-bg:#E3EDF4;--warn-bg:#FBEFD9;--warn:#8A5A12;
+--f-head:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"Source Serif 4",Georgia,"Times New Roman",serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;--warn-bg:#3A2E17;--warn:#E9C27A}}
+:root[data-theme="dark"]{color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;--warn-bg:#3A2E17;--warn:#E9C27A}
+body{background:var(--paper);color:var(--ink);font:17px/1.62 var(--f-body)}
+.wrap{max-width:900px;margin:0 auto;padding-inline:20px;padding-block:40px 80px;display:grid;gap:44px}
+header{display:grid;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+.eyebrow,.lbl{font:600 .72rem/1.2 var(--f-head);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+h1,h2,h3{font-family:var(--f-head);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:2.3rem;line-height:1.1}h2{font-size:1.45rem}h3{font-size:1.08rem}
+p{margin:0;max-width:70ch}.muted{color:var(--muted)}
+section{display:grid;gap:14px}
+.toc{display:flex;flex-wrap:wrap;gap:6px 16px;font:500 .85rem var(--f-head)}
+.toc a{color:var(--accent);text-decoration:none}.toc a:hover{text-decoration:underline}
+a{color:var(--accent)}a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.say{background:var(--accent-bg);border-radius:6px;padding:16px 20px;display:grid;gap:8px}
+.say p{font-size:1.02rem}
+.warn{background:var(--warn-bg);border-radius:6px;padding:14px 18px;display:grid;gap:6px}
+.warn .lbl{color:var(--warn)}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.88rem;line-height:1.45}
+th,td{text-align:left;vertical-align:top;padding:.6rem .8rem;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}
+thead th{font:600 .7rem var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--paper)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.8rem;white-space:nowrap}
+td.t{font:600 .8rem var(--f-mono);white-space:nowrap;color:var(--muted)}
+code{font-family:var(--f-mono);font-size:.82em;background:var(--card);padding:.05em .3em;border-radius:3px;border:1px solid var(--rule)}
+.q{font-family:var(--f-mono);font-size:.84em}
+ul.tight,ol.tight{margin:0;padding-left:1.25rem;display:grid;gap:7px;max-width:72ch}
+.contrib{display:grid;gap:12px}
+.contrib article{border-left:3px solid var(--accent);padding:2px 0 2px 16px;display:grid;gap:4px}
+.contrib h3{font-size:1.02rem}
+.contrib .ev{font-size:.88rem;color:var(--muted)}
+.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.links{grid-template-columns:1fr}}
+.links a{display:grid;gap:2px;background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.links a b{font:600 .95rem var(--f-head);color:var(--accent)}.links a span{font-size:.84rem;color:var(--muted)}
+dl.qa{margin:0;display:grid;gap:14px}
+dl.qa dt{font:600 1rem var(--f-head)}
+dl.qa dd{margin:4px 0 0;max-width:72ch}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Thesis C · supervisor meeting · work from 26 Sep to 5 Oct 2026</span>
+  <h1>What I did this week, and how to present it</h1>
+  <p class="muted">Jovan Xin (z5491897) · Stealthy Advertising Agents in Image Generation Systems. A presenter's brief: the short version, a 15-minute run sheet, the detail behind each of the three things you were asked to do, your contributions, the numbers to quote, and the questions to expect.</p>
+  <nav class="toc" aria-label="Sections">
+    <a href="#short">Short version</a><a href="#runsheet">Run sheet</a><a href="#asks">The three asks</a><a href="#models">Models</a><a href="#timeline">Timeline</a>
+    <a href="#contrib">Contributions</a><a href="#numbers">Numbers</a><a href="#limits">Limitations</a><a href="#decide">Decisions</a><a href="#qa">Q&amp;A</a><a href="#links">Links</a>
+  </nav>
+</header>
+
+<div class="warn">
+  <span class="lbl">Before you present</span>
+  <p>The code, experiment runs and write-ups were produced with Claude Code (an AI coding agent) working under your direction. The research direction, the design decisions, the acceptance rule and the 160 human labels are yours. Check what UNSW and your school require you to declare about AI use in the thesis, and tell your supervisor how the work was done. It's better to say it up front than to be asked.</p>
+</div>
+
+<!-- ============================================================ -->
+<section id="short">
+  <h2>The short version (say this first)</h2>
+  <div class="say">
+    <p>“Last meeting you asked for three things: research how companies decide on product placement, make the rewriter smarter, and check each generated image and regenerate or edit it when the placement is wrong. All three are done and have been run end to end.”</p>
+    <p>“The main finding is that the image model, not the rewriter, decides how visible a product ends up. Describing a placement in detail makes the model re-compose the scene around the product. What works is a short mention, plus a verify-and-repair loop that checks each image and revises the prompt when it fails.”</p>
+    <p>“I calibrated the automatic checker against my own judgement by labelling 160 images. I've also built a 20-item survey set comparing the original prompt, a simple rewrite and a surface-specific rewrite.”</p>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section id="runsheet">
+  <h2>Suggested run sheet (about 15 minutes)</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Time</th><th>Topic</th><th>What to show</th><th>What to say</th></tr></thead>
+    <tbody>
+      <tr><td class="t">0–1</td><td>Recap</td><td>This page</td><td>The three asks, and that all three are done and run end to end.</td></tr>
+      <tr><td class="t">1–4</td><td>Ask 1: how companies decide</td><td><a href="https://claude.ai/artifact/BBWcmuKbrXaczu3B3J1eWC">Research brief</a>, Figures 1–2</td><td>Placement is a chain (brief → match → deal → clearance → execution → measurement). The research points at subtle, congruent, repeated placement. The pipeline mirrors every link except the deal, and that missing consent is the ethical crux.</td></tr>
+      <tr><td class="t">4–8</td><td>Asks 2 + 3: the pipeline and how the rewriter evolved</td><td><a href="https://claude.ai/artifact/1EVuuaDTAx6CZyUNChFHL8">Pilot write-up</a> Figure 1 (pipeline) and Figure 2 (v1 vs v2), then the <a href="https://claude.ai/artifact/4bYqS9zXCnE3VR5e7zbQr9">FLUX limits report</a></td><td>Tell it as a sequence of findings, each causing the next rewriter version (see “Ask 2” below). One sentence per version.</td></tr>
+      <tr><td class="t">8–10</td><td>Calibrating the checker against you</td><td><a href="https://claude.ai/artifact/XuzJB2iBBwGK1biM6SJ7r3">Placement lightbox</a></td><td>You labelled 160 images. The rule fitted to your labels agrees with you 72% of the time (κ 0.46). The original strict rule passed almost nothing (6 images).</td></tr>
+      <tr><td class="t">10–13</td><td>This week's experiment + survey set</td><td><a href="https://claude.ai/artifact/3c5jeod9ZV6JjrKSYxhgqX">Survey image set</a>: the bar chart and the “why it looks staged” examples</td><td>Simple (“with a can of Coke”) vs surface-specific (“…on the cafe table”). Surface alone was slightly worse, but with the feedback loop it was the best: 20/24. The survey set is 20 items × 3 images.</td></tr>
+      <tr><td class="t">13–15</td><td>Limitations and decisions</td><td>“Limitations” and “Decisions” below</td><td>Comfy subscription, closed vs open model for the survey, side-by-side presentation risk, scale-up plan.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="asks">
+  <h2>The three asks, in detail</h2>
+
+  <h3>Ask 1 · “Research how companies decide to implement product placement”</h3>
+  <ul class="tight">
+    <li><b>What I did:</b> surveyed the academic and industry sources and wrote them up as a brief with diagrams (<a href="https://claude.ai/artifact/BBWcmuKbrXaczu3B3J1eWC">research brief</a>). It covers about 25 sources:
+      <ul class="tight">
+        <li>marketing research: Gupta &amp; Lord 1998, d'Astous &amp; Séguin 1999, Law &amp; Braun 2000, Russell 2002, Cowley &amp; Barron 2008, Matthes et al. 2012, Boerman et al. 2012</li>
+        <li>industry practice: BEN, Hollywood Branded, Concave, Mirriad, Amazon Prime Video's virtual product placement</li>
+        <li>regulation and platforms: UK Ofcom s.9, EU AVMSD 2018/1808, Australia's AANA Code 2.7, the GARM brand-safety framework, OpenAI's 2026 ad policy</li>
+        <li>recent AI studies on covert ads in chatbots: Tang et al. 2025, Wu et al. 2026</li>
+      </ul></li>
+    <li><b>Key takeaways:</b>
+      <ul class="tight">
+        <li>Industry decides <i>fit</i> before <i>visibility</i>, and screen time is never guaranteed.</li>
+        <li>An image can only carry implicit, visual placement, which is the least intrusive kind.</li>
+        <li>Making a product central raises recall but not choice (Law &amp; Braun), and prominence backfires with engaged viewers (Cowley &amp; Barron).</li>
+        <li>Australia's AANA code says paid placement generally <b>needs no disclosure</b>, while the UK and EU require it to be signalled.</li>
+      </ul></li>
+    <li><b>How it shaped the pipeline:</b>
+      <ul class="tight">
+        <li>the brand catalogue mirrors advertisers' guidelines</li>
+        <li>the classifier's EXCLUDE category mirrors brand-safety rules and regulation</li>
+        <li>the verifier puts Ofcom's “undue prominence” test into practice</li>
+        <li><code>injections.csv</code> provides the disclosure record that industry gets from signalling</li>
+      </ul></li>
+  </ul>
+
+  <h3>Ask 2 · “Make the rewriter smarter”</h3>
+  <p>Present this as a chain of findings, where each experiment caused the next version:</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Version</th><th>What it does</th><th>What the data showed</th></tr></thead>
+    <tbody>
+      <tr><td><b>v1</b> (Thesis B idea)</td><td>A detailed 30–45-word clause: location, scale, orientation, lighting.</td><td>FLUX re-composed the scene around the product. 0/8 were accepted under the strict band, and CLIPScore dropped 0.028 vs the original prompt.</td></tr>
+      <tr><td><b>v2</b></td><td>One phrase of ≤15 words, grammatically in the background, placed after the subject.</td><td>Product footprint halved (median area 5.2% → 2.3%). CLIPScore loss fell to 0.010.</td></tr>
+      <tr><td><b>v3</b> (session 2)</td><td>Sees the same-seed original image, anchors the product on objects already in it, and lists the scene's own props with the product in the middle. No distance or size words.</td><td>A controlled FLUX probe (3 scenes × 4 seeds × 8 phrasings) showed distance, size and blur words are ignored or backfire, and that naming a location makes other props vanish. Under your rule, v3 reached an acceptable image for 5/8 prompts (2/8 on the first try, vs 1/8 for v2).</td></tr>
+      <tr><td><b>v4</b> (this week)</td><td>For instruction-following closed models (Gemini): the product mid-inventory, with at most one concealment cue.</td><td>Usable placements doubled vs naive appending (6/21 vs 3/21 on the strict survey test). The fresh viewer's ad rating fell from 3.33 to 2.76.</td></tr>
+      <tr><td><b>simple vs surface</b> (this week, your design)</td><td>One LLM call writes the product phrase and a placement surface, so “…, with a can of Coke” and “…, with a can of Coke on the cafe table” differ only by the surface.</td><td>Surface alone passed 15/24 (simple 16/24) and looked more staged (naturalness 3.65 vs 4.26). With the feedback loop it was best, at 20/24.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Ask 3 · “Check placement/prominence after generation; regenerate or edit if wrong”</h3>
+  <ul class="tight">
+    <li><b>Verifier:</b>
+      <ul class="tight">
+        <li>A <i>blind</i> pass: a vision model that sees only the image and the user's prompt rates how much it looks like an ad.</li>
+        <li>An <i>informed</i> pass that knows the intended product. It returns bounding boxes, legibility (0–4), eye-draw, fidelity, integration, and which props from the original image disappeared.</li>
+        <li>Area, centrality, duplicate count and subject overlap are computed from the boxes in code, not taken from the model's own estimates.</li>
+      </ul></li>
+    <li><b>Judge:</b> issue codes (TOO_PROMINENT, ABSENT, DUPLICATES, ON_SUBJECT, SCENE_LOSS, FIDELITY_LOSS, ARTIFACTS…) checked against a prominence band. The band is now <b>calibrated to your labels</b>.</li>
+    <li><b>Repair:</b> a vision LLM reads the failed image and the issues and writes the fix.
+      <ul class="tight">
+        <li><i>Edit path</i> (session 1): Qwen-Image-Edit and Gemini. Edits can't resize products, so I used remove-then-reinsert.</li>
+        <li><i>Prompt path</i>, which is the thesis approach you chose: revise the prompt and regenerate on the same seed. After two failed tries it switches to a different placement plan.</li>
+      </ul></li>
+    <li><b>Result:</b>
+      <ul class="tight">
+        <li>The loop works mechanically.</li>
+        <li>On FLUX it took the v2 rewriter from 0/8 to 5/8 under your rule.</li>
+        <li>This week it took surface-specific placement from 15 to 20 of 24.</li>
+        <li>The limit is how legibly the image model draws the brand.</li>
+      </ul></li>
+  </ul>
+</section>
+
+
+<!-- ============================================================ -->
+<section id="models">
+  <h2>Models used, and for what</h2>
+  <p>Every API call was logged with its model and cost (<code>runs/ledger.jsonl</code>), so the numbers below are exact. All language and vision models were called through OpenRouter. FLUX and Qwen ran on Comfy Cloud. CLIPScore ran locally.</p>
+
+  <h3>Language and vision models (the pipeline's “brains”)</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Job in the pipeline</th><th>Model</th><th>Open / closed</th><th class="num">Calls</th><th class="num">Cost</th><th>Why this model</th></tr></thead>
+    <tbody>
+      <tr><td>Context classifier: INJECT / SKIP / EXCLUDE and brand choice</td><td>Gemini 3.7 Flash (Google)</td><td>closed</td><td class="num">68</td><td class="num">$0.27</td><td>The model selected in Thesis B (P 46.7%, R 62.8% on 1,000 hand-labelled prompts)</td></tr>
+      <tr><td>Placement planner: scene analysis, 3 candidate placements</td><td>Gemini 3.7 Flash</td><td>closed</td><td class="num">38</td><td class="num">$0.31</td><td>Same model throughout, so results compare</td></tr>
+      <tr><td>Prompt rewriter v1–v4</td><td>Gemini 3.7 Flash</td><td>closed</td><td class="num">387</td><td class="num">$1.36</td><td>Cheap and fast; sees the original image for v3/v4</td></tr>
+      <tr><td>Rewriter comparison (v4 only)</td><td>Claude Sonnet 5.5 (Anthropic)</td><td>closed</td><td class="num">32</td><td class="num">$0.32</td><td>Tested whether a stronger LLM writes better placements. It didn't overall (6/20 vs 6/21).</td></tr>
+      <tr><td>Product phrase + surface (simple vs surface experiment)</td><td>Gemini 3.7 Flash</td><td>closed</td><td class="num">63</td><td class="num">$0.13</td><td>Writes “a can of Coke” / “on the cafe table”, the short variant and the loop's new surfaces</td></tr>
+      <tr><td>Repair writer: turns a failed image + issues into revision feedback</td><td>Gemini 3.7 Flash</td><td>closed</td><td class="num">178</td><td class="num">$0.63</td><td>Needs to see the image (vision input)</td></tr>
+      <tr><td>Verifier: blind “is it an ad?” + informed inspector (boxes, legibility, scene loss)</td><td>Gemini 3.7 Flash</td><td>closed</td><td class="num">1,382</td><td class="num">$5.05</td><td>Strong at bounding boxes; calibrated to your 160 labels</td></tr>
+      <tr><td>FLUX probe measurement and instruction check (session 2)</td><td>Gemini 3.7 Flash</td><td>closed</td><td class="num">172</td><td class="num">$0.78</td><td>Measured where the product landed in each probe image</td></tr>
+      <tr><td>Placement planner for edit-in (VPP), exploratory</td><td>Gemini 3.7 Flash</td><td>closed</td><td class="num">18</td><td class="num">$0.06</td><td>Only used in the dropped image-editing runs</td></tr>
+      <tr><td>Participant-proxy judge: single image + side by side</td><td>GPT-5.6 Sol (OpenAI)</td><td>closed</td><td class="num">326</td><td class="num">$2.07</td><td>A <b>different vendor</b> from the verifier and rewriters, so no model grades its own work</td></tr>
+      <tr><td>VQAScore stand-in (discarded)</td><td>GPT-4o (OpenAI)</td><td>closed</td><td class="num">64</td><td class="num">$0.14</td><td>Returned 1.0 for almost every image, so it wasn't used</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Image models</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Model</th><th>Open / closed</th><th>Where it ran</th><th>Used for</th><th class="num">Images</th><th class="num">Cost</th></tr></thead>
+    <tbody>
+      <tr><td><b>FLUX.2 dev</b> (fp8, Black Forest Labs), 28 steps, guidance 4</td><td>open weights</td><td>Comfy Cloud</td><td>The thesis generator: pilots A, B, C, G, the v3 run, the FLUX probe and the instruction test (sessions 1–2). Fixed seed, so original and rewritten images are true pairs.</td><td class="num">≈367</td><td class="num">Comfy credits</td></tr>
+      <tr><td>Qwen-Image-Edit 2511 + 4-step Lightning LoRA (Alibaba)</td><td>open weights</td><td>Comfy Cloud</td><td>Image-edit repairs and edit-in placement (runs A, C, D). Exploratory; dropped when you chose prompt-only.</td><td class="num">≈37</td><td class="num">Comfy credits</td></tr>
+      <tr><td><b>Gemini 3.1 Flash-Lite Image</b> (Google)</td><td>closed</td><td>OpenRouter</td><td><b>All survey images</b> (this week, after Comfy lapsed), plus the seed test</td><td class="num">247</td><td class="num">$8.30</td></tr>
+      <tr><td>Gemini 3.1 Flash Image (Google)</td><td>closed</td><td>OpenRouter</td><td>Closed-model comparison runs E (edit-in) and F (generator + editor), the editor comparison and the seed test</td><td class="num">78</td><td class="num">$5.27</td></tr>
+      <tr><td>GPT-5.4 Image 2 (OpenAI)</td><td>closed</td><td>OpenRouter</td><td>One editor comparison (slow and expensive: 132 s, $0.24)</td><td class="num">1</td><td class="num">$0.24</td></tr>
+      <tr><td>Gemini 2.5 Flash Image, GPT-5 Image Mini</td><td>closed</td><td>OpenRouter</td><td>Seed test only (neither repeats on a seed)</td><td class="num">4 + 4</td><td class="num">$0.32</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Evaluation metrics</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Metric</th><th>Model</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>CLIPScore (fidelity to the original prompt)</td><td>OpenAI CLIP ViT-B/32 via open_clip, run locally on the Mac's GPU</td><td>Done for every image; free</td></tr>
+      <tr><td>VQAScore</td><td>CLIP-FlanT5-XXL via t2v_metrics</td><td>Script ready (<code>scripts/vqascore_t2v.py</code>); needs a GPU with about 24 GB, e.g. Katana</td></tr>
+      <tr><td>Acceptance (your rule)</td><td>Gemini 3.7 Flash verifier + the rule fitted to your labels</td><td>72% agreement with you (κ 0.46)</td></tr>
+      <tr><td>Participant proxy</td><td>GPT-5.6 Sol judge</td><td>Proxy only; the survey is the real measure</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Development tool (not part of the pipeline)</h3>
+  <p>The code, the experiment runs and these write-ups were produced with <b>Claude Code</b> (Anthropic's coding agent, running Claude Opus 5.5) under your direction. It isn't a component of the system being studied. Mention it in the AI-use declaration.</p>
+
+  <div class="say"><p><b>One-line version for the meeting:</b> “Every language step (classifying, planning, rewriting, checking and repairing) uses Gemini 3.7 Flash, the model I chose in Thesis B, with Claude Sonnet 5.5 tested as an alternative rewriter. A separate OpenAI model, GPT-5.6, plays the participant so no model grades itself. Images came from the open-weight FLUX.2 dev until our Comfy subscription lapsed, and the survey set from Google's Gemini 3.1 Flash-Lite Image. CLIPScore is computed locally.”</p></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="timeline">
+  <h2>Timeline</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>When</th><th>What happened</th><th>Outcome</th></tr></thead>
+    <tbody>
+      <tr><td class="t">26 Sep</td><td>Finished the pipeline (verify, loop, CLI, reports, 23 offline tests) and ran it live on FLUX.2 dev (Comfy Cloud). Researched industry placement. Ran pilots A–G: v1 vs v2 rewriter, image-edit vs prompt repair, and closed-model comparisons.</td><td><a href="https://claude.ai/artifact/BBWcmuKbrXaczu3B3J1eWC">Research brief</a>, <a href="https://claude.ai/artifact/1EVuuaDTAx6CZyUNChFHL8">pilot write-up</a>. Your decision: prompt rewriting only, no image editing.</td></tr>
+      <tr><td class="t">27 Sep</td><td>Set your acceptance rule (“not blatant, not right in front”). Ran the FLUX probe and the instruction-following test, built the v3 rewriter, labelled 160 images, and fitted the judge to the labels.</td><td><a href="https://claude.ai/artifact/4bYqS9zXCnE3VR5e7zbQr9">FLUX limits report</a>, <a href="https://claude.ai/artifact/XuzJB2iBBwGK1biM6SJ7r3">lightbox</a>, <a href="https://claude.ai/artifact/Qx3b7dJzLnV3TVyeQCBrRe">prompt appendix</a>.</td></tr>
+      <tr><td class="t">4 Oct</td><td>Comfy Cloud subscription lapsed (402), so I switched to closed image models (your call). Seed test across 4 models, v4 rewriter, first survey draft (superseded). Then the simple vs surface experiment and the final 20-item survey set.</td><td><a href="https://claude.ai/artifact/3c5jeod9ZV6JjrKSYxhgqX">Survey image set</a>, <code>survey/images</code> + <code>key.csv</code>.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="contrib">
+  <h2>Contributions</h2>
+  <p class="muted">Two lists. The first is what the work adds to knowledge, which is what goes in the thesis. The second is what you personally decided and did, which is what to stress when asked “what did <i>you</i> do?”.</p>
+  <h3>What the work contributes</h3>
+  <div class="contrib">
+    <article><h3>1. A working prompt-layer placement agent with a closed verify-and-repair loop</h3>
+      <p>Classifier → planner → rewriter → open-weight image model → verifier → prompt repair. This is the first end-to-end system in the thesis that controls <i>how visible</i> a placement is, not just whether it happens. Prior work on image placement (Alam et al. 2024, Amazon VPP) inserts products in post-production with consent. This one does it covertly, at the prompt.</p>
+      <p class="ev">Evidence: the pilot write-up (7 conditions, 170 verified images) and the survey set (24 prompts).</p></article>
+    <article><h3>2. Evidence that the image model, not the rewriter, sets visibility</h3>
+      <p>Detailed placement text backfires. FLUX ignores size and blur words, and named locations make props vanish. A named surface gets staged (brought into the foreground). The product's brand can even be triggered by description alone (“a red soda can” rendered as Coca-Cola in 4 of 4 seeds).</p>
+      <p class="ev">Evidence: v1 vs v2 (CLIPScore −0.028 vs −0.010), the FLUX probe and instruction test, and simple vs surface (naturalness 4.26 vs 3.65).</p></article>
+    <article><h3>3. A human-calibrated measure of “acceptable placement”</h3>
+      <p>Ofcom's “undue prominence” idea is turned into measurable checks (area, legibility, eye-draw, scene loss, blind ad-suspicion), then calibrated to a human rater. The literature-based strict band agreed with you only 64% of the time (κ 0.11). The fitted rule agrees 72% of the time (κ 0.46).</p>
+      <p class="ev">Evidence: lightbox labels: 160 images, 64 passed, 28 borderline, 68 failed.</p></article>
+    <article><h3>4. Detectability findings for RQ2</h3>
+      <p>An off-the-shelf vision model that's told nothing flags almost any legible brand as advertising. Shown side by side with the original image, it spots the rewritten one in 18–22 of 24 pairs. Covert image placement may be easy to detect automatically, which suggests a defence, and the survey design needs to account for paired viewing.</p>
+      <p class="ev">Evidence: blind ad-suspicion across all pilots, and the side-by-side GPT judge in the survey set.</p></article>
+    <article><h3>5. Model-dependence of prompt-level placement</h3>
+      <p>The same rewrite behaves differently on FLUX and on closed models. Gemini follows concealment cues and renders believable props, but redraws the whole scene whenever the prompt changes, even on a fixed seed. GPT-5 Image Mini makes the product the hero. A placement agent has to be tuned to the model it targets.</p>
+      <p class="ev">Evidence: closed-model seed test, editor comparison, v4 vs v3.</p></article>
+    <article><h3>6. A survey stimulus set with a disclosure key</h3>
+      <p>20 everyday prompts × {original, simple, surface-specific}, with randomised file names and a key that records every injection for post-study disclosure.</p>
+      <p class="ev">Evidence: <code>survey/images</code>, <code>survey/key.csv</code>.</p></article>
+  </div>
+
+  <h3>What you decided and did</h3>
+  <ul class="tight">
+    <li>Set the direction: <b>prompt rewriting only</b>, with no image editing in the thesis method.</li>
+    <li>Defined the acceptance criterion: <b>“not blatant and not put right in front”</b>, with no size cap and scene props kept. This replaced a literature-only band that rejected images you considered fine.</li>
+    <li><b>Hand-labelled 160 images</b> to calibrate the automatic checker.</li>
+    <li>Designed this week's comparison: <b>simple vs surface-specific</b> rewriting, with surface-specific as the target.</li>
+    <li>Chose to switch to <b>closed image models</b> when Comfy lapsed, and to test several of them.</li>
+    <li>Set the <b>survey design</b>: show non-rewritten and rewritten images without disclosing which has the ad.</li>
+    <li>Managed the compute budget: $10 + $5 + $10 + $6 of approvals, $25.25 spent.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="numbers">
+  <h2>Numbers to quote</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Claim</th><th class="num">Number</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Classifier sanity check (incl. Thesis B traps: “apple” fruit, “old computer graphics”, jacket design)</td><td class="num">17/17</td><td>Pilot write-up §3</td></tr>
+      <tr><td>CLIPScore change vs original: v1 → v2 rewriter</td><td class="num">−0.028 → −0.010</td><td>Pilot write-up §7</td></tr>
+      <tr><td>FLUX follows a location word only if the layout has room: desk / BBQ / rooftop</td><td class="num">17 / 11 / 0 of 24</td><td>FLUX limits report</td></tr>
+      <tr><td>FLUX fails every “hide it” instruction (behind, covered, label away, smaller than an apple)</td><td class="num">0/4 each</td><td>FLUX limits report, part 2</td></tr>
+      <tr><td>Agreement with your labels: strict band → fitted rule</td><td class="num">64% → 72% (κ 0.11 → 0.46)</td><td>Lightbox</td></tr>
+      <tr><td>Simple vs surface vs surface + loop: passes your rule</td><td class="num">16 / 15 / 20 of 24</td><td>Survey page</td></tr>
+      <tr><td>Brand fits naturally (GPT judge, 1–5): simple vs surface</td><td class="num">4.26 vs 3.65</td><td>Survey page</td></tr>
+      <tr><td>Side-by-side judge spots the rewritten image: simple / surface</td><td class="num">18 / 22 of 24</td><td>Survey page</td></tr>
+      <tr><td>CLIPScore: original / simple / surface</td><td class="num">0.314 / 0.312 / 0.311</td><td>Survey page</td></tr>
+      <tr><td>Spend for the whole period: OpenRouter; images generated</td><td class="num">$25.25; 404 Comfy jobs + 334 closed-model images</td><td><code>runs/ledger.jsonl</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="limits">
+  <h2>Limitations to raise yourself</h2>
+  <ul class="tight">
+    <li><b>The survey images come from a closed model</b> (Gemini 3.1 Flash-Lite), because Comfy Cloud's subscription lapsed. That conflicts with the thesis's open-weight design. Closed models also redraw the whole scene when the prompt changes, so the three images per item are separate renders, not “same picture plus a product”.</li>
+    <li><b>Simple vs surface was tested on Gemini, not FLUX.</b> Session 2's instruction test found FLUX <i>does</i> follow surface instructions, so the surface condition may do better on FLUX. That's worth re-running once Comfy is back.</li>
+    <li><b>Small n, one seed:</b> 24 prompts in the final experiment and 8 in the FLUX pilots. Differences of one or two prompts are within noise. The consistent direction across runs is the robust part.</li>
+    <li><b>Judges are models.</b> The calibrated rule agrees with you 72% of the time, which is moderate. The GPT viewer is a proxy for participants, and the survey is the real test.</li>
+    <li><b>VQAScore isn't done yet.</b> The real CLIP-FlanT5 version needs a GPU, and <code>scripts/vqascore_t2v.py</code> is ready for Katana or Colab. A GPT-4o stand-in was tried and discarded because it gave 1.0 for almost everything.</li>
+    <li><b>The classifier still uses a stand-in prompt.</b> Thesis B's validated “prompt 2” hasn't been dropped in yet. The 17/17 check is a sanity check, not a benchmark.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="decide">
+  <h2>Decisions to ask your supervisor for</h2>
+  <ol class="tight">
+    <li><b>Survey images: closed model now, or FLUX later?</b> Renew Comfy (about 1 GPU-hour for the full set) and regenerate on FLUX for same-seed pairs, or accept the Gemini set and report it as a limitation.</li>
+    <li><b>Side-by-side presentation.</b> A judge that sees both versions spots the ad in 18–22 of 24 pairs. Should the survey show the two versions together, in separate blocks, or between filler items?</li>
+    <li><b>Which conditions go in the survey:</b> original vs surface only (the target), or all three including simple?</li>
+    <li><b>Blind ad-suspicion as a gate or a measurement.</b> I propose treating it as a measurement (RQ2), as the calibrated rule already does.</li>
+    <li><b>Scale-up for the thesis numbers:</b> about 50 prompts × 3 seeds on FLUX, roughly $9 of API plus about 5 GPU-hours, plus GPU time on Katana for VQAScore.</li>
+    <li><b>Content policy:</b> alcohol is already excluded from the survey. Should HFSS brands (Coke, Pepsi, Red Bull, in 6 of 20 items) also be excluded?</li>
+  </ol>
+</section>
+
+<!-- ============================================================ -->
+<section id="qa">
+  <h2>Likely questions</h2>
+  <dl class="qa">
+    <dt>“Why did surface-specific do worse when that's what we wanted?”</dt>
+    <dd>On its own, naming a surface makes the model treat it as something to show, so it brings the table or towel into the foreground with the product on it. The feedback loop fixes this by picking a surface the camera already looks at (a cup holder, the table people are using), and then it's the best condition: 20/24 vs 16/24 for simple. It also gives the advertiser control over where the product goes.</dd>
+    <dt>“Isn't using Gemini against the thesis's open-weight requirement?”</dt>
+    <dd>Yes, which is why it's listed as a limitation. It was forced by the Comfy subscription, and you chose it to keep the survey moving. The rewriter and loop are model-agnostic. That the same rewrite behaves differently on different models is a result in itself. FLUX regeneration is a one-hour job once Comfy is renewed.</dd>
+    <dt>“How do you know the automatic checker is right?”</dt>
+    <dd>I labelled 160 images myself, and the rule was fitted to those labels: 72% agreement, κ 0.46. A second, independent model from a different vendor (GPT) gives the participant-style ratings. Neither replaces the survey.</dd>
+    <dt>“What exactly is ‘smarter’ about the rewriter now?”</dt>
+    <dd>Three things, each driven by data:
+      <ul class="tight">
+        <li>it keeps the insertion short and after the subject (v2)</li>
+        <li>it looks at what the model drew for the original prompt and anchors on objects that are really there (v3, plus the surface phrase step)</li>
+        <li>it closes the loop: a failed image goes back to the rewriter with the reasons, and it tries a different placement</li>
+      </ul></dd>
+    <dt>“Why not just edit the image?”</dt>
+    <dd>I tried it in session 1. Qwen-Image-Edit can't resize products; Gemini editing works, but it's closed and is post-production, not prompt-level. You decided the thesis method is prompt rewriting, because the threat model is a rewriter hidden in the pipeline.</dd>
+    <dt>“Is it detectable?”</dt>
+    <dd>By a vision model, yes, often. Any legible brand gets flagged, and side by side the rewritten image is spotted 18–22 times out of 24. Whether people notice is what the survey measures, and that gap is the interesting RQ2 result.</dd>
+    <dt>“What did it cost?”</dt>
+    <dd>$25.25 on OpenRouter across all runs, against $31 of approvals; most of it went on closed image models. Comfy Cloud credits were used separately: 404 jobs.</dd>
+  </dl>
+</section>
+
+<!-- ============================================================ -->
+<section id="links">
+  <h2>Have these open</h2>
+  <div class="links">
+    <a href="https://claude.ai/artifact/BBWcmuKbrXaczu3B3J1eWC"><b>Research brief</b><span>How companies decide on placement; regulation; design implications</span></a>
+    <a href="https://claude.ai/artifact/1EVuuaDTAx6CZyUNChFHL8"><b>Pilot write-up</b><span>Pipeline diagram, v1 vs v2, 7 conditions incl. closed models</span></a>
+    <a href="https://claude.ai/artifact/4bYqS9zXCnE3VR5e7zbQr9"><b>FLUX limits report</b><span>What FLUX does and doesn't follow (probe + instruction test)</span></a>
+    <a href="https://claude.ai/artifact/XuzJB2iBBwGK1biM6SJ7r3"><b>Placement lightbox</b><span>Your 160 labels; judge agreement</span></a>
+    <a href="https://claude.ai/artifact/3c5jeod9ZV6JjrKSYxhgqX"><b>Survey image set</b><span>Simple vs surface results; the 20 items</span></a>
+    <a href="https://claude.ai/artifact/Qx3b7dJzLnV3TVyeQCBrRe"><b>Prompt appendix</b><span>Every LLM prompt used, for the thesis appendix</span></a>
+  </div>
+  <p class="muted">All six pages are private. Share them from each page's Share menu before the meeting, or present from your own screen.</p>
+</section>
+</div>
