@@ -1,0 +1,28 @@
+{
+ "injected_images_scanned": 477,
+ "injected_kept": 135,
+ "gold": 33,
+ "good": 102,
+ "controls": 36,
+ "prompt_groups": 29,
+ "open_weight_injected": 0,
+ "by_run": {
+  "pilot-gemini-gen": 11,
+  "pilot-vpp-gemini": 13,
+  "survey-closed": 64,
+  "survey-surface": 47
+ },
+ "brands": {
+  "Adidas": 3,
+  "Apple": 31,
+  "Coca-Cola": 34,
+  "Heineken": 3,
+  "IKEA": 7,
+  "Nike": 19,
+  "Pepsi": 10,
+  "Red Bull": 8,
+  "Samsung": 2,
+  "Starbucks": 12,
+  "Xbox": 6
+ }
+}

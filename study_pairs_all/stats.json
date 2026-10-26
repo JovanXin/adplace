@@ -1,0 +1,35 @@
+{
+ "injected_images_scanned": 477,
+ "injected_kept": 245,
+ "gold": 33,
+ "good": 212,
+ "controls": 45,
+ "prompt_groups": 29,
+ "open_weight_injected": 110,
+ "by_run": {
+  "flux-probe": 53,
+  "pilot-edit": 5,
+  "pilot-gemini-gen": 11,
+  "pilot-regen": 9,
+  "pilot-v2": 6,
+  "pilot-v2-regen": 14,
+  "pilot-v3": 12,
+  "pilot-vpp": 5,
+  "pilot-vpp-gemini": 19,
+  "survey-closed": 64,
+  "survey-surface": 47
+ },
+ "brands": {
+  "Adidas": 3,
+  "Apple": 53,
+  "Coca-Cola": 101,
+  "Heineken": 17,
+  "IKEA": 7,
+  "Nike": 19,
+  "Pepsi": 10,
+  "Red Bull": 15,
+  "Samsung": 2,
+  "Starbucks": 12,
+  "Xbox": 6
+ }
+}
