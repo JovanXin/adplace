@@ -1,0 +1,143 @@
+{
+ "n": 160,
+ "missing": [],
+ "humans": {
+  "fail": 68,
+  "pass": 64,
+  "borderline": 28
+ },
+ "signals": {
+  "inj_ad": {
+   "spearman": -0.054,
+   "p": 0.5004,
+   "auc_pass_vs_fail": 0.464,
+   "auc_pass_vs_not": 0.441
+  },
+  "ad_gain": {
+   "spearman": -0.056,
+   "p": 0.4837,
+   "auc_pass_vs_fail": 0.461,
+   "auc_pass_vs_not": 0.464
+  },
+  "inj_clause": {
+   "spearman": 0.544,
+   "p": 0.0,
+   "auc_pass_vs_fail": 0.838,
+   "auc_pass_vs_not": 0.754
+  },
+  "clause_gain": {
+   "spearman": 0.226,
+   "p": 0.0041,
+   "auc_pass_vs_fail": 0.643,
+   "auc_pass_vs_not": 0.626
+  },
+  "inj_brand": {
+   "spearman": 0.051,
+   "p": 0.5188,
+   "auc_pass_vs_fail": 0.535,
+   "auc_pass_vs_not": 0.58
+  },
+  "brand_gain": {
+   "spearman": 0.173,
+   "p": 0.0283,
+   "auc_pass_vs_fail": 0.613,
+   "auc_pass_vs_not": 0.634
+  },
+  "inj_orig": {
+   "spearman": -0.023,
+   "p": 0.7717,
+   "auc_pass_vs_fail": 0.485,
+   "auc_pass_vs_not": 0.455
+  },
+  "fid_cost": {
+   "spearman": 0.204,
+   "p": 0.0096,
+   "auc_pass_vs_fail": 0.627,
+   "auc_pass_vs_not": 0.61
+  },
+  "inj_clip_orig": {
+   "spearman": 0.085,
+   "p": 0.2857,
+   "auc_pass_vs_fail": 0.56,
+   "auc_pass_vs_not": 0.57
+  },
+  "clip_cost": {
+   "spearman": 0.182,
+   "p": 0.0213,
+   "auc_pass_vs_fail": 0.621,
+   "auc_pass_vs_not": 0.618
+  },
+  "susp": {
+   "spearman": -0.318,
+   "p": 0.0,
+   "auc_pass_vs_fail": 0.301,
+   "auc_pass_vs_not": 0.275
+  },
+  "leg": {
+   "spearman": -0.161,
+   "p": 0.0417,
+   "auc_pass_vs_fail": 0.428,
+   "auc_pass_vs_not": 0.409
+  },
+  "att": {
+   "spearman": -0.226,
+   "p": 0.0041,
+   "auc_pass_vs_fail": 0.369,
+   "auc_pass_vs_not": 0.401
+  }
+ },
+ "cv": {
+  "vqa": {
+   "acc": 0.631,
+   "kappa": 0.242,
+   "auc": 0.628
+  },
+  "vlm_judge": {
+   "acc": 0.669,
+   "kappa": 0.322,
+   "auc": 0.719
+  },
+  "vqa+vlm": {
+   "acc": 0.688,
+   "kappa": 0.352,
+   "auc": 0.724
+  },
+  "ad_only": {
+   "acc": 0.438,
+   "kappa": -0.136,
+   "auc": 0.418
+  }
+ },
+ "means_by_verdict": {
+  "inj_ad": {
+   "borderline": 0.533,
+   "fail": 0.469,
+   "pass": 0.455
+  },
+  "ad_gain": {
+   "borderline": 0.209,
+   "fail": 0.202,
+   "pass": 0.183
+  },
+  "clause_gain": {
+   "borderline": 0.283,
+   "fail": 0.215,
+   "pass": 0.351
+  },
+  "brand_gain": {
+   "borderline": 0.691,
+   "fail": 0.709,
+   "pass": 0.75
+  },
+  "fid_cost": {
+   "borderline": 0.007,
+   "fail": -0.001,
+   "pass": 0.0
+  },
+  "susp": {
+   "borderline": 4.214,
+   "fail": 3.824,
+   "pass": 3.188
+  }
+ }
+}

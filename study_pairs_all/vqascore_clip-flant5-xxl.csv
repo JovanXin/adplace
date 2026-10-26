@@ -1,0 +1,291 @@
+item_id,group_id,condition,tier,brand,product,model,method,run,seed,brand_text,vqa_orig,vqa_sent,vqa_brand,clip_orig
+I0001,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C1_bare",flux-probe,5491897,Coca-Cola soda can or bottle,0.9745,0.9745,0.9092,0.3562
+I0002,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C1_bare",flux-probe,1234,Coca-Cola soda can or bottle,0.9799,0.9822,0.8986,0.3548
+I0003,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C1_bare",flux-probe,777,Coca-Cola soda can or bottle,0.9811,0.9822,0.9226,0.3772
+I0004,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C2_loc",flux-probe,1234,Coca-Cola soda can or bottle,0.9759,0.9655,0.8621,0.3725
+I0005,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C2_loc",flux-probe,777,Coca-Cola soda can or bottle,0.9773,0.9711,0.9141,0.3601
+I0006,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C2_loc",flux-probe,42,Coca-Cola soda can or bottle,0.9786,0.9695,0.8933,0.3657
+I0007,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C3_loc_size",flux-probe,5491897,Coca-Cola soda can or bottle,0.9773,0.9563,0.8877,0.3797
+I0008,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C3_loc_size",flux-probe,1234,Coca-Cola soda can or bottle,0.9773,0.9482,0.9417,0.3767
+I0009,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C3_loc_size",flux-probe,777,Coca-Cola soda can or bottle,0.9759,0.9509,0.9185,0.365
+I0010,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C3_loc_size",flux-probe,42,Coca-Cola soda can or bottle,0.9759,0.9563,0.923,0.3557
+I0011,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C4_generic",flux-probe,5491897,Coca-Cola soda can or bottle,0.9773,0.9636,0.9537,0.3674
+I0012,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C4_generic",flux-probe,777,Coca-Cola soda can or bottle,0.9759,0.9759,0.9312,0.3632
+I0013,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C4_generic",flux-probe,42,Coca-Cola soda can or bottle,0.9833,0.9759,0.8756,0.3698
+I0014,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C6_json",flux-probe,5491897,Coca-Cola soda can or bottle,0.9745,0.9348,0.8816,0.3654
+I0015,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C6_json",flux-probe,1234,Coca-Cola soda can or bottle,0.9745,0.9452,0.9039,0.3428
+I0016,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C6_json",flux-probe,42,Coca-Cola soda can or bottle,0.9786,0.9385,0.9271,0.3488
+I0017,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,5491897,Coca-Cola soda can or bottle,0.9811,0.9786,0.9271,0.3631
+I0018,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,1234,Coca-Cola soda can or bottle,0.9711,0.9759,0.9092,0.3676
+I0019,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,777,Coca-Cola soda can or bottle,0.9745,0.9759,0.9385,0.3727
+I0020,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,42,Coca-Cola soda can or bottle,0.9759,0.9786,0.9482,0.3386
+I0021,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,5491897,Coca-Cola soda can or bottle,0.9799,0.9745,0.8872,0.3704
+I0022,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,1234,Coca-Cola soda can or bottle,0.9773,0.9712,0.8986,0.359
+I0023,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,777,Coca-Cola soda can or bottle,0.9745,0.9695,0.8154,0.369
+I0024,G01,injected,good,Coca-Cola,soda can or bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,42,Coca-Cola soda can or bottle,0.9773,0.9729,0.8816,0.3613
+I0025,G01,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + Qwen-Edit repair loop; attempt 1 (generate),pilot-edit,5491897,Coca-Cola contour glass bottle,0.9694,0.9589,0.8986,0.3741
+I0026,G01,injected,good,Coca-Cola,contour glass bottle,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 1 (generate),pilot-gemini-gen,5491897,Coca-Cola contour glass bottle,0.9312,0.9417,0.5788,0.3289
+I0027,G01,injected,good,Coca-Cola,contour glass bottle,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 2 (edit),pilot-gemini-gen,5491897,Coca-Cola contour glass bottle,0.9092,0.9312,0.495,0.3278
+I0028,G01,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 2 (generate),pilot-regen,5491897,Coca-Cola contour glass bottle,0.9745,0.9537,0.8816,0.3432
+I0029,G01,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter; attempt 1 (generate),pilot-v2,5491897,Coca-Cola contour glass bottle,0.9729,0.9759,0.8933,0.3565
+I0030,G01,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter; attempt 3 (generate),pilot-v2,5491897,Coca-Cola red aluminium can,0.9773,0.9759,0.8933,0.3741
+I0031,G01,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter; attempt 4 (generate),pilot-v2,5491897,Coca-Cola red aluminium can,0.9759,0.9759,0.8756,0.3841
+I0032,G01,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 3 (generate),pilot-v2-regen,5491897,Coca-Cola contour glass bottle,0.9745,0.9676,0.7888,0.3624
+I0033,G01,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 4 (generate),pilot-v2-regen,5491897,Coca-Cola red aluminium can,0.9759,0.9759,0.749,0.3615
+I0034,G01,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 5 (generate),pilot-v2-regen,5491897,Coca-Cola red aluminium can,0.9811,0.9786,0.9271,0.3444
+I0035,G01,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 1 (generate),pilot-v3,5491897,Coca-Cola contour glass bottle,0.9729,0.9745,0.8877,0.3687
+I0036,G01,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 4 (generate),pilot-v3,5491897,Coca-Cola red aluminium can,0.9745,0.9773,0.9417,0.3638
+I0037,G01,injected,good,Coca-Cola,contour glass bottle,"Qwen-Image-Edit-2511 (open weights, Comfy Cloud)","generate original, then edit product in; attempt 1 (edit)",pilot-vpp,5491897,Coca-Cola contour glass bottle,0.9729,0.9612,0.8877,0.3727
+I0038,G01,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 3 (generate)",pilot-vpp,5491897,Coca-Cola red aluminium can,0.9786,0.9759,0.8933,0.3797
+I0039,G01,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 4 (generate)",pilot-vpp,5491897,Coca-Cola red aluminium can,0.9759,0.9729,0.9385,0.3569
+I0040,G01,injected,good,Coca-Cola,contour glass bottle,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 2 (edit)",pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.9711,0.9676,0.8479,0.3691
+I0041,G01,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 3 (generate)",pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.9729,0.9759,0.9348,0.3467
+I0042,G01,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 4 (generate)",pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.9786,0.9759,0.8748,0.3684
+I0043,G01,injected,good,Coca-Cola,Coca-Cola red aluminium can,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Coca-Cola red aluminium can,0.9312,0.9563,0.9745,0.3299
+I0044,G01,injected,good,Coca-Cola,a bottle of Coca-Cola,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a bottle of Coca-Cola,0.6137,0.6727,0.9633,0.328
+I0045,G01,injected,good,Coca-Cola,a bottle of Coca-Cola,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,a bottle of Coca-Cola,0.9385,0.9563,0.9636,0.3524
+I0046,G01,injected,good,Coca-Cola,a bottle of Coca-Cola,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,a bottle of Coca-Cola,0.9589,0.9694,0.9563,0.3164
+I0047,G01,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,1234,Coca-Cola soda can or bottle,0.9773,0.9773,0.1765,0.3637
+I0048,G01,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,777,Coca-Cola soda can or bottle,0.9773,0.9786,0.1711,0.3855
+I0049,G01,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,42,Coca-Cola soda can or bottle,0.9799,0.9786,0.2588,0.3526
+I0050,G01,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),pilot-edit,5491897,Coca-Cola soda can or bottle,0.9773,0.9773,0.1821,0.3711
+I0051,G01,control,control,,,google/gemini-3.1-flash-image,no-inject (original prompt),pilot-gemini-gen,5491897,Coca-Cola soda can or bottle,0.9348,0.9312,0.291,0.3193
+I0052,G02,injected,good,Coca-Cola,enamel wall sign,"Qwen-Image-Edit-2511 (open weights, Comfy Cloud)",v1 rewriter + Qwen-Edit repair loop; attempt 2 (edit),pilot-edit,5491897,Coca-Cola enamel wall sign,0.9385,0.9271,0.9348,0.3412
+I0053,G02,injected,good,Coca-Cola,enamel wall sign,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 1 (generate),pilot-gemini-gen,5491897,Coca-Cola enamel wall sign,0.9589,0.9633,0.9449,0.3476
+I0054,G02,injected,good,Coca-Cola,enamel wall sign,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 2 (edit),pilot-gemini-gen,5491897,Coca-Cola enamel wall sign,0.9563,0.9482,0.4836,0.3497
+I0055,G02,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 2 (generate),pilot-regen,5491897,Coca-Cola enamel wall sign,0.9226,0.8242,0.9312,0.3587
+I0056,G02,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 4 (generate),pilot-regen,5491897,Coca-Cola enamel wall sign,0.9348,0.9271,0.9729,0.3296
+I0057,G02,injected,good,Coca-Cola,enamel wall sign,"Qwen-Image-Edit-2511 (open weights, Comfy Cloud)",v2 rewriter; attempt 2 (edit),pilot-v2,5491897,Coca-Cola enamel wall sign,0.9185,0.9449,0.9271,0.3613
+I0058,G02,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter; attempt 4 (generate),pilot-v2,5491897,Coca-Cola enamel wall sign,0.9039,0.9141,0.9312,0.3502
+I0059,G02,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 1 (generate),pilot-v2-regen,5491897,Coca-Cola enamel wall sign,0.9185,0.9039,0.9348,0.3639
+I0060,G02,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 2 (generate),pilot-v2-regen,5491897,Coca-Cola enamel wall sign,0.9185,0.9589,0.9612,0.3802
+I0061,G02,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 3 (generate),pilot-v2-regen,5491897,Coca-Cola enamel wall sign,0.8872,0.9417,0.9694,0.3754
+I0062,G02,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 3 (generate),pilot-v3,5491897,Coca-Cola enamel wall sign,0.9039,0.9417,0.9185,0.3639
+I0063,G02,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 4 (generate),pilot-v3,5491897,Coca-Cola enamel wall sign,0.9385,0.9537,0.923,0.3729
+I0064,G02,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 2 (generate)",pilot-vpp,5491897,Coca-Cola contour glass bottle,0.9271,0.9271,0.661,0.3671
+I0065,G02,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 4 (generate)",pilot-vpp,5491897,Coca-Cola contour glass bottle,0.9271,0.9509,0.8479,0.3742
+I0066,G02,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 2 (generate)",pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.9226,0.9312,0.7593,0.3623
+I0067,G02,injected,good,Coca-Cola,contour glass bottle,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 3 (edit)",pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.8933,0.9039,0.7697,0.3661
+I0068,G02,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 4 (generate)",pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.9417,0.9449,0.8621,0.3643
+I0069,G02,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),pilot-edit,5491897,Coca-Cola enamel wall sign,0.9271,0.9226,0.8154,0.3686
+I0070,G02,control,control,,,google/gemini-3.1-flash-image,no-inject (original prompt),pilot-gemini-gen,5491897,Coca-Cola enamel wall sign,0.9271,0.9271,0.5544,0.3445
+I0071,G03,injected,gold,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Apple silver laptop,0.9385,0.9537,0.9039,0.3331
+I0072,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C1_bare",flux-probe,5491897,Apple laptop,0.9537,0.9729,0.9903,0.3563
+I0073,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C1_bare",flux-probe,1234,Apple laptop,0.9655,0.9759,0.9903,0.3443
+I0074,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C1_bare",flux-probe,777,Apple laptop,0.9612,0.9745,0.9925,0.3399
+I0075,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C1_bare",flux-probe,42,Apple laptop,0.9589,0.9745,0.9897,0.3554
+I0076,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C3_loc_size",flux-probe,777,Apple laptop,0.9449,0.7593,0.9891,0.3481
+I0077,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C5_front",flux-probe,777,Apple laptop,0.9563,0.6846,0.9897,0.3436
+I0078,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C5_front",flux-probe,42,Apple laptop,0.9482,0.749,0.9852,0.3546
+I0079,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C6_json",flux-probe,777,Apple laptop,0.9482,0.8688,0.9891,0.3565
+I0080,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,5491897,Apple laptop,0.9449,0.9799,0.992,0.3505
+I0081,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,1234,Apple laptop,0.9537,0.9811,0.9933,0.3841
+I0082,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,777,Apple laptop,0.9612,0.9833,0.9925,0.3582
+I0083,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,42,Apple laptop,0.9589,0.9811,0.9869,0.3618
+I0084,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,5491897,Apple laptop,0.9612,0.9759,0.9937,0.3668
+I0085,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,1234,Apple laptop,0.9563,0.9759,0.992,0.3726
+I0086,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,777,Apple laptop,0.9612,0.9773,0.9925,0.3516
+I0087,G03,injected,good,Apple,laptop,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,42,Apple laptop,0.9482,0.9729,0.9937,0.355
+I0088,G03,injected,good,Apple,silver laptop,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + Qwen-Edit repair loop; attempt 3 (generate),pilot-edit,5491897,Apple silver laptop,0.9509,0.923,0.9694,0.3479
+I0089,G03,injected,good,Apple,silver laptop,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 3 (edit),pilot-gemini-gen,5491897,Apple silver laptop,0.9537,0.9385,0.7388,0.3454
+I0090,G03,injected,good,Apple,silver laptop,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 3 (generate),pilot-regen,5491897,Apple silver laptop,0.9385,0.9417,0.9759,0.3458
+I0091,G03,injected,good,Apple,silver laptop,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 4 (generate),pilot-regen,5491897,Apple silver laptop,0.9509,0.8621,0.9482,0.3512
+I0092,G03,injected,good,Apple,silver laptop,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter; attempt 1 (generate),pilot-v2,5491897,Apple silver laptop,0.9348,0.9092,0.5544,0.3591
+I0093,G03,injected,good,Apple,silver laptop,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 1 (generate),pilot-v3,5491897,Apple silver laptop,0.9509,0.9312,0.6494,0.3521
+I0094,G03,injected,good,Apple,silver laptop,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 2 (generate),pilot-v3,5491897,Apple silver laptop,0.9509,0.9482,0.749,0.3563
+I0095,G03,injected,good,Apple,silver laptop,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 1 (edit)",pilot-vpp-gemini,5491897,Apple silver laptop,0.9449,0.9312,0.951,0.3682
+I0096,G03,injected,good,Apple,silver laptop,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 2 (edit)",pilot-vpp-gemini,5491897,Apple silver laptop,0.9509,0.9348,0.9417,0.3642
+I0097,G03,injected,good,Apple,an iPhone,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,Apple an iPhone,0.9509,0.923,0.661,0.3216
+I0098,G03,injected,good,Apple,an iPhone,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,Apple an iPhone,0.9385,0.9482,0.6137,0.3321
+I0099,G03,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,1234,Apple laptop,0.9612,0.9612,0.114,0.3822
+I0100,G03,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,777,Apple laptop,0.9633,0.9612,0.0747,0.3675
+I0101,G03,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,42,Apple laptop,0.9612,0.9612,0.1429,0.3799
+I0102,G03,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),pilot-edit,5491897,Apple laptop,0.9509,0.9509,0.1176,0.3624
+I0103,G03,control,control,,,google/gemini-3.1-flash-image,no-inject (original prompt),pilot-gemini-gen,5491897,Apple laptop,0.9417,0.9417,0.7388,0.3485
+I0104,G03,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Apple laptop,0.9348,0.9385,0.8986,0.3347
+I0105,G04,injected,gold,Coca-Cola,a can of Coke,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,Coca-Cola a can of Coke,0.9693,0.9728,0.8545,0.3184
+I0106,G04,injected,gold,Coca-Cola,a can of Coke,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,Coca-Cola a can of Coke,0.9348,0.9509,0.9563,0.2915
+I0107,G04,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + Qwen-Edit repair loop; attempt 3 (generate),pilot-edit,5491897,Coca-Cola contour glass bottle,0.9482,0.9449,0.9092,0.2903
+I0108,G04,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + Qwen-Edit repair loop; attempt 4 (generate),pilot-edit,5491897,Coca-Cola contour glass bottle,0.9509,0.9589,0.9039,0.3035
+I0109,G04,injected,good,Coca-Cola,contour glass bottle,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 2 (edit),pilot-gemini-gen,5491897,Coca-Cola contour glass bottle,0.9711,0.9745,0.6494,0.334
+I0110,G04,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 3 (generate),pilot-regen,5491897,Coca-Cola contour glass bottle,0.9312,0.9385,0.9271,0.3199
+I0111,G04,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 1 (generate),pilot-v2-regen,5491897,Coca-Cola contour glass bottle,0.9537,0.9633,0.9092,0.3089
+I0112,G04,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 3 (generate),pilot-v2-regen,5491897,Coca-Cola red aluminium can,0.8986,0.9348,0.9694,0.313
+I0113,G04,injected,good,Coca-Cola,red aluminium can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 4 (generate),pilot-v2-regen,5491897,Coca-Cola red aluminium can,0.8621,0.9348,0.9636,0.3217
+I0114,G04,injected,good,Coca-Cola,contour glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 2 (generate),pilot-v3,5491897,Coca-Cola contour glass bottle,0.9348,0.9537,0.8933,0.2974
+I0115,G04,injected,good,Coca-Cola,red aluminium can,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 3 (edit)",pilot-vpp-gemini,5491897,Coca-Cola red aluminium can,0.8748,0.9092,0.9417,0.3212
+I0116,G04,injected,good,Coca-Cola,a can of Coke,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,Coca-Cola a can of Coke,0.9693,0.9744,0.8816,0.3193
+I0117,G04,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),pilot-edit,5491897,Coca-Cola contour glass bottle,0.7697,0.7697,0.0975,0.2922
+I0118,G04,control,control,,,google/gemini-3.1-flash-image,no-inject (original prompt),pilot-gemini-gen,5491897,Coca-Cola contour glass bottle,0.8688,0.8688,0.0691,0.304
+I0119,G04,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-surface,,Coca-Cola contour glass bottle,0.9786,0.9786,0.0902,0.3235
+I0120,G05,injected,good,Red Bull,slim silver-blue can,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 1 (generate),pilot-gemini-gen,5491897,Red Bull slim silver-blue can,0.9711,0.9773,0.9092,0.3136
+I0121,G05,injected,good,Red Bull,slim silver-blue can,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 2 (edit),pilot-gemini-gen,5491897,Red Bull slim silver-blue can,0.9759,0.9773,0.8756,0.3085
+I0122,G05,injected,good,Red Bull,slim silver-blue can,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 3 (generate),pilot-regen,5491897,Red Bull slim silver-blue can,0.9676,0.9694,0.8986,0.3463
+I0123,G05,injected,good,Red Bull,slim silver-blue can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 2 (generate),pilot-v2-regen,5491897,Red Bull slim silver-blue can,0.9693,0.9745,0.7697,0.3488
+I0124,G05,injected,good,Red Bull,slim silver-blue can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 3 (generate),pilot-v2-regen,5491897,Red Bull slim silver-blue can,0.9786,0.9759,0.9312,0.3518
+I0125,G05,injected,good,Red Bull,slim silver-blue can,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 5 (generate),pilot-v2-regen,5491897,Red Bull slim silver-blue can,0.9745,0.9759,0.8154,0.3582
+I0126,G05,injected,good,Red Bull,slim silver-blue can,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 1 (generate),pilot-v3,5491897,Red Bull slim silver-blue can,0.9759,0.9843,0.8154,0.3355
+I0127,G05,injected,good,Red Bull,slim silver-blue can,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 2 (generate),pilot-v3,5491897,Red Bull slim silver-blue can,0.9711,0.9799,0.9039,0.3148
+I0128,G05,injected,good,Red Bull,slim silver-blue can,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 1 (edit)",pilot-vpp-gemini,5491897,Red Bull slim silver-blue can,0.9728,0.9759,0.923,0.3666
+I0129,G05,injected,good,Red Bull,slim silver-blue can,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 2 (edit)",pilot-vpp-gemini,5491897,Red Bull slim silver-blue can,0.9745,0.9773,0.9185,0.3495
+I0130,G05,injected,good,Red Bull,slim silver-blue can,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 4 (generate)",pilot-vpp-gemini,5491897,Red Bull slim silver-blue can,0.9676,0.9745,0.923,0.353
+I0131,G05,control,control,,,google/gemini-3.1-flash-image,no-inject (original prompt),pilot-gemini-gen,5491897,Red Bull slim silver-blue can,0.9711,0.9711,0.2302,0.3049
+I0132,G05,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),pilot-regen,5491897,Red Bull slim silver-blue can,0.9759,0.9745,0.1879,0.364
+I0133,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C2_loc",flux-probe,777,Heineken beer bottle,0.9842,0.9799,0.9417,0.3434
+I0134,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C3_loc_size",flux-probe,1234,Heineken beer bottle,0.981,0.9385,0.9509,0.342
+I0135,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C3_loc_size",flux-probe,777,Heineken beer bottle,0.9833,0.9482,0.9773,0.3581
+I0136,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C4_generic",flux-probe,5491897,Heineken beer bottle,0.9759,0.9759,0.8986,0.3309
+I0137,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C4_generic",flux-probe,1234,Heineken beer bottle,0.9851,0.9711,0.7888,0.3382
+I0138,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C4_generic",flux-probe,777,Heineken beer bottle,0.9842,0.9773,0.8621,0.3407
+I0139,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C4_generic",flux-probe,42,Heineken beer bottle,0.9773,0.9729,0.7063,0.3105
+I0140,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C6_json",flux-probe,5491897,Heineken beer bottle,0.9799,0.9185,0.9417,0.3268
+I0141,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C6_json",flux-probe,777,Heineken beer bottle,0.9711,0.923,0.9385,0.3535
+I0142,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C6_json",flux-probe,42,Heineken beer bottle,0.9799,0.923,0.8986,0.3399
+I0143,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C7_inventory",flux-probe,1234,Heineken beer bottle,0.9773,0.9811,0.8621,0.3245
+I0144,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,1234,Heineken beer bottle,0.9811,0.9759,0.9385,0.3491
+I0145,G06,injected,good,Heineken,beer bottle,"FLUX.2 dev (open weights, Comfy Cloud)","FLUX placement probe, condition C8_crowd",flux-probe,777,Heineken beer bottle,0.9833,0.9745,0.8479,0.3479
+I0146,G06,injected,good,Heineken,green glass bottle,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 2 (edit),pilot-gemini-gen,5491897,Heineken green glass bottle,0.9884,0.9676,0.4836,0.3342
+I0147,G06,injected,good,Heineken,green glass bottle,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 1 (generate),pilot-v3,5491897,Heineken green glass bottle,0.9773,0.9833,0.8816,0.3494
+I0148,G06,injected,good,Heineken,green glass bottle,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 1 (edit)",pilot-vpp-gemini,5491897,Heineken green glass bottle,0.9799,0.9745,0.8756,0.3408
+I0149,G06,injected,good,Heineken,green glass bottle,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 2 (edit)",pilot-vpp-gemini,5491897,Heineken green glass bottle,0.9799,0.9728,0.8479,0.3448
+I0150,G06,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,1234,Heineken beer bottle,0.9851,0.9851,0.5653,0.3361
+I0151,G06,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,777,Heineken beer bottle,0.9759,0.9773,0.5188,0.3513
+I0152,G06,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),flux-probe,42,Heineken beer bottle,0.9842,0.9833,0.3947,0.3438
+I0153,G06,control,control,,,google/gemini-3.1-flash-image,no-inject (original prompt),pilot-gemini-gen,5491897,Heineken beer bottle,0.9884,0.9891,0.6727,0.3114
+I0154,G06,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),pilot-v3,5491897,Heineken beer bottle,0.9811,0.9811,0.5416,0.3406
+I0155,G07,injected,good,Coca-Cola,enamel wall sign,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 2 (edit),pilot-gemini-gen,5491897,Coca-Cola enamel wall sign,0.9417,0.9449,0.8396,0.3127
+I0156,G07,injected,good,Coca-Cola,enamel wall sign,google/gemini-3.1-flash-image,v2 rewriter + prompt repair loop; attempt 3 (generate),pilot-gemini-gen,5491897,Coca-Cola enamel wall sign,0.9509,0.9348,0.798,0.3274
+I0157,G07,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 2 (generate),pilot-regen,5491897,Coca-Cola enamel wall sign,0.8154,0.8986,0.9271,0.2961
+I0158,G07,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v1 rewriter + prompt repair loop; attempt 4 (generate),pilot-regen,5491897,Coca-Cola enamel wall sign,0.8154,0.8877,0.923,0.2794
+I0159,G07,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 2 (generate),pilot-v2-regen,5491897,Coca-Cola enamel wall sign,0.8396,0.9092,0.7888,0.3039
+I0160,G07,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v2 rewriter + prompt repair loop; attempt 3 (generate),pilot-v2-regen,5491897,Coca-Cola enamel wall sign,0.8748,0.9185,0.7288,0.3115
+I0161,G07,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 1 (generate),pilot-v3,5491897,Coca-Cola enamel wall sign,0.9092,0.9348,0.8816,0.3234
+I0162,G07,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)",v3 rewriter + prompt repair loop; attempt 2 (generate),pilot-v3,5491897,Coca-Cola enamel wall sign,0.9092,0.9348,0.8986,0.3241
+I0163,G07,injected,good,Coca-Cola,enamel wall sign,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 1 (edit)",pilot-vpp-gemini,5491897,Coca-Cola enamel wall sign,0.9348,0.9563,0.9636,0.3252
+I0164,G07,injected,good,Coca-Cola,enamel wall sign,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 2 (edit)",pilot-vpp-gemini,5491897,Coca-Cola enamel wall sign,0.9482,0.9589,0.8986,0.3054
+I0165,G07,injected,good,Coca-Cola,enamel wall sign,"FLUX.2 dev (open weights, Comfy Cloud)","generate original, then edit product in; attempt 4 (generate)",pilot-vpp-gemini,5491897,Coca-Cola enamel wall sign,0.8479,0.8986,0.9348,0.3109
+I0166,G07,control,control,,,google/gemini-3.1-flash-image,no-inject (original prompt),pilot-gemini-gen,5491897,Coca-Cola enamel wall sign,0.9482,0.9482,0.3538,0.3043
+I0167,G07,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),pilot-regen,5491897,Coca-Cola enamel wall sign,0.9417,0.9449,0.2528,0.3276
+I0168,G08,injected,good,Coca-Cola,contour glass bottle,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 1 (edit)",pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.9773,0.9039,0.798,0.3964
+I0169,G08,injected,good,Coca-Cola,contour glass bottle,google/gemini-3.1-flash-image,"generate original, then edit product in; attempt 2 (edit)",pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.9759,0.8816,0.8877,0.4017
+I0170,G08,control,control,,,"FLUX.2 dev (open weights, Comfy Cloud)",no-inject (original prompt),pilot-vpp-gemini,5491897,Coca-Cola contour glass bottle,0.9744,0.9744,0.3098,0.393
+I0171,G09,injected,gold,Starbucks,Starbucks white paper cup,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Starbucks white paper cup,0.9417,0.9695,0.9655,0.3652
+I0172,G09,injected,good,Starbucks,Starbucks white paper cup,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Starbucks white paper cup,0.9482,0.9712,0.3947,0.3579
+I0173,G09,injected,good,Starbucks,Starbucks white paper cup,google/gemini-3.1-flash-lite-image,rewriter v2,survey-closed,,Starbucks white paper cup,0.9482,0.9655,0.9141,0.3344
+I0174,G09,injected,good,Starbucks,Starbucks white paper cup,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Starbucks white paper cup,0.9417,0.9711,0.9633,0.355
+I0175,G09,injected,good,Starbucks,a Starbucks cup,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a Starbucks cup,0.9385,0.9773,0.9861,0.3578
+I0176,G09,injected,good,Starbucks,a Starbucks cup,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,a Starbucks cup,0.9537,0.9759,0.9903,0.3456
+I0177,G09,injected,good,Starbucks,a Starbucks cup,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,a Starbucks cup,0.9537,0.9759,0.9891,0.3562
+I0178,G09,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Starbucks white paper cup,0.9385,0.9385,0.1158,0.3563
+I0179,G10,injected,gold,Coca-Cola,Coca-Cola red aluminium can,google/gemini-3.1-flash-lite-image,rewriter v2,survey-closed,,Coca-Cola red aluminium can,0.9141,0.8877,0.8877,0.3677
+I0180,G10,injected,gold,Coca-Cola,Coca-Cola red aluminium can,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Coca-Cola red aluminium can,0.8933,0.9417,0.8479,0.3737
+I0181,G10,injected,good,Coca-Cola,Coca-Cola red aluminium can,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Coca-Cola red aluminium can,0.8986,0.9449,0.9417,0.3741
+I0182,G10,injected,good,Coca-Cola,a bottle of Coca-Cola,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a bottle of Coca-Cola,0.8986,0.9509,0.9759,0.3885
+I0183,G10,injected,good,Coca-Cola,a bottle of Coca-Cola,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,a bottle of Coca-Cola,0.923,0.9633,0.9695,0.3767
+I0184,G10,injected,good,Coca-Cola,a bottle of Coca-Cola,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,a bottle of Coca-Cola,0.9141,0.9563,0.9509,0.3767
+I0185,G10,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Coca-Cola red aluminium can,0.8816,0.8748,0.1071,0.3655
+I0186,G11,injected,gold,Nike,Nike running shoes,google/gemini-3.1-flash-lite-image,rewriter v2,survey-closed,,Nike running shoes,0.9185,0.9385,0.8396,0.3172
+I0187,G11,injected,good,Nike,Nike running shoes,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Nike running shoes,0.9633,0.9633,0.9676,0.3216
+I0188,G11,injected,good,Nike,a Nike gym bag,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a Nike gym bag,0.9537,0.9745,0.9852,0.3525
+I0189,G11,injected,good,Nike,a Nike gym bag,google/gemini-3.1-flash-lite-image,surface-specific + feedback loop,survey-surface,,a Nike gym bag,0.951,0.9695,0.9822,0.3425
+I0190,G11,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Nike running shoes,0.9092,0.9092,0.8396,0.3382
+I0191,G12,injected,good,Samsung,Samsung smartphone,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Samsung smartphone,0.9786,0.9676,0.8154,0.3334
+I0192,G12,injected,good,Samsung,a Samsung phone,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a Samsung phone,0.9729,0.9185,0.6018,0.3685
+I0193,G12,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Samsung smartphone,0.9745,0.9745,0.1452,0.3658
+I0194,G13,injected,gold,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Apple silver laptop,0.9655,0.9633,0.8067,0.2762
+I0195,G13,injected,gold,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Apple silver laptop,0.9612,0.9655,0.8933,0.2931
+I0196,G13,injected,gold,Apple,a MacBook,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,Apple a MacBook,0.9694,0.9676,0.7388,0.284
+I0197,G13,injected,good,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,rewriter v2,survey-closed,,Apple silver laptop,0.9612,0.9655,0.9092,0.3112
+I0198,G13,injected,good,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Apple silver laptop,0.9612,0.9676,0.5416,0.3149
+I0199,G13,injected,good,Apple,a MacBook,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,Apple a MacBook,0.9589,0.9633,0.8545,0.3158
+I0200,G13,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Apple silver laptop,0.9694,0.9694,0.5902,0.2943
+I0201,G14,injected,gold,Xbox,Xbox black console,google/gemini-3.1-flash-lite-image,rewriter v2,survey-closed,,Xbox black console,0.9449,0.9537,0.5416,0.3297
+I0202,G14,injected,good,Xbox,Xbox black console,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Xbox black console,0.9348,0.9385,0.749,0.3325
+I0203,G14,injected,good,Xbox,Xbox black console,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Xbox black console,0.9482,0.9563,0.4836,0.3327
+I0204,G14,injected,good,Xbox,Xbox black console,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Xbox black console,0.9092,0.9417,0.661,0.3306
+I0205,G14,injected,good,Xbox,an Xbox controller,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,an Xbox controller,0.9417,0.9537,0.8816,0.3315
+I0206,G14,injected,good,Xbox,an Xbox controller,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,an Xbox controller,0.9312,0.9385,0.798,0.2927
+I0207,G14,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Xbox black console,0.9185,0.9185,0.4386,0.3514
+I0208,G15,injected,gold,Apple,Apple white earbuds,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Apple white earbuds,0.9563,0.9655,0.847,0.2905
+I0209,G15,injected,good,Apple,Apple white earbuds,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Apple white earbuds,0.9563,0.9417,0.7175,0.2994
+I0210,G15,injected,good,Apple,Apple white earbuds,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Apple white earbuds,0.9589,0.9348,0.2113,0.3062
+I0211,G15,injected,good,Apple,Apple white earbuds,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Apple white earbuds,0.9417,0.9563,0.7888,0.3105
+I0212,G15,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Apple white earbuds,0.9417,0.9417,0.8242,0.3067
+I0213,G16,injected,gold,IKEA,IKEA blue shopping bag,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,IKEA blue shopping bag,0.9799,0.9759,0.9039,0.318
+I0214,G16,injected,gold,IKEA,IKEA blue shopping bag,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,IKEA blue shopping bag,0.9759,0.9695,0.8545,0.2916
+I0215,G16,injected,gold,IKEA,an IKEA bag,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,an IKEA bag,0.9728,0.9537,0.7288,0.3109
+I0216,G16,injected,gold,IKEA,an IKEA bag,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,an IKEA bag,0.9786,0.9563,0.3003,0.3035
+I0217,G16,injected,gold,IKEA,an IKEA bag,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,an IKEA bag,0.9811,0.9655,0.6381,0.3074
+I0218,G16,injected,good,IKEA,IKEA blue shopping bag,google/gemini-3.1-flash-lite-image,rewriter v2,survey-closed,,IKEA blue shopping bag,0.9799,0.9676,0.7697,0.3096
+I0219,G16,injected,good,IKEA,IKEA blue shopping bag,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,IKEA blue shopping bag,0.9728,0.9589,0.6954,0.2895
+I0220,G16,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,IKEA blue shopping bag,0.9773,0.9786,0.1558,0.2876
+I0221,G17,injected,gold,Nike,a Nike gym bag,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a Nike gym bag,0.9745,0.9759,0.9676,0.3621
+I0222,G17,injected,gold,Nike,a Nike gym bag,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,a Nike gym bag,0.9589,0.9694,0.9655,0.3817
+I0223,G17,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Nike gym bag,0.9728,0.9811,0.9843,0.3547
+I0224,G17,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v2,survey-closed,,Nike gym bag,0.9799,0.9786,0.9897,0.3595
+I0225,G17,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Nike gym bag,0.9759,0.9811,0.9884,0.3687
+I0226,G17,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Nike gym bag,0.9728,0.9786,0.9861,0.3647
+I0227,G17,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Nike gym bag,0.9729,0.9729,0.9861,0.3533
+I0228,G17,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Nike gym bag,0.9786,0.9833,0.9745,0.3473
+I0229,G17,injected,good,Nike,a Nike gym bag,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,a Nike gym bag,0.9759,0.9786,0.9676,0.3805
+I0230,G17,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Nike gym bag,0.9589,0.9563,0.4056,0.377
+I0231,G18,injected,gold,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,rewriter v2,survey-closed,,Apple silver laptop,0.9694,0.9612,0.661,0.3666
+I0232,G18,injected,gold,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Apple silver laptop,0.9563,0.9759,0.9136,0.3212
+I0233,G18,injected,good,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Apple silver laptop,0.9728,0.9676,0.5188,0.3355
+I0234,G18,injected,good,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Apple silver laptop,0.9759,0.9811,0.8688,0.3475
+I0235,G18,injected,good,Apple,a MacBook,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,Apple a MacBook,0.9589,0.9711,0.6137,0.331
+I0236,G18,injected,good,Apple,a MacBook,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,Apple a MacBook,0.9759,0.9811,0.7888,0.3466
+I0237,G18,injected,good,Apple,a MacBook,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,Apple a MacBook,0.9537,0.923,0.5311,0.3312
+I0238,G18,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Apple silver laptop,0.9655,0.9676,0.6846,0.3436
+I0239,G19,injected,good,Pepsi,Pepsi blue can,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Pepsi blue can,0.9633,0.9655,0.3272,0.2984
+I0240,G19,injected,good,Pepsi,Pepsi blue can,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Pepsi blue can,0.9711,0.9799,0.9509,0.2826
+I0241,G19,injected,good,Pepsi,Pepsi blue can,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Pepsi blue can,0.9655,0.9711,0.8688,0.2884
+I0242,G19,injected,good,Pepsi,a can of Pepsi,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a can of Pepsi,0.9563,0.7887,0.1332,0.2819
+I0243,G19,injected,good,Pepsi,a can of Pepsi,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,a can of Pepsi,0.9509,0.9589,0.9811,0.2775
+I0244,G19,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Pepsi blue can,0.9563,0.9563,0.114,0.2928
+I0245,G20,injected,gold,Red Bull,Red Bull slim silver-blue can,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Red Bull slim silver-blue can,0.9509,0.9509,0.7593,0.3163
+I0246,G20,injected,good,Red Bull,a Red Bull can,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a Red Bull can,0.9633,0.9711,0.9348,0.3468
+I0247,G20,injected,good,Red Bull,a Red Bull can,google/gemini-3.1-flash-lite-image,surface-specific + feedback loop,survey-surface,,a Red Bull can,0.9633,0.9655,0.9822,0.3554
+I0248,G20,injected,good,Red Bull,a Red Bull can,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,a Red Bull can,0.9449,0.9633,0.9852,0.3142
+I0249,G21,injected,gold,Adidas,Adidas track jacket,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Adidas track jacket,0.9537,0.9633,0.9655,0.305
+I0250,G21,injected,gold,Adidas,an Adidas track jacket,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,an Adidas track jacket,0.9633,0.9711,0.9773,0.2971
+I0251,G21,injected,good,Adidas,Adidas track jacket,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Adidas track jacket,0.9348,0.9612,0.9852,0.3196
+I0252,G21,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Adidas track jacket,0.9694,0.9676,0.3538,0.3392
+I0253,G22,injected,gold,Pepsi,Pepsi plastic bottle,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Pepsi plastic bottle,0.9811,0.9833,0.9482,0.3318
+I0254,G22,injected,good,Pepsi,a can of Pepsi,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a can of Pepsi,0.9811,0.9385,0.7887,0.3378
+I0255,G22,injected,good,Pepsi,a can of Pepsi,google/gemini-3.1-flash-lite-image,surface-specific + feedback loop,survey-surface,,a can of Pepsi,0.9843,0.9822,0.9728,0.322
+I0256,G22,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,a can of Pepsi,0.9833,0.9833,0.2451,0.343
+I0257,G23,injected,good,Apple,Apple smartphone,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Apple smartphone,0.9092,0.9141,0.7175,0.3349
+I0258,G23,injected,good,Apple,Apple smartphone,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Apple smartphone,0.9417,0.9348,0.449,0.3408
+I0259,G23,injected,good,Apple,Apple smartphone,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Apple smartphone,0.9185,0.9185,0.6954,0.344
+I0260,G23,injected,good,Apple,an iPhone,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,Apple an iPhone,0.9348,0.798,0.1271,0.3429
+I0261,G23,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Apple smartphone,0.9385,0.9348,0.1985,0.3316
+I0262,G24,injected,gold,Starbucks,Starbucks white paper cup,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Starbucks white paper cup,0.9537,0.9563,0.5544,0.3059
+I0263,G24,injected,good,Starbucks,Starbucks white paper cup,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Starbucks white paper cup,0.9633,0.9612,0.8933,0.2957
+I0264,G24,injected,good,Starbucks,Starbucks white paper cup,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Starbucks white paper cup,0.9612,0.9563,0.4056,0.308
+I0265,G24,injected,good,Starbucks,a Starbucks cup,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,a Starbucks cup,0.9745,0.9759,0.9745,0.3013
+I0266,G24,injected,good,Starbucks,a Starbucks cup,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,a Starbucks cup,0.9612,0.9693,0.9773,0.304
+I0267,G24,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Starbucks white paper cup,0.9633,0.9633,0.495,0.2771
+I0268,G25,injected,gold,Nike,a Nike gym bag,google/gemini-3.1-flash-lite-image,surface-specific + feedback loop,survey-surface,,a Nike gym bag,0.9589,0.951,0.9773,0.3352
+I0269,G25,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Nike gym bag,0.9712,0.9711,0.9799,0.3414
+I0270,G25,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Nike gym bag,0.9676,0.9676,0.9711,0.3338
+I0271,G25,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Nike gym bag,0.9655,0.9676,0.9589,0.325
+I0272,G25,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Nike gym bag,0.9612,0.9537,0.9773,0.3557
+I0273,G25,injected,good,Nike,Nike gym bag,google/gemini-3.1-flash-lite-image,rewriter v4 + judge-aware repair loop,survey-closed,,Nike gym bag,0.9612,0.9537,0.9811,0.332
+I0274,G25,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Nike gym bag,0.9563,0.9563,0.3456,0.3368
+I0275,G26,injected,gold,Coca-Cola,Coca-Cola contour glass bottle,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Coca-Cola contour glass bottle,0.9786,0.9786,0.9271,0.3236
+I0276,G26,injected,good,Coca-Cola,Coca-Cola contour glass bottle,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Coca-Cola contour glass bottle,0.9811,0.9786,0.8816,0.3119
+I0277,G26,injected,good,Coca-Cola,a can of Coke,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,Coca-Cola a can of Coke,0.9799,0.9799,0.9185,0.3204
+I0278,G26,injected,good,Coca-Cola,a can of Coke,google/gemini-3.1-flash-lite-image,"surface-specific, short relational",survey-surface,,Coca-Cola a can of Coke,0.9833,0.9799,0.9694,0.3075
+I0279,G26,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Coca-Cola contour glass bottle,0.9799,0.9799,0.3171,0.3098
+I0280,G27,injected,gold,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,naive append,survey-closed,,Apple silver laptop,0.9759,0.9633,0.9417,0.3115
+I0281,G27,injected,gold,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Apple silver laptop,0.9676,0.9711,0.9711,0.315
+I0282,G27,injected,gold,Apple,Apple silver laptop,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Apple silver laptop,0.9728,0.9676,0.9612,0.3128
+I0283,G27,injected,good,Apple,an iPhone,google/gemini-3.1-flash-lite-image,surface-specific + feedback loop,survey-surface,,Apple an iPhone,0.9694,0.9711,0.661,0.3153
+I0284,G27,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Apple silver laptop,0.9811,0.9811,0.0564,0.3277
+I0285,G28,injected,gold,Pepsi,Pepsi plastic bottle,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Pepsi plastic bottle,0.9728,0.9612,0.9694,0.2785
+I0286,G28,injected,good,Pepsi,Pepsi plastic bottle,google/gemini-3.1-flash-lite-image,rewriter v4 (Claude Sonnet),survey-closed,,Pepsi plastic bottle,0.9676,0.9589,0.9452,0.2878
+I0287,G29,injected,gold,Coca-Cola,Coca-Cola red aluminium can,google/gemini-3.1-flash-lite-image,rewriter v4 (Gemini Flash),survey-closed,,Coca-Cola red aluminium can,0.9811,0.9745,0.9348,0.3394
+I0288,G29,injected,good,Coca-Cola,a can of Coke,google/gemini-3.1-flash-lite-image,"simple ('..., with a X')",survey-surface,,Coca-Cola a can of Coke,0.9799,0.9833,0.9537,0.3584
+I0289,G29,injected,good,Coca-Cola,a can of Coke,google/gemini-3.1-flash-lite-image,"surface-specific ('..., with a X on the Y')",survey-surface,,Coca-Cola a can of Coke,0.9822,0.9612,0.8877,0.3213
+I0290,G29,control,control,,,google/gemini-3.1-flash-lite-image,no-inject (original prompt),survey-closed,,Coca-Cola a can of Coke,0.9811,0.9811,0.2048,0.3281
