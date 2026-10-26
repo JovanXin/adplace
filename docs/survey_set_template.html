@@ -1,0 +1,163 @@
+<title>Survey Image Set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{--paper:#F4F5F2;--card:#FFFFFF;--ink:#1C2321;--muted:#5D6864;--rule:#D8DDD8;--accent:#1F5F8B;--accent-bg:#E3EDF4;
+--base:#5D6864;--base-bg:#E6E9E6;--bad:#A8322A;--bad-bg:#F8E4E1;--good:#23734A;--good-bg:#E1F2E8;--s1:#2a78d6;--s2:#eb6834;
+--f-head:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"Source Serif 4",Georgia,serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;
+--base:#9AA5A0;--base-bg:#262C29;--bad:#F09A90;--bad-bg:#3A1F1C;--good:#7FD1A3;--good-bg:#1D3326;--s1:#3987e5;--s2:#d95926}}
+:root[data-theme="dark"]{color-scheme:dark;--paper:#141816;--card:#1C211F;--ink:#E4E8E5;--muted:#9AA5A0;--rule:#303834;--accent:#7FB5DB;--accent-bg:#1B2A35;
+--base:#9AA5A0;--base-bg:#262C29;--bad:#F09A90;--bad-bg:#3A1F1C;--good:#7FD1A3;--good-bg:#1D3326;--s1:#3987e5;--s2:#d95926}
+body{background:var(--paper);color:var(--ink);font:16.5px/1.6 var(--f-body)}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:40px 80px;display:grid;gap:44px}
+header.top{display:grid;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:24px}
+.eyebrow,.lbl{font:600 .72rem/1.2 var(--f-head);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+h1,h2,h3{font-family:var(--f-head);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:2.3rem;line-height:1.1}h2{font-size:1.45rem}
+p{margin:0;max-width:72ch}.muted{color:var(--muted)}
+section{display:grid;gap:16px}
+.warn{background:var(--bad-bg);color:var(--ink);border-radius:6px;padding:12px 16px;font-size:.92rem}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:12px 14px;display:grid;gap:2px}
+.kpi b{font:600 1.5rem/1.1 var(--f-head);font-variant-numeric:tabular-nums}.kpi span{font:500 .78rem/1.3 var(--f-head);color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.45}
+th,td{text-align:left;vertical-align:top;padding:.5rem .75rem;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}tr.ref td{color:var(--muted)}
+thead th{font:600 .7rem var(--f-head);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--paper)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.8rem;white-space:nowrap}
+code{font-family:var(--f-mono);font-size:.82em;background:var(--card);padding:.05em .3em;border-radius:3px}
+a{color:var(--accent)}
+figure{margin:0}
+.chart,.diagram{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px}
+.chart svg,.diagram svg{display:block;width:100%;height:auto;color:var(--ink)}
+.diagram{overflow-x:auto}.diagram svg{min-width:640px}
+svg text{font-family:var(--f-head);fill:currentColor}
+.grid{stroke:var(--rule)}.tick{font-size:12px;fill:var(--muted)}.rowlab{font-size:13px}.vlab{font-size:12.5px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.bar{fill:var(--s1)}.bar.loop{fill:var(--s2)}
+.box{fill:var(--card);stroke:currentColor;stroke-width:1.2}.box.hi{fill:var(--accent-bg);stroke:var(--accent)}
+.ttl{font-size:13px;font-weight:600}.sub{font-size:11px;fill:var(--muted)}.edge{stroke:currentColor;stroke-width:1.3;fill:none}.edge.acc{stroke:var(--accent)}
+.elab{font-size:11px;fill:var(--muted)}.elab.acc{fill:var(--accent)}
+figcaption.cap{font-size:.86rem;color:var(--muted);margin-top:8px;max-width:78ch}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+.items{display:grid;gap:22px}
+.item{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:14px;display:grid;gap:10px}
+.item header{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.item header b{font:600 1.05rem var(--f-head)}.brand{font:600 .9rem var(--f-head);color:var(--accent)}
+.up{font-style:italic;color:var(--muted);font-size:.92rem}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:680px){.trio{grid-template-columns:1fr}}
+.cell{display:grid;gap:6px;align-content:start}
+.cell img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:4px;display:block;background:var(--rule)}
+.cell figcaption{display:grid;gap:3px;font-size:.78rem}
+.role{justify-self:start;font:600 .66rem/1 var(--f-mono);padding:.28rem .45rem;border-radius:3px;text-transform:uppercase;letter-spacing:.03em}
+.role.base{background:var(--base-bg);color:var(--base)}.role.bad{background:var(--bad-bg);color:var(--bad)}.role.good{background:var(--good-bg);color:var(--good)}
+.how{font:500 .78rem var(--f-head)}.ins{font:.72rem/1.4 var(--f-mono);color:var(--ink)}
+.stat{font:.7rem var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.pair{font:.7rem var(--f-mono)}.pair.hit{color:var(--bad)}.pair.miss{color:var(--good)}
+ul.tight,ol.tight{margin:0;padding-left:1.2rem;display:grid;gap:6px;max-width:74ch}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">Thesis C · survey stimuli · 4 Oct 2026</span>
+  <h1>Survey image set: no-inject, bad-inject and good-inject</h1>
+  <p class="muted">{{N_ITEMS}} everyday prompts, each rendered three ways. These are the images participants see, with this page's labels removed. The good-inject images come from the rewriter and feedback loop. Since Comfy Cloud is unavailable, every image was made with a closed model (Gemini 3.1 Flash-Lite Image), and two independent judges scored them along with CLIPScore.</p>
+</header>
+
+<div class="warn"><b>Researcher view.</b> This page shows which image carries the ad. Give participants only <code>survey/images/</code>, where file names are S01_A…S16_C with the letters shuffled per item. The answer key is <code>survey/key.csv</code>.</div>
+
+<div class="kpis">
+  <div class="kpi"><b>{{N_ITEMS}} × 3</b><span>items × images ({{N_IMAGES}} total); {{N_STRONG_BAD}} with a clearly blatant bad-inject</span></div>
+  <div class="kpi"><b>6/21 vs 3/21</b><span>prompts meeting the survey's good-inject test: v4 rewriter vs naive append</span></div>
+  <div class="kpi"><b>3 of 8</b><span>stuck prompts rescued by the feedback loop (judge feedback → revised prompt)</span></div>
+  <div class="kpi"><b>{{DET_G}}</b><span>good-inject images the side-by-side judge still singled out as the ad (bad: {{DET_B}})</span></div>
+</div>
+
+<section>
+  <h2>How each image was made</h2>
+  <figure>
+    <div class="diagram">
+    <svg viewBox="0 0 980 250" role="img" aria-label="Pipeline: the user prompt is classified and planned; three branches produce the base image (original prompt), the bad image (product named first, in the foreground) and the good image (v4 rewriter, then verify and judge, with a feedback loop back to the rewriter).">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+      <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/></marker></defs>
+      <rect x="10" y="95" width="130" height="58" rx="6" class="box"/><text x="75" y="119" text-anchor="middle" class="ttl">User prompt</text><text x="75" y="137" text-anchor="middle" class="sub">24 everyday scenes</text>
+      <rect x="166" y="95" width="140" height="58" rx="6" class="box"/><text x="236" y="119" text-anchor="middle" class="ttl">Classify + plan</text><text x="236" y="137" text-anchor="middle" class="sub">brand by fit + diversity</text>
+      <line x1="140" y1="124" x2="164" y2="124" class="edge" marker-end="url(#a)"/>
+      <rect x="350" y="12" width="210" height="50" rx="6" class="box"/><text x="455" y="33" text-anchor="middle" class="ttl">no-inject</text><text x="455" y="50" text-anchor="middle" class="sub">original prompt (brand-free seed)</text>
+      <rect x="350" y="99" width="210" height="50" rx="6" class="box"/><text x="455" y="120" text-anchor="middle" class="ttl">bad-inject</text><text x="455" y="137" text-anchor="middle" class="sub">"A [product] in the foreground, …"</text>
+      <rect x="350" y="186" width="210" height="50" rx="6" class="box hi"/><text x="455" y="207" text-anchor="middle" class="ttl">good-inject: rewriter v4</text><text x="455" y="224" text-anchor="middle" class="sub">product mid-inventory, ≤18 words</text>
+      <path d="M306 124 H326 V37 H348" class="edge" marker-end="url(#a)"/><path d="M326 124 H348" class="edge" marker-end="url(#a)"/><path d="M326 124 V211 H348" class="edge" marker-end="url(#a)"/>
+      <rect x="600" y="99" width="160" height="50" rx="6" class="box"/><text x="680" y="120" text-anchor="middle" class="ttl">Gemini 3.1 Flash-Lite</text><text x="680" y="137" text-anchor="middle" class="sub">image, 1:1, seed 7</text>
+      <path d="M560 37 H580 V124 H598" class="edge" marker-end="url(#a)"/><path d="M560 124 H598" class="edge" marker-end="url(#a)"/><path d="M560 211 H580 V124" class="edge"/>
+      <rect x="800" y="99" width="170" height="50" rx="6" class="box hi"/><text x="885" y="120" text-anchor="middle" class="ttl">Verify + judge</text><text x="885" y="137" text-anchor="middle" class="sub">your rule · GPT viewer · CLIP</text>
+      <line x1="760" y1="124" x2="798" y2="124" class="edge" marker-end="url(#a)"/>
+      <path d="M885 149 V236 H562" class="edge acc" marker-end="url(#aA)"/>
+      <text x="720" y="230" text-anchor="middle" class="elab acc">not good yet → repair feedback → revised prompt (≤2 rounds)</text>
+    </svg>
+    </div>
+    <figcaption class="cap"><b>Good-inject test:</b> the image must pass the rule fitted to your 160 lightbox labels (not blatant or in front; blind ad-suspicion ≤4; scene intact). A fresh viewer (GPT-5.6 Sol, told nothing) must also be able to name the brand, rate it at most 3/5 "looks like an ad", and find that the image still matches the prompt (adherence ≥4). Bad-inject must fail your rule and score at least 4/5.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Rewriter benchmark</h2>
+  <div class="two">
+    <figure><div class="chart">{{BARCHART}}</div>
+      <figcaption class="cap">Share of prompts whose image met the good-inject test on the first try. The loop bar (orange) counts the prompts it rescued among the 8 where every first try failed.</figcaption></figure>
+    <div style="display:grid;gap:10px">
+      <p>The v4 rewriter was written for instruction-following models. It names the product once, in the middle of a short list of the scene's own props, with at most one concealment cue ("partly behind the water carafe"). Compared with naively appending the product, it doubles the share of usable placements and lowers the fresh viewer's ad rating (2.76 vs 3.33). The cost to fidelity is small: CLIPScore is 0.306 vs 0.314 for the baseline (naive: 0.310), and prompt adherence stays at 4.9 of 5.</p>
+      <p>Using Claude Sonnet 5.5 as the rewriter instead of Gemini Flash didn't help overall: 6 usable placements each. Sonnet hid products more (lower legibility) and Flash kept them more recognisable. The FLUX-era v2 rewriter produced the lowest ad scores, but too often the viewer couldn't name the brand.</p>
+    </div>
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Condition</th><th class="num">n</th><th class="num">Your rule</th><th class="num">Survey-good</th><th class="num">Brand named</th><th class="num">GPT ad? (1–5)</th><th class="num">Adherence</th><th class="num">Quality</th><th class="num">CLIPScore</th></tr></thead>
+    <tbody>{{BENCH_ROWS}}</tbody>
+  </table></div>
+  <p class="muted">All conditions use the same image model and seed. "Your rule" = the calibrated band, verified by Gemini 3.7 Flash. "Brand named" = the GPT judge named the target brand unprompted. CLIPScore is scored against the original prompt.</p>
+</section>
+
+<section>
+  <h2>What the closed models changed</h2>
+  <div class="two">
+    <div class="tablewrap"><table>
+      <thead><tr><th>Model</th><th class="num">same seed, same prompt</th><th class="num">same seed, + product</th><th class="num">$/image</th><th class="num">time</th></tr></thead>
+      <tbody>{{SEED_ROWS}}</tbody>
+    </table></div>
+    <ul class="tight">
+      <li><b>No paired design.</b> The Gemini 3.1 models repeat exactly on a seed (correlation 1.0), but any change to the prompt re-draws the whole scene. So unlike the FLUX pairs, the three images of an item are different compositions of the same prompt. Gemini 2.5 and GPT-5 Image Mini aren't even repeatable.</li>
+      <li><b>Closed models follow placement words.</b> FLUX turned "partly behind…" or "among the plates" into a hero shot. Gemini 3.1 renders the product as a believable prop. That's why v4 replaces v3's "no position words" rule.</li>
+      <li><b>Flash-Lite was enough</b> at $0.034 per image and about 4 s. GPT-5 Image Mini made the product the hero and took 41 s per image.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>A warning for the survey design</h2>
+  <p>A GPT-5.6 Sol judge saw each injected image next to its no-inject image, in random order and told nothing, and was asked which one (if either) contains advertising. It singled out the <b>good-inject image {{DET_G}} times</b> and the bad-inject {{DET_B}}. Seen alone, the same good-inject images averaged only {{GOOD_AD}}/5 on "looks like an ad". It preferred the good-inject image as the better match for the prompt in {{PREF_G}} pairs. The side-by-side comparison does the detecting: once two images of the same prompt are shown together, the extra branded object is what differs. If the survey shows both versions of a prompt, consider separating them (different pages or blocks, mixed with filler items), or asking about each image before revealing its pair. Otherwise detection rates will reflect the comparison rather than the placement.</p>
+</section>
+
+<section>
+  <h2>The {{N_ITEMS}} items</h2>
+  <p class="muted">Each image is labelled with how it was made, the text added to the prompt, the GPT viewer's ad rating, the verifier's legibility score (0–4), CLIPScore against the original prompt, and whether the side-by-side judge picked it as the ad. "Weak" marks a bad-inject that the viewer rated only 3/5. Both weak ones are Apple laptops, which look normal on a desk even when front and centre.</p>
+  <div class="items">{{CARDS}}</div>
+</section>
+
+<section>
+  <h2>Notes and caveats</h2>
+  <ul class="tight">
+    <li><b>Dropped prompts.</b> 5 of the 21 generated prompts had no image that met the good-inject test, even after the loop. Samsung TV (living room) and Apple at the bus stop ended up too hidden to name. Nike basketball, Pepsi beach volleyball and Nike skatepark stayed blatant. Prompts 20, 22 and 23 weren't generated (budget).</li>
+    <li><b>Organic brands.</b> The Tokyo convenience-store baseline shows a Lawson storefront, and the stadium baseline shows Liverpool FC. Both are part of the scene, not placements, but participants may report them. Baselines with consumer brands (Apple, Red Bull, Reebok, PlayStation) were re-rolled to brand-free seeds.</li>
+    <li><b>Judges are models, not people.</b> The verifier uses your fitted rule (72% agreement with your labels). The GPT viewer is an independent vendor's model, but both are proxies until the survey runs.</li>
+    <li><b>HFSS brands</b> (Coca-Cola, Pepsi, Red Bull) appear in {{N_HFSS}} items. Alcohol was excluded.</li>
+    <li><b>Files.</b> <code>survey/images/</code> (48 JPEGs, 1024²), <code>survey/key.csv</code> (condition, prompts, scores), <code>runs/survey-closed/</code> (every candidate, verdict and prompt). Rebuild with <code>scripts/survey_bench.py</code>, <code>scripts/survey_select.py</code> and <code>docs/build_survey_page.py</code>.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Spend this session</th><th>Model</th><th class="num">USD</th></tr></thead>
+    <tbody>{{COST_ROWS}}<tr><td><b>Total</b> (budget $10)</td><td></td><td class="num"><b>{{SESSION_USD}}</b></td></tr></tbody>
+  </table></div>
+</section>
+</div>
