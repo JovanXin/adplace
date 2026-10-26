@@ -2,8 +2,8 @@
 # (OPENROUTER_API_KEY, COMFY_API_KEY) or a .env file next to this one. Never commit keys.
 
 budget:
-  openrouter_usd_cap: 13.2        # hard stop (global ledger): $10 preliminary + $5 session-2 budget (2026-09-27), minus margin
-  max_image_generations: 60       # hard stop on ComfyUI / image-model generations per run
+  openrouter_usd_cap: 26.5        # hard stop (global ledger): $10 preliminary + $5 session 2 + $10 session 3 survey set + $6 session 3b (simple vs surface rewriter, 2026-10-04)
+  max_image_generations: 170      # hard stop on ComfyUI / image-model generations per run
 
 models:
   # Names are matched against OpenRouter's live model list (`python -m adplace models`).
@@ -62,6 +62,18 @@ prominence:
     max_blind_suspicion: 5
     gate_blind: false
     max_count: 1
+  calibrated:                     # session 3: the rule fitted to Jovan's 160 lightbox labels (72% agreement, kappa 0.46)
+    min_area: 0.0005
+    max_area: null
+    max_centrality: null
+    min_legibility: 1
+    max_legibility: 3               # legibility 4 (hero/product shot) fails
+    max_draws_attention: null
+    front_attention: 4
+    max_blind_suspicion: 4          # blind ad-suspicion 5 ("looks like an advert") fails
+    gate_blind: true
+    max_count: 99                   # no duplicate gate in the fitted rule
+    max_scene_loss: 0.75
   subtle:
     min_area: 0.002               # fraction of frame covered by the product bbox
     max_area: 0.04

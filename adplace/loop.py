@@ -48,6 +48,7 @@ class Ctx:
     reuse: Path | None = None   # earlier run: reuse its classify/plan/rewrite/baseline/attempt 1 (paired design)
     reuse_upto: str = "attempt1"  # attempt1 | plan (re-run the rewrite and everything after it)
     resume: bool = False          # keep finished prompts already in run_dir; redo errored/unfinished ones
+    brand_prefs: dict = field(default_factory=dict)  # prompt -> preferred brand key (used only if the classifier ranked it)
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
 
     @property
@@ -128,7 +129,7 @@ def repair_text(ctx: Ctx, image: bytes, action: dict, *, original: str, rewritte
     try:
         if baseline is not None:
             payload["images"] = "FIRST = the failed image; SECOND = the same-seed baseline (original prompt)"
-        out = ctx.llm.chat_json(ctx.models["verifier"], load_prompt("repair"), payload,
+        out = ctx.llm.chat_json(ctx.models.get("repair") or ctx.models["verifier"], load_prompt("repair"), payload,
                                 task="repair", temperature=0.2,
                                 images=[image, baseline] if baseline is not None else [image])
         if action["action"] == "edit":
@@ -222,7 +223,11 @@ def process_prompt(ctx: Ctx, idx: int, prompt: str) -> dict:
         rec["classify"] = c
         if c["decision"] != "INJECT":
             return finish(c["decision"].lower())
-        brand_key = c["brands"][0]["brand_key"]
+        ranked = [b["brand_key"] for b in c["brands"]]
+        want = ctx.brand_prefs.get(prompt)
+        brand_key = want if want in ranked else ranked[0]
+        if want:
+            rec["brand_pref"] = {"wanted": want, "ranked": ranked, "used": brand_key}
         brand = ctx.catalog[brand_key]
         rec["brand"] = brand_key
         if prev and prev.get("plan") and prev.get("rewrite") and ctx.reuse_upto == "attempt1":
@@ -313,7 +318,7 @@ def process_prompt(ctx: Ctx, idx: int, prompt: str) -> dict:
                        pre_edit_image=pre_edit[0] if pre_edit else None,
                        pre_edit_box=pre_edit[1] if pre_edit else None, exclude_boxes=exclude_boxes,
                        baseline_image=baseline if cfg["prominence"].get("compare_baseline") else None,
-                       max_scene_loss=float(cfg["prominence"].get("max_scene_loss", 0.5)))
+                       max_scene_loss=float(ctx.band.get("max_scene_loss", cfg["prominence"].get("max_scene_loss", 0.5))))
             att = {"k": k, "image": name, "made_by": how, "prompt": current_prompt,
                    "plan_chosen": chosen, "verify": v,
                    "codes": [i["code"] for i in v["issues"]], "severity": severity(v["issues"])}

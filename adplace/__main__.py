@@ -48,7 +48,8 @@ def resolve_models(cfg: dict, llm) -> dict:
     m = cfg["models"]
     return {"classifier": llm.resolve(m["classifier"]),
             "rewriter": llm.resolve(m["rewriter"]),
-            "verifier": llm.resolve(m["verifier"], need_image_in=True)}
+            "verifier": llm.resolve(m["verifier"], need_image_in=True),
+            **({"repair": llm.resolve(m["repair"], need_image_in=True)} if m.get("repair") else {})}
 
 
 def make_backends(cfg: dict, llm, mock: bool):
@@ -139,6 +140,9 @@ def cmd_run(args, cfg):
                            "v2": {"prompt": "rewriter_v2", "max_inserted_words": 18},
                            "v3": {"prompt": "rewriter_v3", "max_inserted_words": 12, "max_other_words": 36,
                                   "baseline_aware": True}}[args.rewriter]
+    if args.rewriter_model:
+        cfg["models"]["rewriter"] = [args.rewriter_model]
+        cfg["models"]["repair"] = [args.rewriter_model]
     run_id = args.name or time.strftime("%Y%m%d-%H%M%S")
     llm = make_llm(cfg, args.mock, run_id)
     models = resolve_models(cfg, llm)
@@ -149,6 +153,7 @@ def cmd_run(args, cfg):
     ctx = Ctx(cfg=cfg, llm=llm, models=models, gen=gen, editor=ed, catalog=load_catalog(),
               run_dir=run_dir, dry_run=args.dry_run,
               reuse=(ROOT / "runs" / args.reuse) if args.reuse else None, reuse_upto=args.reuse_upto,
+              brand_prefs=json.loads(Path(args.brand_prefs).read_text()) if args.brand_prefs else {},
               resume=args.resume)
     prompts = read_prompts(args.file, args.limit)
     print(f"run {run_id}: {len(prompts)} prompts, repair={'regen' if cfg['edit']['backend'] == 'none' else 'edit:' + cfg['edit']['backend']}, gen={cfg['generation']['backend']}, "
@@ -185,10 +190,12 @@ def main(argv=None):
     s.add_argument("--dry-run", action="store_true", help="stop after the rewrite (no images)")
     s.add_argument("--repair", choices=["edit", "regen"], help="edit = Qwen-Image-Edit repairs; regen = rewrite+regenerate only")
     s.add_argument("--mode", choices=["rewrite", "vpp"], help="vpp = edit the product into the unmodified baseline")
-    s.add_argument("--visibility", choices=["natural", "subtle", "moderate"])
+    s.add_argument("--visibility", choices=["natural", "calibrated", "subtle", "moderate"])
+    s.add_argument("--rewriter-model", help="OpenRouter id for the rewriter AND the repair writer (e.g. a closed model); verifier unchanged")
     s.add_argument("--editor", choices=["qwen", "gemini"], help="qwen = Qwen-Image-Edit on Comfy (open); gemini = Gemini 3.1 Flash Image on OpenRouter (closed)")
     s.add_argument("--generator", choices=["flux", "gemini"], help="flux = FLUX.2 dev on Comfy (open); gemini = Gemini 3.1 Flash Image (closed, upper-bound comparison)")
     s.add_argument("--max-attempts", type=int)
+    s.add_argument("--brand-prefs", help="JSON {prompt: brand_key}: prefer this brand when the classifier ranked it (brand diversity)")
     s.add_argument("--resume", action="store_true", help="re-run only errored/unfinished prompts of an existing run --name")
     s.add_argument("--rewriter", choices=["v1", "v2", "v3"], help="v1 = detailed spatial clause, v2 = short backgrounded clause, v3 = baseline-aware (sees the same-seed baseline)")
     s.add_argument("--workers", type=int, default=3)

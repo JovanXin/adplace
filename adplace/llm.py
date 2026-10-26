@@ -96,8 +96,17 @@ def extract_json(text: str) -> dict:
     raise ValueError(f"No JSON object in model reply: {text[:300]}")
 
 
-def image_to_data_url(img_bytes: bytes, mime: str = "image/png") -> str:
-    return f"data:{mime};base64,{base64.b64encode(img_bytes).decode()}"
+def _sniff_mime(b: bytes) -> str:
+    if b[:3] == b"\xff\xd8\xff":
+        return "image/jpeg"
+    if b[:4] == b"RIFF" and b[8:12] == b"WEBP":
+        return "image/webp"
+    return "image/png"
+
+
+def image_to_data_url(img_bytes: bytes, mime: str | None = None) -> str:
+    # Closed image models may return JPEG/WebP; Anthropic rejects a mislabelled media type.
+    return f"data:{mime or _sniff_mime(img_bytes)};base64,{base64.b64encode(img_bytes).decode()}"
 
 
 def data_url_to_bytes(url: str) -> bytes:
@@ -209,7 +218,7 @@ class OpenRouter:
             return extract_json(data["choices"][0]["message"].get("content") or "")
 
     def image(self, model: str, prompt: str, task: str, input_image: bytes | None = None,
-              width: int = 1024, height: int = 1024) -> bytes:
+              width: int = 1024, height: int = 1024, seed: int | None = None) -> bytes:
         """Text->image, or image+instruction->image (edit) via an image-output model."""
         if input_image is not None:
             content = [{"type": "text", "text": prompt},
@@ -218,8 +227,10 @@ class OpenRouter:
             content = prompt
         body = {"model": model, "modalities": ["image", "text"],
                 "messages": [{"role": "user", "content": content}]}
-        if width != height:
+        if input_image is None:      # always pin the aspect ratio (Gemini 3.1 defaults to wide)
             body["image_config"] = {"aspect_ratio": _aspect(width, height)}
+        if seed is not None:
+            body["seed"] = int(seed)
         data = self._post(body, task, images_expected=1)
         msg = data["choices"][0]["message"]
         imgs = msg.get("images") or []

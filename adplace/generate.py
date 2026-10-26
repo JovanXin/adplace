@@ -170,7 +170,7 @@ class OpenRouterImage:
         self.llm, self.model = llm, model
 
     def generate(self, prompt: str, seed: int, width: int, height: int) -> bytes:
-        return self.llm.image(self.model, prompt, task="generate", width=width, height=height)
+        return self.llm.image(self.model, prompt, task="generate", width=width, height=height, seed=seed)
 
     def edit(self, image: bytes, instruction: str, seed: int) -> bytes:
         return self.llm.image(self.model, instruction, task="edit", input_image=image)
